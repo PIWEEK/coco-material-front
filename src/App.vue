@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="nav">
+      <img alt="Vue logo" src="./assets/logo.jpg">
+      <div class="nav-links">
+        <span class="link">
+          <router-link to="/">Home</router-link>
+        </span>
+        <span class="link"><router-link to="/about">About Us</router-link></span>
+        <span class="link"><router-link to="/piweek">A PiWEEK Project</router-link></span>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -17,16 +23,25 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+.nav {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  width: 100%;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+a {
+  text-decoration: none;
+  padding: 10;
+
+  &:hover {
+    color: red;
   }
 }
+
 </style>

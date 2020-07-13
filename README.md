@@ -1,4 +1,4 @@
-# coco-material
+# coco-material-front
 
 ## Project setup
 ```
