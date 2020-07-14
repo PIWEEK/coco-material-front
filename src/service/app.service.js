@@ -13,6 +13,13 @@ const appService = {
       })
     })
   },
+  getVectorByTag (tag) {
+    return new Promise((resolve) => {
+      axios.get(`/vectors/?tags=${tag}`).then(response => {
+        resolve(response.data)
+      })
+    })
+  },
   getTags () {
     return new Promise((resolve) => {
       axios.get('/tags/').then(response => {

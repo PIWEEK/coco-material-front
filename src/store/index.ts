@@ -7,10 +7,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tags: [],
-    vectors: []
+    vectors: [],
+    filteredVectors: []
   },
   getters: {
-    vectorsList: state => state.vectors
+    vectorsList: state => state.vectors,
+    filteredVectorsList: state => state.filteredVectors
   },
   mutations: {
     getTagsSuccess (state, tags) {
@@ -18,6 +20,9 @@ export default new Vuex.Store({
     },
     getVectorsSuccess (state, vectors) {
       state.vectors = vectors
+    },
+    getVectorsByTagSuccess (state, vectors) {
+      state.filteredVectors = vectors
     }
   },
   actions: {
@@ -28,13 +33,17 @@ export default new Vuex.Store({
         })
     },
     getVectors ({ commit }) {
-      console.log('AQUÍ ENTRA!!!', appService)
       appService.getVectors()
         .then(vectors => {
-          console.log('AQUÍ NO ENTRA!!!', vectors)
           commit('getVectorsSuccess', vectors)
         })
         .catch(error => console.log(error))
+    },
+    getVectorByTag ({ commit }, tag) {
+      appService.getVectorByTag(tag)
+        .then(vectors => {
+          commit('getVectorsByTagSuccess', vectors)
+        })
     }
   },
   modules: {
