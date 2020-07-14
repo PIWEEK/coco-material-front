@@ -19,8 +19,9 @@
         <li>Fruits</li>
       </ul>
       <div class="svg-list">
-        aquí todos los svgs
-        <img src="../assets/idea.svg" />
+        <span v-for="(vector, index) in vectorsList" :key="index">
+          {{vector.svg}}
+        </span>
       </div>
     </div>
   </section>
@@ -28,17 +29,30 @@
 
 <script>
 
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'Home',
-  components: {
-    // 'svg-icon': SvgIcon
-  },
   data () {
     return {
+      vectors: null,
       search: ''
     }
   },
+  created () {
+    console.log('mounted!')
+    this.getVectors()
+    console.log('vectorsList', this.vectorsList)
+  },
+  computed: {
+    ...mapGetters({
+      vectorsList: 'vectorsList'
+    })
+  },
   methods: {
+    ...mapActions({
+      getVectors: 'getVectors'
+    }),
     searchIcon () {
       console.log(this.search)
     }
