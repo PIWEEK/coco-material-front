@@ -129,7 +129,7 @@ export default {
       clearSearchTags: 'clearSearchTags'
     }),
     searchVector (search) {
-      const textToSearch = search || this.search
+      const textToSearch = typeof search === 'string' ? search : this.search
       this.$store.dispatch('getVectorByTag', textToSearch)
       this.$router.push('results')
     }

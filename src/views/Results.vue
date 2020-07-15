@@ -12,7 +12,7 @@
       <div class="menu">
         <div class="search">
           <label for="search">Search results for: </label>
-          <input id="search" v-model="search" type="text" @keyup.enter="searchIcon"/>
+          <input id="search" v-model="search" type="text" @keyup.enter="searchVector"/>
           <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
         </div>
         <div  v-if="filteredVectorsList.length" class="vectors-actions">
@@ -58,7 +58,7 @@
 
 <script>
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import modal from '../components/modal/modal.vue'
 
 export default {
@@ -78,6 +78,9 @@ export default {
     ...mapGetters({
       filteredVectorsList: 'filteredVectorsList',
       searchTags: 'searchTags'
+    }),
+    ...mapActions({
+      getVectorsByTag: 'getVectorByTag'
     })
   },
   methods: {
@@ -96,6 +99,11 @@ export default {
       const height = document.getElementById(`${id}`).clientHeight
       const width = document.getElementById(`${id}`).clientWidth
       document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
+    },
+    searchVector (search) {
+      const textToSearch = typeof search === 'string' ? search : this.search
+      this.$store.dispatch('getVectorByTag', textToSearch)
+      this.$router.push('results')
     }
   }
 }
