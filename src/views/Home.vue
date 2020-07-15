@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <div class="cta" :style="{ backgroundImage: 'url(' + require('@/assets/cta-pink.svg') + ')' }">
+    <div class="cta" :style="{ backgroundImage: `url(${require('@/assets/cta-pink.svg')})`}">
       <div class="container container-cta">
         <div class="section-text">
           <h1 class="title">Looking for the perfect illustration?</h1>
@@ -8,33 +8,87 @@
           <a class="btn" href="#start">Start now</a>
         </div>
         <div class="section-img">
-          <img alt="Person thinking" src="../assets/asking.svg" />
+          <img alt="Person thinking illustration" src="../assets/asking.svg" />
         </div>
       </div>
     </div>
-    <div class="search-section" :style="{ backgroundImage: 'url(' + require('@/assets/customize.svg') + ')' }">
+    <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/customize.svg')})`}">
       <div class="container">
         <h3 id="start"  class="title">Customize & Download</h3>
         <p class="subtitle">Search by theme and customize the colors of the illustration to match your needs</p>
         <div class="search">
           <label for="search">Search</label>
-          <input id="search" v-model="search" type="text" placeholder="Search by topic" @keyup.enter="searchIcon"/>
+          <input id="search" v-model="search" type="text" placeholder="Search by topic" @keyup.enter="searchVector"/>
         </div>
       </div>
     </div>
     <div class=topics>
-      <ul class="topics-list">
-        <li>Food</li>
-        <li>Pets</li>
-        <li>Fruits</li>
-      </ul>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Technology</h5>
+          <button @click="searchVector('technology')">View all</button>
+        </div>
+        <img src="../assets/topics/tech.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Science</h5>
+          <button @click="searchVector('science')">View all</button>
+        </div>
+        <img src="../assets/topics/science.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Objects</h5>
+          <button @click="searchVector('objects')">View all</button>
+        </div>
+        <img src="../assets/topics/objects.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Food</h5>
+          <button @click="searchVector('food')">View all</button>
+        </div>
+        <img src="../assets/topics/food.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">People</h5>
+          <button @click="searchVector('people')">View all</button>
+        </div>
+        <img src="../assets/topics/people.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Charts</h5>
+          <button @click="searchVector('charts')">View all</button>
+        </div>
+        <img src="../assets/topics/charts.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Emojis</h5>
+          <button @click="searchVector('emojis')">View all</button>
+        </div>
+        <img src="../assets/topics/emojis.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Office</h5>
+          <button @click="searchVector('office')">View all</button>
+        </div>
+        <img src="../assets/topics/office.svg" />
+      </div>
+      <div class="topic">
+        <div class="top">
+          <h5 class="title">Social</h5>
+          <button @click="searchVector('rrss')">View all</button>
+        </div>
+        <img src="../assets/topics/rrss.svg" />
+      </div>
+
     </div>
-    <div class="svg-list">
-      <span v-for="(vector, index) in vectorsList" :key="index">
-        <img :src="vector.svg" />
-      </span>
-    </div>
-    <div class="piweek-section">
+    <div id="piweek" class="piweek-section">
       <div class="container">
         <h3 class="title">A PIWEEK project</h3>
         <p class="subtitle">CocoMaterial is a PIWEEK project.</p>
@@ -47,7 +101,7 @@
 
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
@@ -58,20 +112,25 @@ export default {
     }
   },
   beforeMount () {
-    this.getVectors()
+    this.getTags()
+    this.clearSearchTags()
   },
   computed: {
     ...mapGetters({
-      vectorsList: 'vectorsList'
+      tagsList: 'tagsList'
     })
   },
   methods: {
     ...mapActions({
-      getVectors: 'getVectors',
+      getTags: 'getTags',
       getVectorsByTag: 'getVectorByTag'
     }),
-    searchIcon () {
-      this.$store.dispatch('getVectorByTag', this.search)
+    ...mapMutations({
+      clearSearchTags: 'clearSearchTags'
+    }),
+    searchVector (search) {
+      const textToSearch = search || this.search
+      this.$store.dispatch('getVectorByTag', textToSearch)
       this.$router.push('results')
     }
   }
@@ -204,19 +263,36 @@ export default {
     }
   }
 
-  .topics-list {
-    list-style-type: none;
+  .topics {
     display: grid;
+    column-gap: 50px;
     grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 80px;
+    row-gap: 50px;
   }
 
-  .svg-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+  .topic {
+    margin: auto;
 
-    & span, & img {
-      height: 250px;
-      text-align: center;
+    & .top {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    & .title {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    & button {
+      background-color: transparent;
+      border: 2px solid $color-turquoise;
+      border-radius: 4px;
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 15px;
     }
   }
 

@@ -1,22 +1,12 @@
-<script>
-export default {
-  name: 'modal',
-  methods: {
-    close () {
-      this.$emit('close')
-    }
-  }
-}
-</script>
-
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
       <div class="modal">
         <header class="modal-header">
           <slot name="header">
-            Customize illustration
-
+            <span class="title">
+              Customize illustration
+            </span>
             <button
               type="button"
               class="btn-close"
@@ -28,15 +18,39 @@ export default {
         </header>
         <section class="modal-body">
           <slot name="body">
-            <div class="preview">
-              aquí dibujo
+            <div ref="preview" class="preview" v-html="vector">
             </div>
             <div class="colors">
               <div class="stroke">
-                Color:
+                <label class="title" for="strokeHex"> Color </label>
+                <div class="color-options">
+                  <span class="round" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
+                </div>
               </div>
               <div class="fill">
-
+                <label class="title" for="fillHex"> Background </label>
+                <div class="color-options">
+                  <span :class="`round ${color == 'transparent' ? 'transparent': ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
+                </div>
+              </div>
+              <div class="download">
+                <span class="title">Download PNG</span>
+                <div class="buttons">
+                  <div class="btn-container">
+                    <button type="button" class="btn-download" @click="downloadPng('128')">S</button>
+                    <span class="size">128px</span>
+                  </div>
+                  <div class="btn-container">
+                    <button type="button" class="btn-download" @click="downloadPng('256')">M</button>
+                    <span class="size">256px</span>
+                  </div>
+                  <div class="btn-container">
+                    <button type="button" class="btn-download" @click="downloadPng('512')">L</button>
+                    <span class="size">512px</span>
+                  </div>
+                </div>
               </div>
             </div>
           </slot>
@@ -46,64 +60,102 @@ export default {
   </transition>
 </template>
 
-<style>
+<script>
+export default {
+  name: 'modal',
+  props: {
+    vector: null
+  },
+  data () {
+    return {
+      fillColor: ['transparent', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      strokeColor: ['#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      svgCode: null,
+      strokeHexValue: null,
+      backgroundHexValue: null
+    }
+  },
+  methods: {
+    close () {
+      this.$emit('close')
+    },
+    selectStroke (color) {
+      if (color.length === 7) {
+        this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
+      } else {
+        this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#000000'
+      }
+    },
+    selectFill (color) {
+      if (color.length === 7) {
+        this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
+      } else {
+        this.$refs.preview.firstElementChild.firstElementChild.style.fill = '#FFFFFF'
+      }
+    },
+    downloadPng (size) {
+      console.log('downloadPng', size)
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
   .modal-backdrop {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: center;
     align-items: center;
+    background-color: rgba(94, 100, 114, 0.61);
+    display: flex;
+    bottom: 0;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
   }
 
   .modal {
     background: #FFFFFF;
-    box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
+    border-radius: 6px;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.07);
     display: flex;
     flex-direction: column;
+    overflow-x: auto;
   }
 
   .modal-header,
   .modal-footer {
-    padding: 15px;
     display: flex;
+    padding: 25px;
   }
 
   .modal-header {
-    border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
     justify-content: space-between;
-  }
 
-  .modal-footer {
-    border-top: 1px solid #eeeeee;
-    justify-content: flex-end;
+    & .title {
+      font-size: 18px;
+      font-weight: 500;
+      height: 26px;
+      margin: auto;
+      text-align: center;
+    }
   }
 
   .modal-body {
+    display: flex;
+    padding: 20px 60px 20px 30px;
     position: relative;
-    padding: 20px 10px;
   }
 
   .btn-close {
-    border: none;
-    font-size: 20px;
-    padding: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4AAE9B;
     background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
+    border: none;
+    color: #1C2541;
+    cursor: pointer;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: -10px;
+    padding: 0;
   }
 
   .modal-fade-enter,
@@ -114,5 +166,99 @@ export default {
   .modal-fade-enter-active,
   .modal-fade-leave-active {
     transition: opacity .5s ease
+  }
+
+  .preview {
+    align-items: center;
+    background-image: url('../../assets/square.svg');
+    background-color: #E5E5E5;
+    display: flex;
+    justify-content: center;
+    height: 335px;
+    margin-right: 50px;
+    width: 335px;
+  }
+
+  .round {
+    border: 1px solid transparent;
+    border-radius: 12px;
+    display: inline-block;
+    margin-right: 8px;
+    height: 18px;
+    width: 18px;
+
+    &.transparent {
+      border: 1px solid #5E6472;
+      position: relative;
+
+      &:after {
+        border: 2px solid #FF0404;
+        border-radius: 2px;
+        content: '';
+        left: -6px;
+        position: absolute;
+        transform: rotate(-45deg);
+        top: 6px;
+        width: 25px;
+      }
+    }
+  }
+
+  .colors {
+    & .title {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    & .hex {
+      border: 1px solid #C4C4C4;
+      border-radius: 2px;
+      margin-left: 15px;
+      padding: 5px;
+      width: 70px;
+    }
+
+    & .color-options {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .stroke {
+    margin-bottom: 30px;
+  }
+
+  .download {
+    margin-top: 60px;
+
+    & .buttons {
+      display: flex;
+    }
+
+    & .btn-container {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+    }
+
+    & .btn-download {
+      background-color: transparent;
+      border: 2px solid #3CD7C9;
+      border-radius: 4px;
+      font-family: 'Red Hat Display', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 30px;
+    }
+
+    & .size {
+      color: #BDBDBD;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 5px;
+      text-align: center;
+    }
   }
 </style>

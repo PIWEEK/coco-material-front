@@ -17,29 +17,40 @@
         </div>
         <div  v-if="filteredVectorsList.length" class="vectors-actions">
           <button class="btn-color">
-            <img src="../assets/palette.svg" />
+            <img alt="Palette icon" src="../assets/palette.svg"/>
             <span>Customize all</span></button>
           <button class="btn-download">Download all SVG</button>
         </div>
       </div>
       <div v-if="filteredVectorsList.length" class="results-list">
-        <span class="vector-container" v-for="(vector, index) in filteredVectorsList" :key="index">
-          <img :src="vector.svg" />
+        <div class="vector-container" v-for="(vector, index) in filteredVectorsList" :key="index">
+          <div class="img-container">
+            <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
+          </div>
           <div class="download-btn">
             <button class="btn svg">SVG</button>
-            <button class="btn png" @click="showModal">PNG</button>
+            <button class="btn png" @click="showModal(vector)">PNG</button>
           </div>
-        </span>
+        </div>
       </div>
       <div v-else class="no-results">
-        <img src="../assets/coco.svg" />
+        <img alt="Coconut illustration" src="../assets/coco.svg" />
         <h3>Sorry, this coconut is empty</h3>
-        <p>We didn't find any result matching "".</p>
+        <div>
+          <span>We didn't find any result matching "</span>
+          <span class="highlight">
+            <span v-for="(tag, index) in searchTags" :key="index">
+              {{tag}}
+            </span>
+          </span>
+          <span>".</span>
+        </div>
         <p>Please try a different search term or look within our <strong>popular tags</strong></p>
       </div>
     </section>
     <modal
-      v-show="isModalVisible"
+      v-if="isModalVisible && filteredVectorsList.length"
+      :vector="svgCode"
       @close="closeModal"
     />
   </div>
@@ -58,20 +69,33 @@ export default {
   data () {
     return {
       search: '',
-      isModalVisible: false
+      isModalVisible: false,
+      selectedVector: null,
+      svgCode: null
     }
   },
   computed: {
     ...mapGetters({
-      filteredVectorsList: 'filteredVectorsList'
+      filteredVectorsList: 'filteredVectorsList',
+      searchTags: 'searchTags'
     })
   },
   methods: {
-    showModal () {
+    showModal (vector) {
+      this.selectedVector = vector
+      var xmlHttp = new XMLHttpRequest()
+      xmlHttp.open('GET', vector.url, false)
+      xmlHttp.send(null)
+      this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
       this.isModalVisible = true
     },
     closeModal () {
       this.isModalVisible = false
+    },
+    loaded (id) {
+      const height = document.getElementById(`${id}`).clientHeight
+      const width = document.getElementById(`${id}`).clientWidth
+      document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     }
   }
 }
@@ -87,7 +111,7 @@ export default {
   }
 
   .search {
-    width: 64%;
+    width: 65%;
 
     & label {
       font-size: 18px;
@@ -110,7 +134,7 @@ export default {
   }
 
   .vectors-actions {
-    width: 36%;
+    width: 40%;
     text-align: right;
   }
 
@@ -164,7 +188,8 @@ export default {
   .results-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    column-gap: 20px;
+    column-gap: 30px;
+    row-gap: 50px;
 
     & .download-btn {
       width: 100%;
@@ -175,18 +200,37 @@ export default {
       border: 2px solid $color-turquoise;
       border-radius: 4px;
       padding: 5px;
+      transition: all ease .3s;
       width: 46%;
+
+      &:hover {
+        background-color: $color-turquoise;
+        color: $color-white;
+      }
     }
 
     & .svg {
       margin-right: 8%;
     }
 
-    & img {
+    & .img-container {
       border: 1px solid #F2F2F2;
+      display: flex;
+      height: 150px;
       margin-bottom: 10px;
       padding: 8%;
-      width: 84%;
+    }
+
+    & img {
+      margin: auto;
+
+      &.vertical {
+         height: 125px;
+      }
+
+      &.horizontal {
+        width: 125px;
+      }
     }
   }
 
@@ -207,6 +251,10 @@ export default {
 
     & strong {
       font-size: 16px;
+    }
+
+    & .highlight {
+      color: $color-turquoise;
     }
   }
 

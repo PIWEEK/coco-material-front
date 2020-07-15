@@ -1,38 +1,40 @@
 <template>
   <div id="app">
-    <div class="nav">
-      <router-link to="/">
-        <img alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
-      </router-link>
-      <div class="nav-links">
-        <span class="link">
-          <router-link to="/">Home</router-link>
-        </span>
-        <span class="separator">
-          <img alt="Menu separator" src="./assets/dot.png">
-        </span>
-        <span class="link">
-          <router-link to="/about">About Us</router-link>
-        </span>
-        <span class="separator">
-          <img alt="Menu separator" src="./assets/dot.png">
-        </span>
-        <span class="link">
-          <router-link to="/piweek">A PiWEEK Project</router-link>
-        </span>
+    <div>
+      <div class="nav">
+        <router-link to="/">
+          <img alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
+        </router-link>
+        <div class="nav-links">
+          <span class="link">
+            <router-link to="/">Home</router-link>
+          </span>
+          <span class="separator">
+            <img alt="Menu separator" src="./assets/dot.png">
+          </span>
+          <span class="link">
+            <router-link to="/team">The team</router-link>
+          </span>
+          <span class="separator">
+            <img alt="Menu separator" src="./assets/dot.png">
+          </span>
+          <span class="link">
+            <a href="#piweek">A PiWEEK Project</a>
+          </span>
+        </div>
       </div>
+      <router-view/>
     </div>
-    <router-view/>
     <footer :style="{ backgroundImage: 'url(' + require('@/assets/waves.svg') + ')' }">
       <div class="left-side">
         <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
         <ul class="menu-list">
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/about">About Us</router-link></li>
-          <li><router-link to="/piweek">A PiWEEK Project</router-link></li>
+          <li><router-link to="/team">The team</router-link></li>
+          <li><a href="#piweek">A PiWEEK Project</a></li>
         </ul>
       </div>
-      <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with love and open source</span>
+      <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with &lt;3 and open source</span>
     </footer>
   </div>
 </template>
@@ -40,6 +42,11 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&display=swap');
 @import '@/variables';
+
+html,
+body {
+  height: 100%;
+}
 
 body {
   font-family: 'Red Hat Display', sans-serif;
@@ -52,6 +59,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: $color-black;
   font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .nav {
@@ -117,6 +132,12 @@ footer {
     color: $color-black;
     font-size: 14px;
     font-weight: 500;
+  }
+}
+
+.preview {
+  svg {
+    width: 200px;
   }
 }
 
