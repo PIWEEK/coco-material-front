@@ -21,6 +21,11 @@ export default {
     font-weight: 700;
     margin-bottom: 90px;
     text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
   }
 
   p {
@@ -29,6 +34,10 @@ export default {
     line-height: 24px;
     max-width: 500px;
     margin: 0 auto 30px;
+
+    @media (max-width: 768px) {
+      padding: 0 20px;
+    }
   }
 
 </style>

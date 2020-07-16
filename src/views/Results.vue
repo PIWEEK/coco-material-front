@@ -180,20 +180,48 @@ export default {
     grid-template-columns: 1fr 6fr;
     margin: 70px auto;
     max-width: 1440px;
+
+    @media (max-width: 1500px) {
+      margin: 0 20px;
+    }
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .search {
     display: flex;
     align-items: center;
 
+    @media (max-width: 1200px) {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+
     & label {
       font-size: 18px;
       font-weight: 500;
       margin-right: 5px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
     }
 
       & .relative {
         position: relative;
+
+        @media (max-width: 768px) {
+          margin-bottom: 10px;
+          width: 100%;
+        }
       }
 
     & .search-input-wrapper {
@@ -259,12 +287,21 @@ export default {
     & .info-text {
       color: $color-grey;
       font-size: 14px;
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
     }
   }
 
   .vectors-actions {
     width: 40%;
     text-align: right;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+    }
   }
 
   .btn-color,
@@ -297,9 +334,16 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 35px;
+
+    @media (max-width: 1200px) {
+      flex-direction: column;
+    }
   }
 
   .tags {
+    @media (max-width: 900px) {
+      display: none;
+    }
     & p {
       font-weight: 700;
       font-size: 14px;
@@ -322,6 +366,14 @@ export default {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 30px;
     row-gap: 50px;
+
+    @media (max-width: 1500px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
     & .download-btn {
       display: grid;
@@ -393,6 +445,12 @@ export default {
 
     & .highlight {
       color: $color-turquoise;
+    }
+  }
+
+  .results-data {
+    @media (max-width: 768px) {
+      padding: 0 20px;
     }
   }
 

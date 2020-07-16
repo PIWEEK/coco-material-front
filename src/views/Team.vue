@@ -42,6 +42,10 @@ export default {
     font-weight: 700;
     margin-bottom: 30px;
     text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
   }
 
   p {
@@ -52,6 +56,10 @@ export default {
 
   img {
     margin: auto;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
 
   .bg {
@@ -65,6 +73,10 @@ export default {
 
   .members {
     display: grid;
+
+    @media (max-width: 768px) {
+      margin: 0 20px;
+    }
   }
 
   .group {

@@ -83,7 +83,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Charts</h5>
-          <button @click="searchVector('chart')">View all</button>
+          <button @click="searchVector('charts')">View all</button>
         </div>
         <img src="../assets/topics/charts.svg" />
       </div>
@@ -104,7 +104,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Social</h5>
-          <button @click="searchVector('social')">View all</button>
+          <button @click="searchVector('rrss')">View all</button>
         </div>
         <img src="../assets/topics/rrss.svg" />
       </div>
@@ -187,6 +187,10 @@ export default {
 
   .container {
     margin: 0 70px;
+
+    @media (max-width: 768px) {
+      margin: 0;
+    }
   }
 
   .cta {
@@ -202,6 +206,15 @@ export default {
     grid-template-columns: 6fr 2fr;
     margin: 0 auto;
     max-width: 1600px;
+
+    @media (max-width: 1600px) {
+      padding: 0 70px;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 2fr 1fr;
+      padding: 0 20px;
+    }
 
     & .section-text {
       margin: auto;
@@ -221,6 +234,11 @@ export default {
       font-weight: 700;
       margin-bottom: 35px;
       padding-right: 20%;
+
+      @media (max-width: 768px) {
+        font-size: 36px;
+        padding-right: 5%;
+      }
     }
 
     & .subtitle {
@@ -230,6 +248,22 @@ export default {
       line-height: 32px;
       margin-bottom: 50px;
       padding-right: 30%;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+        padding-right: 5%;
+      }
+    }
+
+    & .section-img {
+      @media (max-width: 768px) {
+        align-self: end;
+      }
+      & img {
+        @media (max-width: 768px) {
+          max-width: 100%;
+        }
+      }
     }
 
     & .btn {
@@ -253,22 +287,39 @@ export default {
     padding: 40px;
     text-align: center;
 
+    @media (max-width: 768px) {
+        padding: 20px;
+        background-size: 100%;
+      }
+
     & .title {
       font-size: 48px;
       font-weight: 700;
       margin-bottom: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
     }
 
     & .subtitle {
       color: $color-grey;
       font-size: 18px;
       margin-bottom: 25px;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
     }
 
     & .search {
       margin: auto;
       position: relative;
       width: 420px;
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
 
       & label {
         position: absolute;
@@ -319,6 +370,10 @@ export default {
         overflow-y: scroll;
         width: 420px;
 
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+
         & span {
           background-color: $color-white;
           font-weight: 500;
@@ -343,10 +398,18 @@ export default {
     padding: 40px;
     text-align: center;
 
+    @media (max-width: 768px) {
+      padding: 20px;
+    }
+
     & .title {
       font-size: 48px;
       font-weight: 700;
       margin-bottom: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
     }
 
     & .subtitle {
@@ -354,8 +417,11 @@ export default {
       font-size: 14px;
       line-height: 24px;
       margin: auto;
-      width: 60%;
       max-width: 700px;
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+      }
     }
 
     & .highlight {
@@ -388,14 +454,14 @@ export default {
     @media (max-width: 1200px) {
       grid-template-columns: 1fr 1fr;
     }
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-    }
   }
 
   .topic {
     margin: auto;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
 
     & .top {
       display: flex;
@@ -416,6 +482,12 @@ export default {
       font-size: 14px;
       font-weight: 500;
       padding: 5px 15px;
+    }
+
+    & img {
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
   }
 

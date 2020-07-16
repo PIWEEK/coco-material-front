@@ -147,10 +147,18 @@ export default {
   .modal-footer {
     display: flex;
     padding: 25px;
+
+    @media (max-width: 768px) {
+      padding: 10px;
+    }
   }
 
   .modal-header {
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+      padding: 20px 10px 5px;
+    }
 
     & .title-container {
       margin: auto;
@@ -181,6 +189,11 @@ export default {
     display: flex;
     padding: 20px 60px 30px 30px;
     position: relative;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 20px 30px;
+    }
   }
 
   .btn-close {
@@ -193,6 +206,10 @@ export default {
     font-weight: 500;
     margin-top: -10px;
     padding: 0 10px;
+
+    @media (max-width: 768px) {
+      margin-top: -45px;
+    }
   }
 
   .modal-fade-enter,
@@ -214,6 +231,11 @@ export default {
     height: 335px;
     margin-right: 50px;
     width: 335px;
+
+    @media (max-width: 768px) {
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
   }
 
   .preview-title {
