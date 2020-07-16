@@ -199,6 +199,10 @@ export default {
     padding: 80px 0;
     background-size: 30%;
     background-image:none;
+
+    @media (max-width: 768px) {
+      padding: 20px 0;
+    }
   }
 
   .container-cta {
@@ -212,6 +216,10 @@ export default {
     }
 
     @media (max-width: 768px) {
+      background-image: url("../assets/pink-buble.svg");
+      background-repeat: no-repeat;
+      background-position: -100px -40px;
+      background-size: 50%;
       grid-template-columns: 2fr 1fr;
       padding: 0 20px;
     }
@@ -219,6 +227,7 @@ export default {
     & .section-text {
       margin: auto;
       position:relative;
+
       &:before{
         content: url("../assets/pink-buble.svg");
         display: block;
@@ -226,6 +235,10 @@ export default {
         z-index: -1;
         top: -50%;
         left: -40%;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
       }
     }
 
