@@ -32,6 +32,13 @@ export default new Vuex.Store({
     },
     clearFilteredVectors (state) {
       state.filteredVectors = []
+    },
+    updateSearchTags (state, tag) {
+      state.searchTags.push(tag)
+    },
+    removeSearchTag (state, tag) {
+      const index = state.searchTags.findIndex(it => it === tag)
+      state.searchTags.splice(index, 1)
     }
   },
   actions: {

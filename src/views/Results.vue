@@ -16,7 +16,7 @@
             <div class="search-input-wrapper">
               <span
                 class="tag"
-                v-for="(tag, index) in tagsToSearch"
+                v-for="(tag, index) in searchTags"
                 :key="index"
                 @click="removeTag(tag)">x {{tag}}</span>
               <input
@@ -24,7 +24,6 @@
                 ref="search"
                 v-model="search"
                 type="text"
-                @keyup.enter="searchVector"
                 @keyup="autocompleteSearch"/>
             </div>
             <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
@@ -36,9 +35,10 @@
               </span>
             </div>
           </div>
-          <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
         </form>
-        <div  v-if="filteredVectorsList.length" class="vectors-actions">
+        <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
+
+        <div v-if="filteredVectorsList.length" class="vectors-actions">
           <button class="btn-color">
             <img alt="Palette icon" src="../assets/palette.svg"/>
             <span>Customize all</span></button>
@@ -95,27 +95,29 @@ export default {
       isModalVisible: false,
       selectedVector: null,
       svgCode: null,
-      tagsToSearch: [],
       autocompleteResults: []
     }
+  },
+  beforeMount () {
+    !this.searchTags.length && this.getTags()
   },
   computed: {
     ...mapGetters({
       filteredVectorsList: 'filteredVectorsList',
       searchTags: 'searchTags',
       tagsList: 'tagsList'
-    }),
+    })
+  },
+  methods: {
     ...mapActions({
+      getTags: 'getTags',
       getVectorsByTag: 'getVectorByTag'
     }),
     ...mapMutations({
-      clearFilteredVectors: 'clearFilteredVectors'
-    })
-  },
-  beforeMount () {
-    this.tagsToSearch = this.searchTags.length && [...this.searchTags]
-  },
-  methods: {
+      clearFilteredVectors: 'clearFilteredVectors',
+      updateSearchTags: 'updateSearchTags',
+      removeSearchTag: 'removeSearchTag'
+    }),
     showModal (vector) {
       this.selectedVector = vector
       var xmlHttp = new XMLHttpRequest()
@@ -139,26 +141,18 @@ export default {
       this.autocompleteResults = []
     },
     addTag (tag) {
-      this.tagsToSearch.push(tag)
       this.search = ''
       this.$refs.search.focus()
       this.autocompleteResults = []
-      this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+      this.updateSearchTags(tag)
+      this.$store.dispatch('getVectorByTag', this.searchTags)
     },
     removeTag (tag) {
-      const index = this.tagsToSearch.findIndex(it => it === tag)
-      this.tagsToSearch.splice(index, 1)
-      if (this.tagsToSearch.length) {
-        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+      this.removeSearchTag(tag)
+      if (this.searchTags.length) {
+        this.$store.dispatch('getVectorByTag', this.searchTags)
       } else {
         this.clearFilteredVectors()
-      }
-    },
-    searchVector (search) {
-      if (this.tagsToSearch.length) {
-        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
-      } else {
-        this.$store.dispatch('getVectorByTag', [this.search])
       }
     }
   }
@@ -231,7 +225,7 @@ export default {
         border-radius: 3px;
         height: 200px;
         overflow-y: scroll;
-        width: 420px;
+        width: calc(100% - 12px);
 
         & span {
           background-color: $color-white;
