@@ -10,11 +10,34 @@
     </aside>
     <section class="results-data">
       <div class="menu">
-        <div class="search">
+        <form autocomplete="off" class="search">
           <label for="search">Search results for: </label>
-          <input id="search" v-model="search" type="text" @keyup.enter="searchVector"/>
+          <div class="relative">
+            <div class="search-input-wrapper">
+              <span
+                class="tag"
+                v-for="(tag, index) in tagsToSearch"
+                :key="index"
+                @click="removeTag(tag)">x {{tag}}</span>
+              <input
+                id="search"
+                ref="search"
+                v-model="search"
+                type="text"
+                @keyup.enter="searchVector"
+                @keyup="autocompleteSearch"/>
+            </div>
+            <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+              <span
+                v-for="(result, index) in autocompleteResults"
+                :key="index"
+                @click="addTag(result.slug)">
+                {{result.slug}}
+              </span>
+            </div>
+          </div>
           <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
-        </div>
+        </form>
         <div  v-if="filteredVectorsList.length" class="vectors-actions">
           <button class="btn-color">
             <img alt="Palette icon" src="../assets/palette.svg"/>
@@ -58,7 +81,7 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import modal from '../components/modal/modal.vue'
 
 export default {
@@ -71,17 +94,26 @@ export default {
       search: '',
       isModalVisible: false,
       selectedVector: null,
-      svgCode: null
+      svgCode: null,
+      tagsToSearch: [],
+      autocompleteResults: []
     }
   },
   computed: {
     ...mapGetters({
       filteredVectorsList: 'filteredVectorsList',
-      searchTags: 'searchTags'
+      searchTags: 'searchTags',
+      tagsList: 'tagsList'
     }),
     ...mapActions({
       getVectorsByTag: 'getVectorByTag'
+    }),
+    ...mapMutations({
+      clearFilteredVectors: 'clearFilteredVectors'
     })
+  },
+  beforeMount () {
+    this.tagsToSearch = this.searchTags.length && [...this.searchTags]
   },
   methods: {
     showModal (vector) {
@@ -100,10 +132,34 @@ export default {
       const width = document.getElementById(`${id}`).clientWidth
       document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     },
+    autocompleteSearch () {
+      this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+    },
+    closeAutocomplete () {
+      this.autocompleteResults = []
+    },
+    addTag (tag) {
+      this.tagsToSearch.push(tag)
+      this.search = ''
+      this.$refs.search.focus()
+      this.autocompleteResults = []
+      this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+    },
+    removeTag (tag) {
+      const index = this.tagsToSearch.findIndex(it => it === tag)
+      this.tagsToSearch.splice(index, 1)
+      if (this.tagsToSearch.length) {
+        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+      } else {
+        this.clearFilteredVectors()
+      }
+    },
     searchVector (search) {
-      const textToSearch = typeof search === 'string' ? search : this.search
-      this.$store.dispatch('getVectorByTag', textToSearch)
-      this.$router.push('results')
+      if (this.tagsToSearch.length) {
+        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+      } else {
+        this.$store.dispatch('getVectorByTag', [this.search])
+      }
     }
   }
 }
@@ -119,7 +175,8 @@ export default {
   }
 
   .search {
-    width: 65%;
+    display: flex;
+    align-items: center;
 
     & label {
       font-size: 18px;
@@ -127,13 +184,69 @@ export default {
       margin-right: 5px;
     }
 
-    & input {
-      border-radius: 3px;
-      border: 1px solid #C4C4C4;
-      margin-right: 10px;
-      padding: 5px 0;
-      width: 50%;
-    }
+      & .relative {
+        position: relative;
+      }
+
+    & .search-input-wrapper {
+        display: flex;
+        align-items: center;
+        background-color: $color-white;
+        border: 1px solid $color-black;
+        border-radius: 3px;
+        box-sizing: border-box;
+        height: 32px;
+        margin-right: 10px;
+        padding: 5px 10px;
+      }
+
+      & .tag {
+         background-color: $color-pink;
+         font-size: 14px;
+         margin-right: 5px;
+         padding: 2px 10px;
+
+         &:hover {
+           cursor: pointer;
+         }
+      }
+
+      & input {
+        background-color: transparent;
+        border: none;
+        height: 30px;
+        font-size: 16px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      & .autocomplete-results {
+        background-color: $color-white;
+        position: absolute;
+        top: 32px;
+        border: 1px solid $color-grey;
+        border-radius: 3px;
+        height: 200px;
+        overflow-y: scroll;
+        width: 420px;
+
+        & span {
+          background-color: $color-white;
+          font-weight: 500;
+          display: block;
+          padding: 10px 25px;
+          text-align: left;
+          transition: all .3s ease;
+
+          &:hover {
+            background-color:$color-turquoise;
+            color: $color-white;
+            cursor: pointer;
+          }
+        }
+      }
 
     & .info-text {
       color: $color-grey;

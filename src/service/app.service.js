@@ -13,9 +13,9 @@ const appService = {
       })
     })
   },
-  getVectorByTag (tag) {
+  getVectorByTag (tags) {
     return new Promise((resolve) => {
-      axios.get(`/vectors/?tags=${tag}`).then(response => {
+      axios.get(`/vectors/?tags=${tags.join()}`).then(response => {
         resolve(response.data)
       })
     })

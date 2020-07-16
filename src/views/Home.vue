@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <div class="cta" :style="{ backgroundImage: `url(${require('@/assets/cta-pink.svg')})`}">
+    <div class="cta" :style="{ backgroundImage: `url(${require('@/assets/cta-pink.svg')})`}" @click="closeAutocomplete">
       <div class="container container-cta">
         <div class="section-text">
           <h1 class="title">Looking for the perfect illustration?</h1>
@@ -12,17 +12,39 @@
         </div>
       </div>
     </div>
-    <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/customize.svg')})`}">
+    <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/customize.svg')})`}" @click="closeAutocomplete">
       <div class="container">
         <h3 id="start"  class="title">Customize & Download</h3>
         <p class="subtitle">Search by theme and customize the colors of the illustration to match your needs</p>
-        <div class="search">
+        <form autocomplete="off" class="search">
           <label for="search">Search</label>
-          <input id="search" v-model="search" type="text" placeholder="Search by topic" @keyup.enter="searchVector"/>
-        </div>
+          <div class="search-input-wrapper">
+            <span
+              class="tag"
+              v-for="(tag, index) in tagsToSearch"
+              :key="index"
+              @click="removeTag(tag)">x {{tag}}</span>
+            <input
+              id="search"
+              ref="search"
+              v-model="search"
+              type="text"
+              :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
+              @keyup.enter="searchVector"
+              @keyup="autocompleteSearch"/>
+          </div>
+          <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+            <span
+              v-for="(result, index) in autocompleteResults"
+              :key="index"
+              @click="addTag(result.slug)">
+              {{result.slug}}
+            </span>
+          </div>
+        </form>
       </div>
     </div>
-    <div class=topics>
+    <div class=topics @click="closeAutocomplete">
       <div class="topic">
         <div class="top">
           <h5 class="title">Technology</h5>
@@ -108,7 +130,9 @@ export default {
   data () {
     return {
       vectors: null,
-      search: ''
+      search: '',
+      tagsToSearch: [],
+      autocompleteResults: []
     }
   },
   beforeMount () {
@@ -128,9 +152,30 @@ export default {
     ...mapMutations({
       clearSearchTags: 'clearSearchTags'
     }),
+    autocompleteSearch () {
+      this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+    },
+    closeAutocomplete () {
+      this.autocompleteResults = []
+    },
+    addTag (tag) {
+      this.tagsToSearch.push(tag)
+      this.search = ''
+      this.$refs.search.focus()
+      this.autocompleteResults = []
+    },
+    removeTag (tag) {
+      const index = this.tagsToSearch.findIndex(it => it === tag)
+      this.tagsToSearch.splice(index, 1)
+    },
     searchVector (search) {
-      const textToSearch = typeof search === 'string' ? search : this.search
-      this.$store.dispatch('getVectorByTag', textToSearch)
+      if (this.tagsToSearch.length) {
+        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
+      } else if (typeof search === 'string') {
+        this.$store.dispatch('getVectorByTag', [search])
+      } else {
+        this.$store.dispatch('getVectorByTag', [this.search])
+      }
       this.$router.push('results')
     }
   }
@@ -208,19 +253,73 @@ export default {
     }
 
     & .search {
+      margin: auto;
+      position: relative;
+      width: 420px;
 
       & label {
         position: absolute;
         top: -1000px;
       }
 
-      input {
+      & .search-input-wrapper {
+        display: flex;
+        align-items: center;
+        background-color: $color-white;
         border: 1px solid $color-black;
         border-radius: 3px;
-        font-size: 16px;
+        box-sizing: border-box;
         height: 48px;
         padding: 0 25px;
-        width: 30%;
+        width: 100%;
+      }
+
+      & .tag {
+         background-color: $color-pink;
+         font-size: 14px;
+         margin-right: 5px;
+         padding: 5px 10px;
+
+         &:hover {
+           cursor: pointer;
+         }
+      }
+
+      & input {
+        background-color: transparent;
+        border: none;
+        height: 46px;
+        font-size: 16px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      & .autocomplete-results {
+        background-color: $color-white;
+        position: absolute;
+        top: 48px;
+        border: 1px solid $color-grey;
+        border-radius: 3px;
+        height: 200px;
+        overflow-y: scroll;
+        width: 420px;
+
+        & span {
+          background-color: $color-white;
+          font-weight: 500;
+          display: block;
+          padding: 10px 25px;
+          text-align: left;
+          transition: all .3s ease;
+
+          &:hover {
+            background-color:$color-turquoise;
+            color: $color-white;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
@@ -269,6 +368,14 @@ export default {
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: 80px;
     row-gap: 50px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .topic {

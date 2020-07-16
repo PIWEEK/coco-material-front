@@ -25,10 +25,13 @@ export default new Vuex.Store({
     },
     getVectorsByTagSuccess (state, payload) {
       state.filteredVectors = payload.vectors
-      state.searchTags.push(payload.tag)
+      state.searchTags = payload.tags
     },
     clearSearchTags (state) {
       state.searchTags = []
+    },
+    clearFilteredVectors (state) {
+      state.filteredVectors = []
     }
   },
   actions: {
@@ -45,10 +48,10 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
-    getVectorByTag ({ commit }, tag) {
-      appService.getVectorByTag(tag)
+    getVectorByTag ({ commit }, tags) {
+      appService.getVectorByTag(tags)
         .then(vectors => {
-          commit('getVectorsByTagSuccess', { vectors, tag })
+          commit('getVectorsByTagSuccess', { vectors, tags })
         })
     }
   },
