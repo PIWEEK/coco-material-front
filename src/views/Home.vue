@@ -83,7 +83,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Charts</h5>
-          <button @click="searchVector('charts')">View all</button>
+          <button @click="searchVector('chart')">View all</button>
         </div>
         <img src="../assets/topics/charts.svg" />
       </div>
@@ -104,7 +104,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Social</h5>
-          <button @click="searchVector('rrss')">View all</button>
+          <button @click="searchVector('social')">View all</button>
         </div>
         <img src="../assets/topics/rrss.svg" />
       </div>
