@@ -26,15 +26,17 @@
       <router-view/>
     </div>
     <footer :style="{ backgroundImage: 'url(' + require('@/assets/waves.svg') + ')' }">
-      <div class="left-side">
-        <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
-        <ul class="menu-list">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/team">The team</router-link></li>
-          <li><a href="#piweek">A PiWEEK Project</a></li>
-        </ul>
+      <div class="inner-footer">
+        <div class="left-side">
+          <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
+          <ul class="menu-list">
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/team">The team</router-link></li>
+            <li><a href="#piweek">A PiWEEK Project</a></li>
+          </ul>
+        </div>
+        <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with &lt;3 and open source</span>
       </div>
-      <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with &lt;3 and open source</span>
     </footer>
   </div>
 </template>
@@ -72,7 +74,8 @@ button:hover {
 .nav {
   display: grid;
   grid-template-columns: 128px 1fr;
-  margin: 20px 70px;
+  margin: 20px auto;
+  max-width: 1440px;
 
   & a {
     margin: 0;
@@ -99,39 +102,44 @@ button:hover {
 }
 
 footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 30px 60px;
+
   background-size: cover;
   background-repeat: no-repeat;
-
-  & .left-side {
+  & .inner-footer {
     display: flex;
+    justify-content: space-between;
     align-items: flex-end;
-  }
+    padding: 30px 60px;
+    margin:0 auto;
+    max-width: 1440px;
 
-  & .menu-list {
-    list-style-type: none;
-    margin: 0;
-
-    & li {
-      margin-top: 15px;
+    & .left-side {
+      display: flex;
+      align-items: flex-end;
     }
-  }
 
-  & a{
-    color: $color-black;
-    font-size: 14px;
-    font-weight: 700;
-    margin-top: 15px;
-    text-decoration: none;
-  }
+    & .menu-list {
+      list-style-type: none;
+      margin: 0;
 
-  & .text {
-    color: $color-black;
-    font-size: 14px;
-    font-weight: 500;
+      & li {
+        margin-top: 15px;
+      }
+    }
+
+    & a{
+      color: $color-black;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+
+    & .text {
+      color: $color-black;
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 }
 

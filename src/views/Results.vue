@@ -171,7 +171,8 @@ export default {
   .results {
     display: grid;
     grid-template-columns: 1fr 6fr;
-    margin: 70px;
+    margin: 70px auto;
+    max-width: 1440px;
   }
 
   .search {

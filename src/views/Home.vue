@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <div class="cta" :style="{ backgroundImage: `url(${require('@/assets/cta-pink.svg')})`}" @click="closeAutocomplete">
+    <div class="cta">
       <div class="container container-cta">
         <div class="section-text">
           <h1 class="title">Looking for the perfect illustration?</h1>
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/customize.svg')})`}" @click="closeAutocomplete">
+    <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/bg-customize.svg')})`}" @click="closeAutocomplete">
       <div class="container">
         <h3 id="start"  class="title">Customize & Download</h3>
         <p class="subtitle">Search by theme and customize the colors of the illustration to match your needs</p>
@@ -194,14 +194,26 @@ export default {
     background-repeat: no-repeat;
     padding: 80px 0;
     background-size: 30%;
+    background-image:none;
   }
 
   .container-cta {
     display: grid;
     grid-template-columns: 6fr 2fr;
+    margin: 0 auto;
+    max-width: 1600px;
 
     & .section-text {
       margin: auto;
+      position:relative;
+      &:before{
+        content: url("../assets/pink-buble.svg");
+        display: block;
+        position: absolute;
+        z-index: -1;
+        top: -50%;
+        left: -40%;
+      }
     }
 
     & .title {
@@ -235,8 +247,9 @@ export default {
   }
 
   .search-section {
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-size: 1600px;
+    background-repeat: repeat-x;
+    background-position: center;
     padding: 40px;
     text-align: center;
 
@@ -342,6 +355,7 @@ export default {
       line-height: 24px;
       margin: auto;
       width: 60%;
+      max-width: 700px;
     }
 
     & .highlight {
@@ -364,10 +378,12 @@ export default {
 
   .topics {
     display: grid;
-    column-gap: 50px;
+    column-gap: auto;
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: 80px;
     row-gap: 50px;
+    max-width: 1000px;
+    margin:80px auto 0 auto;
 
     @media (max-width: 1200px) {
       grid-template-columns: 1fr 1fr;
