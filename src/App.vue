@@ -19,7 +19,7 @@
             <img alt="Menu separator" src="./assets/dot.png">
           </span>
           <span class="link">
-            <a href="#piweek">A PiWEEK Project</a>
+            <a href="/license">License</a>
           </span>
         </div>
       </div>
@@ -32,7 +32,7 @@
           <ul class="menu-list">
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/team">The team</router-link></li>
-            <li><a href="#piweek">A PiWEEK Project</a></li>
+            <li><a href="/license">License</a></li>
           </ul>
         </div>
         <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with &lt;3 and open source</span>

@@ -272,7 +272,7 @@ export default {
 
       & label {
         position: absolute;
-        top: -1000px;
+        top: -100000px;
       }
 
       & .search-input-wrapper {

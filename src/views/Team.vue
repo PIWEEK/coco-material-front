@@ -19,24 +19,17 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Team',
   data () {
     return {
-      info: null,
       members: [
         { name: 'Marina López', position: 'Front-End Developer' },
         { name: 'Natacha Menjibar', position: 'UX/UI Designer' },
         { name: 'Esther Moreno', position: 'Creator & Illustrator' },
         { name: 'Yamila Moreno', position: 'Back-End Developer' }]
     }
-  },
-  mounted () {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response))
   }
 }
 </script>
