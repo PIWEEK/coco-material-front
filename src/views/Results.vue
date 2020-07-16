@@ -39,10 +39,10 @@
         <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
 
         <div v-if="filteredVectorsList.length" class="vectors-actions">
-          <button class="btn-color">
+          <button class="btn-color" @click="showModal(filteredVectorsList[0], true)">
             <img alt="Palette icon" src="../assets/palette.svg"/>
             <span>Customize all</span></button>
-          <button class="btn-download">Download all SVG</button>
+          <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
         </div>
       </div>
       <div v-if="filteredVectorsList.length" class="results-list">
@@ -51,8 +51,8 @@
             <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
           </div>
           <div class="download-btn">
-            <button class="btn svg">SVG</button>
-            <button class="btn png" @click="showModal(vector)">PNG</button>
+            <a :href="downloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
+            <button class="btn png" @click="showModal(vector, false)">PNG</button>
           </div>
         </div>
       </div>
@@ -74,6 +74,8 @@
     <modal
       v-if="isModalVisible && filteredVectorsList.length"
       :vector="svgCode"
+      :customizeBulk="customizeBulk"
+      :vectors="filteredVectorsList.length"
       @close="closeModal"
     />
   </div>
@@ -95,7 +97,8 @@ export default {
       isModalVisible: false,
       selectedVector: null,
       svgCode: null,
-      autocompleteResults: []
+      autocompleteResults: [],
+      customizeBulk: false
     }
   },
   beforeMount () {
@@ -106,7 +109,10 @@ export default {
       filteredVectorsList: 'filteredVectorsList',
       searchTags: 'searchTags',
       tagsList: 'tagsList'
-    })
+    }),
+    downloadAllSvg () {
+      return `https://cocomaterial.com/api/download/?tags=${this.searchTags.join()}&img_format=svg`
+    }
   },
   methods: {
     ...mapActions({
@@ -118,12 +124,13 @@ export default {
       updateSearchTags: 'updateSearchTags',
       removeSearchTag: 'removeSearchTag'
     }),
-    showModal (vector) {
+    showModal (vector, bulk) {
       this.selectedVector = vector
       var xmlHttp = new XMLHttpRequest()
       xmlHttp.open('GET', vector.url, false)
       xmlHttp.send(null)
       this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
+      this.customizeBulk = bulk
       this.isModalVisible = true
     },
     closeModal () {
@@ -154,6 +161,10 @@ export default {
       } else {
         this.clearFilteredVectors()
       }
+    },
+    downloadSvg (vector) {
+      const id = vector.id
+      return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
     }
   }
 }
@@ -275,6 +286,9 @@ export default {
   .btn-download {
     background-color: transparent;
     border: 2px solid $color-turquoise;
+    color: $color-black;
+    font: 500 14px 'Red Hat Display';
+    text-decoration: none;
   }
 
   .menu {
@@ -308,16 +322,18 @@ export default {
     row-gap: 50px;
 
     & .download-btn {
-      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 10px;
     }
 
     & .btn {
       background-color: transparent;
       border: 2px solid $color-turquoise;
       border-radius: 4px;
+      font-size: 14px;
       padding: 5px;
       transition: all ease .3s;
-      width: 46%;
 
       &:hover {
         background-color: $color-turquoise;
@@ -326,7 +342,11 @@ export default {
     }
 
     & .svg {
-      margin-right: 8%;
+      color: $color-black;
+      font: 400 14px 'Red Hat Display';
+      padding: 4px 5px;
+      text-decoration: none;
+      text-align: center;
     }
 
     & .img-container {

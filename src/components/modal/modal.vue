@@ -4,9 +4,14 @@
       <div class="modal">
         <header class="modal-header">
           <slot name="header">
-            <span class="title">
-              Customize illustration
-            </span>
+            <div class="title-container">
+              <span class="title">
+                {{customizeBulk ? 'Customize selection' : 'Customize illustration'}}
+              </span>
+              <span v-if="customizeBulk" class="subtitle">
+              ( {{vectors}} illustrations selected)
+              </span>
+            </div>
             <button
               type="button"
               class="btn-close"
@@ -18,7 +23,9 @@
         </header>
         <section class="modal-body">
           <slot name="body">
-            <div ref="preview" class="preview" v-html="vector">
+            <div ref="preview" class="preview">
+              <span class="title" v-if="customizeBulk">Example illustation for reference</span>
+              <div v-html="vector"></div>
             </div>
             <div class="colors">
               <div class="stroke">
@@ -36,7 +43,10 @@
                 </div>
               </div>
               <div class="download">
-                <span class="title">Download PNG</span>
+                <div class="title-container">
+                  <span class="title">Download PNG</span>
+                  <span v-if="customizeBulk" class="subtitle">( {{vectors}} illustrations)</span>
+                </div>
                 <div class="buttons">
                   <div class="btn-container">
                     <button type="button" class="btn-download" @click="downloadPng('128')">S</button>
@@ -64,7 +74,9 @@
 export default {
   name: 'modal',
   props: {
-    vector: null
+    vector: null,
+    customizeBulk: null,
+    vectors: null
   },
   data () {
     return {
@@ -131,12 +143,22 @@ export default {
   .modal-header {
     justify-content: space-between;
 
+    & .title-container {
+      margin: auto;
+    }
+
     & .title {
+      color: #1C2541;
+      display: block;
       font-size: 18px;
       font-weight: 500;
       height: 26px;
-      margin: auto;
-      text-align: center;
+    }
+
+    & .subtitle {
+      color: #5E6472;
+      font-size: 14px;
+      font-weight: 400;
     }
   }
 
@@ -176,7 +198,19 @@ export default {
     justify-content: center;
     height: 335px;
     margin-right: 50px;
+    position: relative;
     width: 335px;
+
+    & .title {
+      color: #5E6472;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 500;
+      position: absolute;
+      text-align: center;
+      top: 30px;
+      width: 180px;
+    }
   }
 
   .round {
@@ -232,6 +266,21 @@ export default {
 
   .download {
     margin-top: 60px;
+
+    & .title-container {
+      & .title,
+      & .subtitle {
+        display: inline-block;
+      }
+
+      & .subtitle {
+        display: inline-block;
+        color: #5E6472;
+        font-size: 14px;
+        font-weight: 400;
+        margin: -3px 0 0 5px;
+      }
+    }
 
     & .buttons {
       display: flex;
