@@ -76,6 +76,8 @@
       :vector="svgCode"
       :customizeBulk="customizeBulk"
       :vectors="filteredVectorsList.length"
+      :vectorId="selectedVector.id"
+      :tags="searchTags"
       @close="closeModal"
     />
   </div>

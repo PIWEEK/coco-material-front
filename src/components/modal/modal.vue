@@ -9,7 +9,7 @@
                 {{customizeBulk ? 'Customize selection' : 'Customize illustration'}}
               </span>
               <span v-if="customizeBulk" class="subtitle">
-              ( {{vectors}} illustrations selected)
+              (<strong>{{vectors}} illustrations </strong>selected for bulk edit)
               </span>
             </div>
             <button
@@ -23,22 +23,23 @@
         </header>
         <section class="modal-body">
           <slot name="body">
-            <div ref="preview" class="preview">
-              <span class="title" v-if="customizeBulk">Example illustation for reference</span>
-              <div v-html="vector"></div>
+            <div class="preview-container">
+              <span class="preview-title" v-if="customizeBulk">Example illustation for reference</span>
+              <div ref="preview" class="preview" v-html="vector">
+              </div>
             </div>
             <div class="colors">
               <div class="stroke">
                 <label class="title" for="strokeHex"> Color </label>
                 <div class="color-options">
-                  <span class="round" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
                   <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
                 </div>
               </div>
               <div class="fill">
                 <label class="title" for="fillHex"> Background </label>
                 <div class="color-options">
-                  <span :class="`round ${color == 'transparent' ? 'transparent': ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <span :class="`round ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
                   <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
                 </div>
               </div>
@@ -49,15 +50,15 @@
                 </div>
                 <div class="buttons">
                   <div class="btn-container">
-                    <button type="button" class="btn-download" @click="downloadPng('128')">S</button>
+                    <a class="btn-download" :href="downloadPng('128')">S</a>
                     <span class="size">128px</span>
                   </div>
                   <div class="btn-container">
-                    <button type="button" class="btn-download" @click="downloadPng('256')">M</button>
+                    <a class="btn-download" :href="downloadPng('256')">M</a>
                     <span class="size">256px</span>
                   </div>
                   <div class="btn-container">
-                    <button type="button" class="btn-download" @click="downloadPng('512')">L</button>
+                    <a class="btn-download" :href="downloadPng('512')">L</a>
                     <span class="size">512px</span>
                   </div>
                 </div>
@@ -75,16 +76,18 @@ export default {
   name: 'modal',
   props: {
     vector: null,
+    vectorId: null,
     customizeBulk: null,
-    vectors: null
+    vectors: null,
+    tags: null
   },
   data () {
     return {
-      fillColor: ['transparent', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      fillColor: ['#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
       strokeColor: ['#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
       svgCode: null,
-      strokeHexValue: null,
-      backgroundHexValue: null
+      strokeHexValue: '#1C2541',
+      backgroundHexValue: '#FFFFFF'
     }
   },
   methods: {
@@ -94,6 +97,7 @@ export default {
     selectStroke (color) {
       if (color.length === 7) {
         this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
+        this.strokeHexValue = color
       } else {
         this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#000000'
       }
@@ -101,12 +105,17 @@ export default {
     selectFill (color) {
       if (color.length === 7) {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
+        this.backgroundHexValue = color
       } else {
-        this.$refs.preview.firstElementChild.firstElementChild.style.fill = '#FFFFFF'
+        this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'transparent'
       }
     },
     downloadPng (size) {
-      console.log('downloadPng', size)
+      if (this.customizeBulk) {
+        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'FFFFFF'}&size=${size}`
+      } else {
+        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'FFFFFF'}&size=${size}`
+      }
     }
   }
 }
@@ -153,12 +162,18 @@ export default {
       font-size: 18px;
       font-weight: 500;
       height: 26px;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
     & .subtitle {
       color: #5E6472;
       font-size: 14px;
       font-weight: 400;
+
+      &strong {
+        font-weight: 700;
+      }
     }
   }
 
@@ -198,43 +213,29 @@ export default {
     justify-content: center;
     height: 335px;
     margin-right: 50px;
-    position: relative;
     width: 335px;
+  }
 
-    & .title {
-      color: #5E6472;
-      font-size: 18px;
-      font-style: italic;
-      font-weight: 500;
-      position: absolute;
-      text-align: center;
-      top: 30px;
-      width: 180px;
-    }
+  .preview-title {
+    color: #5E6472;
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
   }
 
   .round {
-    border: 1px solid transparent;
     border-radius: 12px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.18);
     display: inline-block;
     margin-right: 8px;
     height: 18px;
     width: 18px;
 
-    &.transparent {
-      border: 1px solid #5E6472;
-      position: relative;
-
-      &:after {
-        border: 2px solid #FF0404;
-        border-radius: 2px;
-        content: '';
-        left: -6px;
-        position: absolute;
-        transform: rotate(-45deg);
-        top: 6px;
-        width: 25px;
-      }
+    &.selected {
+      border: 2px solid #7BDFF2;
     }
   }
 
@@ -296,10 +297,13 @@ export default {
       background-color: transparent;
       border: 2px solid #3CD7C9;
       border-radius: 4px;
+      color: #5E6472;
       font-family: 'Red Hat Display', sans-serif;
       font-size: 14px;
       font-weight: 500;
       padding: 5px 30px;
+      text-decoration: none;
+
       &:hover {
         background-color: #3CD7C9;
         color:#ffffff;
