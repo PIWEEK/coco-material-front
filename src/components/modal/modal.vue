@@ -142,7 +142,7 @@ export default {
 
   .modal-body {
     display: flex;
-    padding: 20px 60px 20px 30px;
+    padding: 20px 60px 30px 30px;
     position: relative;
   }
 
@@ -155,7 +155,7 @@ export default {
     font-size: 20px;
     font-weight: 500;
     margin-top: -10px;
-    padding: 0;
+    padding: 0 10px;
   }
 
   .modal-fade-enter,
@@ -251,6 +251,11 @@ export default {
       font-size: 14px;
       font-weight: 500;
       padding: 5px 30px;
+      &:hover {
+        background-color: #3CD7C9;
+        color:#ffffff;
+        transition: all ease .3s;
+      }
     }
 
     & .size {

@@ -228,7 +228,7 @@ export default {
       font-size: 24px;
       font-weight: 500;
       line-height: 32px;
-      margin-bottom: 35px;
+      margin-bottom: 50px;
       padding-right: 30%;
     }
 
