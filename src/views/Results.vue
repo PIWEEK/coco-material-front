@@ -10,7 +10,7 @@
     </aside>
     <section class="results-data">
       <div class="menu">
-        <form autocomplete="off" class="search">
+        <form autocomplete="off" class="search" onsubmit="return false;">
           <label for="search">Search results for: </label>
           <div class="relative">
             <div class="search-input-wrapper">

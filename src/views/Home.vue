@@ -16,7 +16,7 @@
       <div class="container">
         <h3 id="start"  class="title">Customize & Download</h3>
         <p class="subtitle">Search by theme and customize the colors of the illustration to match your needs</p>
-        <form autocomplete="off" class="search">
+        <form autocomplete="off" class="search" onsubmit="return false;">
           <label for="search">Search</label>
           <div class="search-input-wrapper">
             <span
