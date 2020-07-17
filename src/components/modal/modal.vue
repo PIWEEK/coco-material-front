@@ -104,7 +104,7 @@ export default {
         this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
         this.strokeHexValue = color
       } else {
-        this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#000000'
+        this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#1C2541'
       }
     },
     selectFill (color) {
@@ -118,12 +118,12 @@ export default {
     downloadPng (size) {
       const bgColor = (this.backgroundHexValue === 'none' || !this.backgroundHexValue)
         ? 'none'
-        : this.backgroundHexValue
+        : this.backgroundHexValue.replace('#', '')
 
       if (this.customizeBulk) {
-        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${bgColor}&size=${size}`
+        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
       } else {
-        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${bgColor}&size=${size}`
+        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
       }
     }
   }
