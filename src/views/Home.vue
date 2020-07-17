@@ -478,6 +478,7 @@ export default {
 
     & .top {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       padding: 0 30px;
     }
@@ -485,6 +486,10 @@ export default {
     & .title {
       font-size: 24px;
       margin: 0;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
     }
 
     & button {
@@ -495,6 +500,10 @@ export default {
       font-size: 14px;
       font-weight: 500;
       padding: 5px 15px;
+
+      @media (max-width: 768px) {
+        padding: 5px 8px;
+      }
     }
 
     & img {
