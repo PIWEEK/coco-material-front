@@ -35,6 +35,7 @@
           </div>
           <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
             <span
+              tabindex="0"
               v-for="(result, index) in autocompleteResults"
               :key="index"
               @click="addTag(result.slug)">
@@ -85,7 +86,7 @@
           <h5 class="title">Charts</h5>
           <button @click="searchVector('charts')">View all</button>
         </div>
-        <img src="../assets/topics/charts.svg" />
+        <img src="../assets/topics/chart.svg" />
       </div>
       <div class="topic">
         <div class="top">
@@ -104,7 +105,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Social</h5>
-          <button @click="searchVector('rrss')">View all</button>
+          <button @click="searchVector('social')">View all</button>
         </div>
         <img src="../assets/topics/rrss.svg" />
       </div>
