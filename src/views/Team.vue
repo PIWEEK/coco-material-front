@@ -2,7 +2,7 @@
   <div class="team">
     <h3 class="title">The team</h3>
     <div class="bg">
-      <p><strong>CocoMaterial</strong> is an idea of Esther Moreno for Kaleidos’ PIWEEK.</p>
+      <p><strong>CocoMaterial</strong> is an idea of Esther Moreno for <a href="https://kaleidos.net/" target="_blank" class="link">Kaleidos’</a> <a class="link" href="https://piweek.com/" target="_blank">PIWEEK </a>.</p>
       <p>The team members are:</p>
       <div class="members">
         <img alt="Team members illustration" src="../assets/team.svg" />
@@ -108,6 +108,20 @@ export default {
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
+  }
+
+  .link {
+    text-decoration: none;
+    color: $color-black;
+    font-size: 14px;
+    line-height: 24px;
+
+    &:active {
+      color: $color-black;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 500;
+    }
   }
 
 </style>

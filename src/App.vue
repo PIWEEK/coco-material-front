@@ -63,7 +63,7 @@
             <li><router-link to="/license">License</router-link></li>
           </ul>
         </div>
-        <span class="text">Free for commercial and personal use under ¿?? License | Cocomaterial © 2020 | Made with &lt;3 and open source</span>
+        <span class="text">Cocomaterial © 2020 | Made with &lt;3 and open source</span>
       </div>
     </footer>
   </div>

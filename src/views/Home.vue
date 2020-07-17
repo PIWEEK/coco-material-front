@@ -31,14 +31,18 @@
               type="text"
               :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
               @keyup.enter="searchVector"
-              @keyup="autocompleteSearch"/>
+              @keyup="autocompleteSearch"
+              @keydown.down="focusAutocompleteResults(-1, 'down')"/>
           </div>
-          <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+          <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
             <span
-              tabindex="0"
+              tabindex="1"
               v-for="(result, index) in autocompleteResults"
               :key="index"
-              @click="addTag(result.slug)">
+              @click="addTag(result.slug)"
+              @keyup.enter="addTag(result.slug)"
+              @keydown.up="focusAutocompleteResults(index, 'up')"
+              @keydown.down="focusAutocompleteResults(index, 'down')">
               {{result.slug}}
             </span>
           </div>
@@ -63,7 +67,7 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Objects</h5>
-          <button @click="searchVector('objects')">View all</button>
+          <button @click="searchVector('object')">View all</button>
         </div>
         <img src="../assets/topics/objects.svg" />
       </div>
@@ -115,7 +119,7 @@
       <div class="container">
         <h3 class="title">A PIWEEK project</h3>
         <p class="subtitle">CocoMaterial is a PIWEEK project.</p>
-        <p class="subtitle">PIWEEK is an original idea by <span class="highlight">Kaleidos</span>. Every six months participants leave their ongoing work in standby to devote an entire week to personal innovative projects, either alone or joined by others.</p>
+        <p class="subtitle">PIWEEK is an original idea by <a href="https://kaleidos.net/" target="_blank" class="highlight">Kaleidos</a>. Every six months participants leave their ongoing work in standby to devote an entire week to personal innovative projects, either alone or joined by others.</p>
         <a class="btn-piweek" href="https://piweek.com/" target="_blank">Know more about PIWEEK</a>
       </div>
     </div>
@@ -155,6 +159,20 @@ export default {
     }),
     autocompleteSearch () {
       this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+    },
+    focusAutocompleteResults (index, key) {
+      if (key === 'down') {
+        const element = document.querySelectorAll('#results span')[index + 1]
+        element.focus()
+        if (index === -1) {
+          document.querySelector('#results').scrollTop = 0
+        }
+      } else if (key === 'up' && index === 0) {
+        document.querySelector('#search').focus()
+      } else {
+        const element = document.querySelectorAll('#results span')[index - 1]
+        element.focus()
+      }
     },
     closeAutocomplete () {
       this.autocompleteResults = []
@@ -396,7 +414,9 @@ export default {
           text-align: left;
           transition: all .3s ease;
 
-          &:hover {
+          &:hover,
+          &:focus {
+            outline: none;
             background-color:$color-turquoise;
             color: $color-white;
             cursor: pointer;
@@ -440,6 +460,14 @@ export default {
 
     & .highlight {
       color: $color-turquoise;
+      text-decoration: none;
+      font-weight: 700;
+
+      &:active {
+        color: $color-turquoise;
+        font-size: 14px;
+        font-weight: 500;
+      }
     }
 
     & .btn-piweek {
