@@ -115,11 +115,6 @@ export default {
   beforeMount () {
     !this.searchTags.length && this.getTags()
   },
-  updated () {
-    if (!this.loading) {
-      console.log('loading stoped')
-    }
-  },
   computed: {
     ...mapGetters({
       filteredVectorsList: 'filteredVectorsList',

@@ -232,9 +232,9 @@ export default {
     display: grid;
     grid-template-columns: 6fr 2fr;
     margin: 0 auto;
-    max-width: 1600px;
+    max-width: 1440px;
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1440px) {
       padding: 0 70px;
     }
 
@@ -490,11 +490,11 @@ export default {
 
   .topics {
     display: grid;
-    column-gap: auto;
+    column-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: 80px;
     row-gap: 50px;
-    max-width: 1000px;
+    max-width: 1440px;
     margin:80px auto 0 auto;
 
     @media (max-width: 1200px) {

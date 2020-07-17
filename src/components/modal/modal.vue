@@ -25,7 +25,7 @@
           <slot name="body">
             <div class="preview-container">
               <span class="preview-title" v-if="customizeBulk">Example illustation for reference</span>
-              <div ref="preview" :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`" v-html="vector">
+              <div id="preview" ref="preview" :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`" v-html="vector">
               </div>
             </div>
             <div class="colors">
@@ -101,18 +101,24 @@ export default {
     },
     selectStroke (color) {
       if (color.length === 7) {
-        this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
+        // this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
+        document.querySelectorAll('#preview path')[1].style.fill = color
+        this.backgroundHexValue = color
         this.strokeHexValue = color
       } else {
-        this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#1C2541'
+        document.querySelectorAll('#preview path')[1].style.fill = '#1C2541'
+        this.backgroundHexValue = color
+        // this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#1C2541'
       }
     },
     selectFill (color) {
       if (color.length === 7 || color === 'none') {
-        this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
+        // this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
+        document.querySelectorAll('#preview path')[0].style.fill = color
         this.backgroundHexValue = color
       } else {
-        this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
+        // this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
+        document.querySelectorAll('#preview path')[0].style.fill = 'none'
       }
     },
     downloadPng (size) {

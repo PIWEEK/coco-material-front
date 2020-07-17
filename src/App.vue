@@ -121,7 +121,7 @@ button:hover {
   margin: 20px auto;
   max-width: 1440px;
 
-  @media (max-width: 1500px) {
+  @media (max-width: 1440px) {
     margin: 20px;
   }
 
