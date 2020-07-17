@@ -88,11 +88,11 @@ export default {
   },
   data () {
     return {
-      fillColor: ['none', '#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
-      strokeColor: ['#FFFFFF', '#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      fillColor: ['#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF', 'none'],
+      strokeColor: ['#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF', '#FFFFFF'],
       svgCode: null,
-      strokeHexValue: '#FFFFFF',
-      backgroundHexValue: 'none'
+      strokeHexValue: '#1C2541',
+      backgroundHexValue: '#FFFFFF'
     }
   },
   methods: {
@@ -108,11 +108,9 @@ export default {
       }
     },
     selectFill (color) {
-      if (color.length === 7) {
+      if (color.length === 7 || color === 'none') {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
         this.backgroundHexValue = color
-      } else if (color === 'none') {
-        this.backgroundHexValue = 'none'
       } else {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
       }
