@@ -101,23 +101,17 @@ export default {
     },
     selectStroke (color) {
       if (color.length === 7) {
-        // this.$refs.preview.firstElementChild.lastElementChild.style.fill = color
         document.querySelectorAll('#preview path')[1].style.fill = color
-        this.backgroundHexValue = color
         this.strokeHexValue = color
       } else {
         document.querySelectorAll('#preview path')[1].style.fill = '#1C2541'
-        this.backgroundHexValue = color
-        // this.$refs.preview.firstElementChild.lastElementChild.style.fill = '#1C2541'
       }
     },
     selectFill (color) {
       if (color.length === 7 || color === 'none') {
-        // this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
         document.querySelectorAll('#preview path')[0].style.fill = color
         this.backgroundHexValue = color
       } else {
-        // this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
         document.querySelectorAll('#preview path')[0].style.fill = 'none'
       }
     },
