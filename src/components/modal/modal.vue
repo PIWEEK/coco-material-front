@@ -108,14 +108,14 @@ export default {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
         this.backgroundHexValue = color
       } else {
-        this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'transparent'
+        this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
       }
     },
     downloadPng (size) {
       if (this.customizeBulk) {
-        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue : '#000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue : 'none'}&size=${size}`
+        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'none'}&size=${size}`
       } else {
-        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue : '#000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue : 'none'}&size=${size}`
+        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'none'}&size=${size}`
       }
     }
   }

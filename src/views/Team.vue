@@ -7,10 +7,10 @@
       <div class="members">
         <img alt="Team members illustration" src="../assets/team.svg" />
         <div class="group">
-          <div class="person" v-for="(member, index) in members" :key="index">
+          <a :href="member.link" target="_blank" class="person" v-for="(member, index) in members" :key="index">
             <p class="name">{{member.name}}</p>
             <p class="position">{{member.position}}</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@ export default {
   data () {
     return {
       members: [
-        { name: 'Marina López', position: 'Front-End Developer' },
-        { name: 'Natacha Menjibar', position: 'UX/UI Designer' },
-        { name: 'Esther Moreno', position: 'Creator & Illustrator' },
-        { name: 'Yamila Moreno', position: 'Back-End Developer' }]
+        { name: 'Marina López', position: 'Front-End Developer', link: 'https://kaleidos.net/ff8a80/' },
+        { name: 'Natacha Menjibar', position: 'UX/UI Designer', link: 'https://kaleidos.net/492858/' },
+        { name: 'Esther Moreno', position: 'Creator & Illustrator', link: 'https://kaleidos.net/720b34/' },
+        { name: 'Yamila Moreno', position: 'Back-End Developer', link: 'https://kaleidos.net/D70A53/' }]
     }
   }
 }
@@ -86,7 +86,12 @@ export default {
     column-gap: 20px;
   }
 
+  .person {
+    text-decoration: none;
+  }
+
   .name {
+    color: $color-black;
     font-weight: 500;
     font-size: 18px;
   }

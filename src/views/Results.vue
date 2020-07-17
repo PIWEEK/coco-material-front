@@ -1,6 +1,6 @@
 <template>
   <div class="results">
-    <aside class="tags">
+    <aside class="tags" @click="closeAutocomplete">
       <p>Popular tags</p>
       <ul class="tags-list">
         <li><button class="popular-btn" @click="searchVector(['face'])">Face</button></li>
@@ -10,7 +10,7 @@
         <li><button class="popular-btn" @click="searchVector(['food'])">Food</button></li>
       </ul>
     </aside>
-    <section class="results-data">
+    <section class="results-data"  @click="closeAutocomplete">
       <div class="menu">
         <form autocomplete="off" class="search" onsubmit="return false;">
           <label for="search">Search results for: </label>
@@ -40,14 +40,14 @@
         </form>
         <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
 
-        <div v-if="filteredVectorsList.length" class="vectors-actions">
+        <div v-if="filteredVectorsList.length" class="vectors-actions" @click="closeAutocomplete">
           <button class="btn-color" @click="showModal(filteredVectorsList[0], true, 0)">
             <img alt="Palette icon" src="../assets/palette.svg"/>
             <span>Customize all</span></button>
           <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
         </div>
       </div>
-      <div v-if="filteredVectorsList.length" class="results-list">
+      <div v-if="filteredVectorsList.length" class="results-list"  @click="closeAutocomplete">
         <div class="vector-container" v-for="(vector, index) in filteredVectorsList" :key="index">
           <div class="img-container">
             <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div v-else class="no-results">
+      <div v-else class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../assets/coco.svg" />
         <h3>Sorry, this coconut is empty</h3>
         <div v-if="searchTags.length">
@@ -393,7 +393,8 @@ export default {
     }
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 45%);
+      grid-template-columns: repeat(2, 49%);
+      column-gap: 2%;
     }
 
     & .download-btn {
@@ -474,12 +475,6 @@ export default {
 
     & .highlight {
       color: $color-turquoise;
-    }
-  }
-
-  .results-data {
-    @media (max-width: 768px) {
-      padding: 0 20px;
     }
   }
 

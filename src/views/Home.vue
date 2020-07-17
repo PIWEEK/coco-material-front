@@ -161,17 +161,21 @@ export default {
       this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
     },
     focusAutocompleteResults (index, key) {
-      if (key === 'down') {
-        const element = document.querySelectorAll('#results span')[index + 1]
-        element.focus()
-        if (index === -1) {
-          document.querySelector('#results').scrollTop = 0
+      if (this.autocompleteResults.length) {
+        if (key === 'down') {
+          const element = document.querySelectorAll('#results span')[index + 1]
+          element.focus()
+          if (index === -1) {
+            setTimeout(function () {
+              document.querySelector('#results').scrollTop = 0
+            }, 100)
+          }
+        } else if (key === 'up' && index === 0) {
+          document.querySelector('#search').focus()
+        } else {
+          const element = document.querySelectorAll('#results span')[index - 1]
+          element.focus()
         }
-      } else if (key === 'up' && index === 0) {
-        document.querySelector('#search').focus()
-      } else {
-        const element = document.querySelectorAll('#results span')[index - 1]
-        element.focus()
       }
     },
     closeAutocomplete () {
