@@ -9,19 +9,21 @@ export default new Vuex.Store({
     tags: [],
     vectors: [],
     filteredVectors: [],
-    searchTags: []
+    searchTags: [],
+    loading: false
   },
   getters: {
     tagsList: state => state.tags,
     filteredVectorsList: state => state.filteredVectors,
-    searchTags: state => state.searchTags
+    searchTags: state => state.searchTags,
+    loading: state => state.loading
   },
   mutations: {
     getTagsSuccess (state, tags) {
       state.tags = tags
     },
     getVectorsSuccess (state, vectors) {
-      state.vectors = vectors
+      state.filteredVectors = vectors
     },
     getVectorsByTagSuccess (state, payload) {
       state.filteredVectors = payload.vectors
@@ -39,6 +41,9 @@ export default new Vuex.Store({
     removeSearchTag (state, tag) {
       const index = state.searchTags.findIndex(it => it === tag)
       state.searchTags.splice(index, 1)
+    },
+    setLoading (state, activate) {
+      state.loading = activate
     }
   },
   actions: {
@@ -49,9 +54,11 @@ export default new Vuex.Store({
         })
     },
     getVectors ({ commit }) {
+      commit('setLoading', true)
       appService.getVectors()
         .then(vectors => {
           commit('getVectorsSuccess', vectors)
+          commit('setLoading', false)
         })
         .catch(error => console.log(error))
     },

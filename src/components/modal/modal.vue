@@ -121,7 +121,10 @@ export default {
         : this.backgroundHexValue.replace('#', '')
 
       if (this.customizeBulk) {
-        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
+        const tags = this.tags.length
+          ? this.tags.join()
+          : 'all'
+        return `https://cocomaterial.com/api/download/?tags=${tags}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
       } else {
         return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
       }

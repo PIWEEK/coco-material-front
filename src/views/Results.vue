@@ -115,20 +115,30 @@ export default {
   beforeMount () {
     !this.searchTags.length && this.getTags()
   },
+  updated () {
+    if (!this.loading) {
+      console.log('loading stoped')
+    }
+  },
   computed: {
     ...mapGetters({
       filteredVectorsList: 'filteredVectorsList',
       searchTags: 'searchTags',
-      tagsList: 'tagsList'
+      tagsList: 'tagsList',
+      loading: 'loading'
     }),
     downloadAllSvg () {
-      return `https://cocomaterial.com/api/download/?tags=${this.searchTags.join()}&img_format=svg`
+      const tags = this.searchTags.length
+        ? this.searchTags.join()
+        : 'all'
+      return `https://cocomaterial.com/api/download/?tags=${tags}&img_format=svg`
     }
   },
   methods: {
     ...mapActions({
       getTags: 'getTags',
-      getVectorsByTag: 'getVectorByTag'
+      getVectorsByTag: 'getVectorByTag',
+      getVectors: 'getVectors'
     }),
     ...mapMutations({
       clearFilteredVectors: 'clearFilteredVectors',
@@ -167,7 +177,7 @@ export default {
           const element = document.querySelectorAll('#results span')[index + 1]
           element.focus()
           if (index === -1) {
-            setTimeout(function () {
+            setTimeout(() => {
               document.querySelector('#results').scrollTop = 0
             }, 100)
           }
@@ -194,7 +204,7 @@ export default {
       if (this.searchTags.length) {
         this.$store.dispatch('getVectorByTag', this.searchTags)
       } else {
-        this.clearFilteredVectors()
+        this.getVectors()
       }
     },
     downloadSvg (vector) {

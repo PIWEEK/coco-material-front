@@ -166,7 +166,7 @@ export default {
           const element = document.querySelectorAll('#results span')[index + 1]
           element.focus()
           if (index === -1) {
-            setTimeout(function () {
+            setTimeout(() => {
               document.querySelector('#results').scrollTop = 0
             }, 100)
           }
