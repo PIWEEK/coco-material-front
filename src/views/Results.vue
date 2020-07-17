@@ -26,13 +26,18 @@
                 ref="search"
                 v-model="search"
                 type="text"
-                @keyup="autocompleteSearch"/>
+                @keyup="autocompleteSearch"
+                @keydown.down="focusAutocompleteResults(-1, 'down')"/>
             </div>
-            <div ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+            <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
               <span
+                tabindex="1"
                 v-for="(result, index) in autocompleteResults"
                 :key="index"
-                @click="addTag(result.slug)">
+                @click="addTag(result.slug)"
+                @keyup.enter="addTag(result.slug)"
+                @keydown.up="focusAutocompleteResults(index, 'up')"
+                @keydown.down="focusAutocompleteResults(index, 'down')">
                 {{result.slug}}
               </span>
             </div>
@@ -155,6 +160,24 @@ export default {
     },
     autocompleteSearch () {
       this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+    },
+    focusAutocompleteResults (index, key) {
+      if (this.autocompleteResults.length) {
+        if (key === 'down') {
+          const element = document.querySelectorAll('#results span')[index + 1]
+          element.focus()
+          if (index === -1) {
+            setTimeout(function () {
+              document.querySelector('#results').scrollTop = 0
+            }, 100)
+          }
+        } else if (key === 'up' && index === 0) {
+          document.querySelector('#search').focus()
+        } else {
+          const element = document.querySelectorAll('#results span')[index - 1]
+          element.focus()
+        }
+      }
     },
     closeAutocomplete () {
       this.autocompleteResults = []
@@ -289,7 +312,9 @@ export default {
           text-align: left;
           transition: all .3s ease;
 
-          &:hover {
+          &:hover,
+          &:focus {
+            outline: none;
             background-color:$color-turquoise;
             color: $color-white;
             cursor: pointer;
