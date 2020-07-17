@@ -270,8 +270,25 @@ footer {
 }
 
 .preview {
-  svg {
-    width: 200px;
+
+  &.horizontal {
+    svg {
+      width: 200px;
+
+      @media (max-width: 768px) {
+        width: 180px;
+      }
+    }
+  }
+
+  &.vertical {
+    svg {
+      height: 200px;
+
+      @media (max-width: 768px) {
+        height: 160px;
+      }
+    }
   }
 }
 

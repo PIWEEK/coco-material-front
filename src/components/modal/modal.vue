@@ -25,7 +25,7 @@
           <slot name="body">
             <div class="preview-container">
               <span class="preview-title" v-if="customizeBulk">Example illustation for reference</span>
-              <div ref="preview" class="preview" v-html="vector">
+              <div ref="preview" :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`" v-html="vector">
               </div>
             </div>
             <div class="colors">
@@ -79,7 +79,8 @@ export default {
     vectorId: null,
     customizeBulk: null,
     vectors: null,
-    tags: null
+    tags: null,
+    isHorizontal: null
   },
   data () {
     return {
@@ -235,6 +236,8 @@ export default {
     @media (max-width: 768px) {
       margin-right: 0;
       margin-bottom: 30px;
+      height: 207px;
+      width: 326px;
     }
   }
 
@@ -289,6 +292,10 @@ export default {
 
   .download {
     margin-top: 60px;
+
+    @media (max-width: 768px) {
+      margin-top: 40px;
+    }
 
     & .title-container {
       & .title,

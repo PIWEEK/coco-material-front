@@ -3,9 +3,11 @@
     <aside class="tags">
       <p>Popular tags</p>
       <ul class="tags-list">
-        <li>Food</li>
-        <li>Pets</li>
-        <li>Fruits</li>
+        <li><button class="popular-btn" @click="searchVector(['face'])">Face</button></li>
+        <li><button class="popular-btn" @click="searchVector(['transportation'])">Transportation</button></li>
+        <li><button class="popular-btn" @click="searchVector(['social'])">Social</button></li>
+        <li><button class="popular-btn" @click="searchVector(['nature'])">Nature</button></li>
+        <li><button class="popular-btn" @click="searchVector(['food'])">Food</button></li>
       </ul>
     </aside>
     <section class="results-data">
@@ -39,7 +41,7 @@
         <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
 
         <div v-if="filteredVectorsList.length" class="vectors-actions">
-          <button class="btn-color" @click="showModal(filteredVectorsList[0], true)">
+          <button class="btn-color" @click="showModal(filteredVectorsList[0], true, 0)">
             <img alt="Palette icon" src="../assets/palette.svg"/>
             <span>Customize all</span></button>
           <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
@@ -52,14 +54,14 @@
           </div>
           <div class="download-btn">
             <a :href="downloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
-            <button class="btn png" @click="showModal(vector, false)">PNG</button>
+            <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
       </div>
       <div v-else class="no-results">
         <img alt="Coconut illustration" src="../assets/coco.svg" />
         <h3>Sorry, this coconut is empty</h3>
-        <div>
+        <div v-if="searchTags.length">
           <span>We didn't find any result matching "</span>
           <span class="highlight">
             <span v-for="(tag, index) in searchTags" :key="index">
@@ -78,6 +80,7 @@
       :vectors="filteredVectorsList.length"
       :vectorId="selectedVector.id"
       :tags="searchTags"
+      :isHorizontal="isHorizontal"
       @close="closeModal"
     />
   </div>
@@ -100,7 +103,8 @@ export default {
       selectedVector: null,
       svgCode: null,
       autocompleteResults: [],
-      customizeBulk: false
+      customizeBulk: false,
+      isHorizontal: true
     }
   },
   beforeMount () {
@@ -126,11 +130,17 @@ export default {
       updateSearchTags: 'updateSearchTags',
       removeSearchTag: 'removeSearchTag'
     }),
-    showModal (vector, bulk) {
+    showModal (vector, bulk, id) {
       this.selectedVector = vector
+      // get svg code
       var xmlHttp = new XMLHttpRequest()
       xmlHttp.open('GET', vector.url, false)
       xmlHttp.send(null)
+
+      const height = document.getElementById(`${id}`).clientHeight
+      const width = document.getElementById(`${id}`).clientWidth
+
+      this.isHorizontal = height < width
       this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
       this.customizeBulk = bulk
       this.isModalVisible = true
@@ -167,6 +177,9 @@ export default {
     downloadSvg (vector) {
       const id = vector.id
       return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
+    },
+    searchVector (search) {
+      this.$store.dispatch('getVectorByTag', search)
     }
   }
 }
@@ -359,20 +372,28 @@ export default {
         margin: 15px 0;
       }
     }
+
+    & .popular-btn {
+      background: none;
+      border: none;
+      font-weight: 500;
+      font-size: 14px;
+      font-family: 'Red Hat Display';
+    }
   }
 
   .results-list {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    column-gap: 30px;
+    grid-template-columns: repeat(5, 18%);
+    column-gap: 3%;
     row-gap: 50px;
 
     @media (max-width: 1500px) {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 22%);
     }
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 45%);
     }
 
     & .download-btn {
@@ -416,10 +437,18 @@ export default {
 
       &.vertical {
          height: 125px;
+
+        @media (max-width: 1200px) {
+          height: 100px;
+        }
       }
 
       &.horizontal {
         width: 125px;
+
+        @media (max-width: 1200px) {
+          width: 100px;
+        }
       }
     }
   }
