@@ -84,9 +84,9 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Charts</h5>
-          <button @click="searchVector('charts')">View all</button>
+          <button @click="searchVector('chart')">View all</button>
         </div>
-        <img src="../assets/topics/chart.svg" />
+        <img src="../assets/topics/charts.svg" />
       </div>
       <div class="topic">
         <div class="top">
