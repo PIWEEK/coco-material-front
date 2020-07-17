@@ -32,14 +32,18 @@
               <div class="stroke">
                 <label class="title" for="strokeHex"> Color </label>
                 <div class="color-options">
-                  <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <div class="rounds">
+                    <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
+                  </div>
                   <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
                 </div>
               </div>
               <div class="fill">
                 <label class="title" for="fillHex"> Background </label>
                 <div class="color-options">
-                  <span :class="`round ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
+                  <div class="rounds">
+                    <span :class="`round ${color === 'none' ? 'transparent' : ''} ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
+                  </div>
                   <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
                 </div>
               </div>
@@ -84,11 +88,11 @@ export default {
   },
   data () {
     return {
-      fillColor: ['#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
-      strokeColor: ['#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      fillColor: ['none', '#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
+      strokeColor: ['#FFFFFF', '#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF'],
       svgCode: null,
-      strokeHexValue: '#1C2541',
-      backgroundHexValue: '#FFFFFF'
+      strokeHexValue: '#FFFFFF',
+      backgroundHexValue: 'none'
     }
   },
   methods: {
@@ -107,15 +111,21 @@ export default {
       if (color.length === 7) {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = color
         this.backgroundHexValue = color
+      } else if (color === 'none') {
+        this.backgroundHexValue = 'none'
       } else {
         this.$refs.preview.firstElementChild.firstElementChild.style.fill = 'none'
       }
     },
     downloadPng (size) {
+      const bgColor = (this.backgroundHexValue === 'none' || !this.backgroundHexValue)
+        ? 'none'
+        : this.backgroundHexValue
+
       if (this.customizeBulk) {
-        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'none'}&size=${size}`
+        return `https://cocomaterial.com/api/download/?tags=${this.tags.join()}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${bgColor}&size=${size}`
       } else {
-        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${this.backgroundHexValue ? this.backgroundHexValue.replace('#', '') : 'none'}&size=${size}`
+        return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '000000'}&fill=${bgColor}&size=${size}`
       }
     }
   }
@@ -173,6 +183,10 @@ export default {
       height: 26px;
       margin-bottom: 15px;
       text-align: center;
+
+      @media (max-width: 768px) {
+        margin-bottom: 5px;
+      }
     }
 
     & .subtitle {
@@ -259,6 +273,21 @@ export default {
     height: 18px;
     width: 18px;
 
+    &.transparent {
+      position: relative;
+
+      &:before {
+        border: 2px solid #FF0404;
+        border-radius: 2px;
+        content: '';
+        left: -6px;
+        position: absolute;
+        transform: rotate(-45deg);
+        top: 6px;
+        width: 25px;
+      }
+    }
+
     &.selected {
       border: 2px solid #7BDFF2;
     }
@@ -270,6 +299,10 @@ export default {
       font-size: 14px;
       font-weight: 700;
       margin-bottom: 15px;
+
+      @media (max-width: 768px) {
+        margin-bottom: 0;
+      }
     }
 
     & .hex {
@@ -278,23 +311,53 @@ export default {
       margin-left: 15px;
       padding: 5px;
       width: 70px;
+
+      @media (max-width: 768px) {
+        border: 1px solid #1C2541;
+        margin-left: 0;
+        align-self: flex-end;
+      }
     }
 
     & .color-options {
       display: flex;
       align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+    }
+
+    & .rounds {
+      display: flex;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+      }
     }
   }
 
   .stroke {
     margin-bottom: 30px;
+
+    @media (max-width: 768px) {
+      margin-bottom: 20px;
+    }
   }
 
   .download {
     margin-top: 60px;
 
     @media (max-width: 768px) {
-      margin-top: 40px;
+      margin-top: 20px;
+
+      & .title {
+        margin-bottom: 15px;
+      }
     }
 
     & .title-container {
@@ -314,12 +377,20 @@ export default {
 
     & .buttons {
       display: flex;
+
+      @media (max-width: 768px) {
+        justify-content: space-between;
+      }
     }
 
     & .btn-container {
       display: flex;
       flex-direction: column;
       margin-right: 20px;
+
+      @media (max-width: 768px) {
+        margin-right: 0;
+      }
     }
 
     & .btn-download {
@@ -337,6 +408,10 @@ export default {
         background-color: #3CD7C9;
         color:#ffffff;
         transition: all ease .3s;
+      }
+
+      @media (max-width: 768px) {
+        padding: 5px 40px;
       }
     }
 
