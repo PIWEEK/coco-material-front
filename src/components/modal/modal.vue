@@ -54,15 +54,15 @@
                 </div>
                 <div class="buttons">
                   <div class="btn-container">
-                    <a class="btn-download" :href="downloadPng('128')">S</a>
+                    <a class="btn-download" :href="downloadPng('128')" @click="handleDownloadPng('128')">S</a>
                     <span class="size">128px</span>
                   </div>
                   <div class="btn-container">
-                    <a class="btn-download" :href="downloadPng('256')">M</a>
+                    <a class="btn-download" :href="downloadPng('256')" @click="handleDownloadPng('256')">M</a>
                     <span class="size">256px</span>
                   </div>
                   <div class="btn-container">
-                    <a class="btn-download" :href="downloadPng('512')">L</a>
+                    <a class="btn-download" :href="downloadPng('512')" @click="handleDownloadPng('512')">L</a>
                     <span class="size">512px</span>
                   </div>
                 </div>
@@ -128,6 +128,9 @@ export default {
       } else {
         return `https://cocomaterial.com/api/download/?id=${this.vectorId}&img_format=png&stroke=${this.strokeHexValue ? this.strokeHexValue.replace('#', '') : '1C2541'}&fill=${bgColor}&size=${size}`
       }
+    },
+    handleDownloadPng (size) {
+      this.$matomo.trackEvent('downloads', `png-${size}`, this.vector.name)
     }
   }
 }

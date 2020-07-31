@@ -58,7 +58,7 @@
             <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
           </div>
           <div class="download-btn">
-            <a :href="downloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
+            <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
             <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
@@ -205,6 +205,9 @@ export default {
     downloadSvg (vector) {
       const id = vector.id
       return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
+    },
+    handleDownloadSvg (vector) {
+      this.$matomo.trackEvent('downloads', 'svg', vector.name)
     },
     searchVector (search) {
       this.$store.dispatch('getVectorByTag', search.toLocaleLowerCase())
