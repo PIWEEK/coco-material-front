@@ -53,63 +53,63 @@
       <div class="topic">
         <div class="top">
           <h5 class="title">Technology</h5>
-          <button @click="searchVector('technology')">View all</button>
+          <button @click="searchVectorByTopic('technology')">View all</button>
         </div>
         <img src="../assets/topics/tech.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Science</h5>
-          <button @click="searchVector('science')">View all</button>
+          <button @click="searchVectorByTopic('science')">View all</button>
         </div>
         <img src="../assets/topics/science.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Objects</h5>
-          <button @click="searchVector('object')">View all</button>
+          <button @click="searchVectorByTopic('object')">View all</button>
         </div>
         <img src="../assets/topics/objects.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Food</h5>
-          <button @click="searchVector('food')">View all</button>
+          <button @click="searchVectorByTopic('food')">View all</button>
         </div>
         <img src="../assets/topics/food.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">People</h5>
-          <button @click="searchVector('people')">View all</button>
+          <button @click="searchVectorByTopic('people')">View all</button>
         </div>
         <img src="../assets/topics/people.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Charts</h5>
-          <button @click="searchVector('chart')">View all</button>
+          <button @click="searchVectorByTopic('chart')">View all</button>
         </div>
         <img src="../assets/topics/charts.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Emojis</h5>
-          <button @click="searchVector('emojis')">View all</button>
+          <button @click="searchVectorByTopic('emojis')">View all</button>
         </div>
         <img src="../assets/topics/emojis.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Office</h5>
-          <button @click="searchVector('office')">View all</button>
+          <button @click="searchVectorByTopic('office')">View all</button>
         </div>
         <img src="../assets/topics/office.svg" />
       </div>
       <div class="topic">
         <div class="top">
           <h5 class="title">Social</h5>
-          <button @click="searchVector('social')">View all</button>
+          <button @click="searchVectorByTopic('social')">View all</button>
         </div>
         <img src="../assets/topics/rrss.svg" />
       </div>
@@ -182,7 +182,7 @@ export default {
       this.autocompleteResults = []
     },
     addTag (tag) {
-      this.tagsToSearch.push(tag)
+      this.tagsToSearch.push(tag.toLocaleLowerCase())
       this.search = ''
       this.$refs.search.focus()
       this.autocompleteResults = []
@@ -191,15 +191,14 @@ export default {
       const index = this.tagsToSearch.findIndex(it => it === tag)
       this.tagsToSearch.splice(index, 1)
     },
-    searchVector (search) {
-      if (this.tagsToSearch.length) {
-        this.$store.dispatch('getVectorByTag', this.tagsToSearch)
-      } else if (typeof search === 'string') {
-        this.$store.dispatch('getVectorByTag', [search.toLocaleLowerCase()])
-      } else {
-        this.$store.dispatch('getVectorByTag', [this.search.toLocaleLowerCase()])
+    searchVector () {
+      if (this.search !== '') {
+        this.addTag(this.search)
       }
-      this.$router.push('results')
+      this.$router.push({ path: '/results', query: { q: this.tagsToSearch.join(',') } })
+    },
+    searchVectorByTopic (search) {
+      this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
     }
   }
 }
