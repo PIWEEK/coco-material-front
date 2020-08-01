@@ -4,7 +4,7 @@
       <div class="container container-cta">
         <div class="section-text">
           <h1 class="title">Looking for the perfect illustration?</h1>
-          <h2 class="subtitle">Discover the CocoMaterial, the Open Source hand-draw illustration library</h2>
+          <h2 class="subtitle">Discover the CocoMaterial, the Open Source hand-drawn illustration library</h2>
           <a class="btn" href="#start">Start now</a>
         </div>
         <div class="section-img">
