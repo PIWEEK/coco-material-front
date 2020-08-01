@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <p class="contact">Feel free to <a class="highlight" href="mailto:esther.moreno@kaleidos.net">contact us</a></p>
+    <p class="contact">Feel free to <a class="highlight" href="mailto:soyesthermoreno@gmail.com">contact us</a></p>
   </div>
 </template>
 
