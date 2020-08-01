@@ -30,7 +30,7 @@
             </div>
             <div class="colors">
               <div class="stroke">
-                <label class="title" for="strokeHex"> Color </label>
+                <label class="title" for="strokeHex"> Stroke </label>
                 <div class="color-options">
                   <div class="rounds">
                     <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
