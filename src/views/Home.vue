@@ -379,6 +379,7 @@ export default {
          font-size: 14px;
          margin-right: 5px;
          padding: 5px 10px;
+         white-space: nowrap;
 
          &:hover {
            cursor: pointer;
