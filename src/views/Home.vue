@@ -195,9 +195,11 @@ export default {
       if (this.tagsToSearch.length) {
         this.$store.dispatch('getVectorByTag', this.tagsToSearch)
       } else if (typeof search === 'string') {
-        this.$store.dispatch('getVectorByTag', [search])
+        this.$store.dispatch('getVectorByTag', [search.toLocaleLowerCase()
+])
       } else {
-        this.$store.dispatch('getVectorByTag', [this.search])
+        this.$store.dispatch('getVectorByTag', [this.search.toLocaleLowerCase()
+])
       }
       this.$router.push('results')
     }

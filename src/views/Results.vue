@@ -207,7 +207,8 @@ export default {
       return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
     },
     searchVector (search) {
-      this.$store.dispatch('getVectorByTag', search)
+      this.$store.dispatch('getVectorByTag', search.toLocaleLowerCase()
+)
     }
   }
 }
