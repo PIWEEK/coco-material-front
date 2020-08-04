@@ -3,11 +3,11 @@
     <aside class="tags" @click="closeAutocomplete">
       <p>Popular tags</p>
       <ul class="tags-list">
-        <li><button class="popular-btn" @click="searchVector(['face'])">Face</button></li>
-        <li><button class="popular-btn" @click="searchVector(['transportation'])">Transportation</button></li>
-        <li><button class="popular-btn" @click="searchVector(['social'])">Social</button></li>
-        <li><button class="popular-btn" @click="searchVector(['nature'])">Nature</button></li>
-        <li><button class="popular-btn" @click="searchVector(['food'])">Food</button></li>
+        <li><button class="popular-btn" @click="searchVector('face')">Face</button></li>
+        <li><button class="popular-btn" @click="searchVector('transportation')">Transportation</button></li>
+        <li><button class="popular-btn" @click="searchVector('social')">Social</button></li>
+        <li><button class="popular-btn" @click="searchVector('nature')">Nature</button></li>
+        <li><button class="popular-btn" @click="searchVector('food')">Food</button></li>
       </ul>
     </aside>
     <section class="results-data"  @click="closeAutocomplete">
@@ -58,7 +58,7 @@
             <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
           </div>
           <div class="download-btn">
-            <a :href="downloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
+            <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
             <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
@@ -114,6 +114,12 @@ export default {
   },
   beforeMount () {
     !this.searchTags.length && this.getTags()
+
+    if (this.$route.query.q) {
+      this.getVectorsByTag(this.$route.query.q.split(','))
+    } else {
+      this.getVectors()
+    }
   },
   computed: {
     ...mapGetters({
@@ -191,23 +197,31 @@ export default {
       this.search = ''
       this.$refs.search.focus()
       this.autocompleteResults = []
-      this.updateSearchTags(tag)
-      this.$store.dispatch('getVectorByTag', this.searchTags)
+      this.updateSearchTags(tag.toLocaleLowerCase())
+
+      this.getVectorsByTag(this.searchTags)
+      this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
     },
     removeTag (tag) {
       this.removeSearchTag(tag)
       if (this.searchTags.length) {
-        this.$store.dispatch('getVectorByTag', this.searchTags)
+        this.getVectorsByTag(this.searchTags)
+        this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
       } else {
         this.getVectors()
+        this.$router.push({ path: '/results' })
       }
     },
     downloadSvg (vector) {
       const id = vector.id
       return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
     },
+    handleDownloadSvg (vector) {
+      this.$matomo.trackEvent('downloads', 'svg', vector.name)
+    },
     searchVector (search) {
-      this.$store.dispatch('getVectorByTag', search.toLocaleLowerCase())
+      this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
+      this.getVectorsByTag([search.toLocaleLowerCase()])
     }
   }
 }
