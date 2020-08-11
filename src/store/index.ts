@@ -60,7 +60,6 @@ export default new Vuex.Store({
           commit('getVectorsSuccess', vectors)
           commit('setLoading', false)
         })
-        .catch(error => console.log(error))
     },
     getVectorByTag ({ commit }, tags) {
       appService.getVectorByTag(tags)
