@@ -64,7 +64,6 @@
             <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
-          <button @click="limitNumber += 60">Show more</button>
       </div>
       <div v-else class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../assets/coco.svg" />
@@ -80,6 +79,11 @@
         </div>
         <p>Please try a different search term or look within our <strong>popular tags</strong></p>
       </div>
+
+      <transition name="fade" mode="out-in">
+        <button v-if="showScrollToTop" class="scroll-to-top" @click="scrollToTop()">Scroll to top</button>
+      </transition>
+
     </section>
     <modal
       v-if="isModalVisible && filteredVectorsList.length"
@@ -113,7 +117,8 @@ export default {
       autocompleteResults: [],
       customizeBulk: false,
       isHorizontal: true,
-      limitNumber: 60
+      limitNumber: 60,
+      showScrollToTop: false
     }
   },
   beforeMount () {
@@ -141,6 +146,12 @@ export default {
   },
   mounted: function () {
     window.addEventListener('scroll', () => {
+      if ((window.innerHeight + window.scrollY) >= window.innerHeight * 1.5) {
+        this.showScrollToTop = true
+      } else {
+        this.showScrollToTop = false
+      }
+
       if ((window.innerHeight + window.scrollY) >= document.getElementById('coco-container').offsetHeight) {
         if (this.limitNumber <= this.filteredVectorsList.length) {
           this.limitNumber += 60
@@ -245,6 +256,11 @@ export default {
       if (this.search === '') {
         this.removeTag(this.searchTags.slice(-1).pop())
       }
+    },
+    scrollToTop () {
+      window.scrollTo(
+        { top: 0, behavior: 'smooth' }
+      )
     }
   }
 }
@@ -252,6 +268,22 @@ export default {
 
 <style lang="scss" scoped>
   @import '@/variables';
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity .5s
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0
+  }
+
+  .scroll-to-top {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+  }
 
   .results {
     display: grid;
