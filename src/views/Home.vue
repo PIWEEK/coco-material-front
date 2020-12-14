@@ -193,7 +193,7 @@ export default {
     },
     searchVector () {
       if (this.search !== '') {
-        this.addTag(this.search.toLowerCase())
+        this.addTag(this.search.toLocaleLowerCase())
       }
       this.$router.push({ path: '/results', query: { q: this.tagsToSearch.join(',') } })
     },

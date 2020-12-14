@@ -26,6 +26,7 @@
                 ref="search"
                 v-model="search"
                 type="text"
+                @keyup.enter="searchVector"
                 @keyup="autocompleteSearch"
                 @keydown.down="focusAutocompleteResults(-1, 'down')"/>
             </div>
@@ -153,8 +154,8 @@ export default {
       xmlHttp.open('GET', vector.url, false)
       xmlHttp.send(null)
 
-      const height = document.getElementById(`${id}`).clientHeight
-      const width = document.getElementById(`${id}`).clientWidth
+      const height = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientHeight
+      const width = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientWidth
 
       this.isHorizontal = height < width
       this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
@@ -220,6 +221,9 @@ export default {
       this.$matomo.trackEvent('downloads', 'svg', vector.name)
     },
     searchVector (search) {
+      if (this.search !== '') {
+        this.addTag(this.search.toLocaleLowerCase())
+      }
       this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
       this.getVectorsByTag([search.toLocaleLowerCase()])
     }
