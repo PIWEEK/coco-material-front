@@ -14,6 +14,7 @@ export default new Vuex.Store({
   },
   getters: {
     tagsList: state => state.tags,
+    vectors: state => state.vectors,
     filteredVectorsList: state => state.filteredVectors,
     searchTags: state => state.searchTags,
     loading: state => state.loading
@@ -23,11 +24,14 @@ export default new Vuex.Store({
       state.tags = tags
     },
     getVectorsSuccess (state, vectors) {
-      state.filteredVectors = vectors
+      state.vectors = vectors
     },
     getVectorsByTagSuccess (state, payload) {
       state.filteredVectors = payload.vectors
       state.searchTags = payload.tags
+    },
+    updateVectors (state) {
+      state.filteredVectors = state.vectors
     },
     clearSearchTags (state) {
       state.searchTags = []
@@ -54,12 +58,17 @@ export default new Vuex.Store({
         })
     },
     getVectors ({ commit }) {
-      commit('setLoading', true)
-      appService.getVectors()
-        .then(vectors => {
-          commit('getVectorsSuccess', vectors)
-          commit('setLoading', false)
-        })
+      if (this.state.vectors.length) {
+        commit('updateVectors')
+      } else {
+        commit('setLoading', true)
+        appService.getVectors()
+          .then(vectors => {
+            commit('getVectorsSuccess', vectors)
+            commit('updateVectors')
+            commit('setLoading', false)
+          })
+      }
     },
     getVectorByTag ({ commit }, tags) {
       appService.getVectorByTag(tags)
