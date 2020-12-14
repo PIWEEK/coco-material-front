@@ -31,6 +31,7 @@
               type="text"
               :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
               @keyup.enter="searchVector"
+              @keyup.delete="handleDelete"
               @keyup="autocompleteSearch"
               @keydown.down="focusAutocompleteResults(-1, 'down')"/>
           </div>
@@ -199,6 +200,11 @@ export default {
     },
     searchVectorByTopic (search) {
       this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
+    },
+    handleDelete () {
+      if (this.search === '') {
+        this.removeTag(this.tagsToSearch.slice(-1).pop())
+      }
     }
   }
 }
@@ -390,6 +396,7 @@ export default {
         border: none;
         height: 46px;
         font-size: 16px;
+        width: 100%;
 
         &:focus {
           outline: none;

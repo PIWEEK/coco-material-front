@@ -26,6 +26,7 @@
                 ref="search"
                 v-model="search"
                 type="text"
+                @keyup.delete="handleDelete"
                 @keyup.enter="searchVector"
                 @keyup="autocompleteSearch"
                 @keydown.down="focusAutocompleteResults(-1, 'down')"/>
@@ -166,9 +167,11 @@ export default {
       this.isModalVisible = false
     },
     loaded (id) {
-      const height = document.getElementById(`${id}`).clientHeight
-      const width = document.getElementById(`${id}`).clientWidth
-      document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
+      const height = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientHeight
+      const width = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientWidth
+      if (document.getElementById(id)) {
+        document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
+      }
     },
     autocompleteSearch () {
       this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
@@ -226,6 +229,11 @@ export default {
       }
       this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
       this.getVectorsByTag([search.toLocaleLowerCase()])
+    },
+    handleDelete () {
+      if (this.search === '') {
+        this.removeTag(this.searchTags.slice(-1).pop())
+      }
     }
   }
 }
@@ -300,6 +308,7 @@ export default {
          font-size: 14px;
          margin-right: 5px;
          padding: 2px 10px;
+         white-space: nowrap;
 
          &:hover {
            cursor: pointer;
@@ -311,6 +320,7 @@ export default {
         border: none;
         height: 30px;
         font-size: 16px;
+        width: 100%;
 
         &:focus {
           outline: none;
