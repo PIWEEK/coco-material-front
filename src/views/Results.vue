@@ -57,13 +57,14 @@
       <div v-if="filteredVectorsList.length" class="results-list"  @click="closeAutocomplete">
         <div class="vector-container" v-for="(vector, index) in filteredVectorsList" :key="index">
           <div class="img-container">
-            <img :id="index" :alt="vector.name" :src="vector.svg" @load="loaded(index)"/>
+            <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
           </div>
           <div class="download-btn">
             <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
             <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
+          <!-- <button @click="limitNumber += 60">Show more</button> -->
       </div>
       <div v-else class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../assets/coco.svg" />
@@ -111,7 +112,8 @@ export default {
       svgCode: null,
       autocompleteResults: [],
       customizeBulk: false,
-      isHorizontal: true
+      isHorizontal: true,
+      limitNumber: 60
     }
   },
   beforeMount () {
@@ -488,10 +490,18 @@ export default {
       display: flex;
       height: 150px;
       margin-bottom: 10px;
-      padding: 8%;
+      padding: 8% 16%;
     }
 
-    & img {
+    & .svg-container {
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+    }
+
+    & img, .svg-container {
       margin: auto;
 
       &.vertical {
