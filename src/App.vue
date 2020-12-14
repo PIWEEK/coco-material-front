@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div id="coco-container">
       <div class="nav">
         <router-link to="/">
           <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">

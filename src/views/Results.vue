@@ -55,7 +55,7 @@
         </div>
       </div>
       <div v-if="filteredVectorsList.length" class="results-list"  @click="closeAutocomplete">
-        <div class="vector-container" v-for="(vector, index) in filteredVectorsList" :key="index">
+        <div class="vector-container" v-for="(vector, index) in filteredVectorsList.slice(0, limitNumber)" :key="index">
           <div class="img-container">
             <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
           </div>
@@ -64,7 +64,7 @@
             <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
           </div>
         </div>
-          <!-- <button @click="limitNumber += 60">Show more</button> -->
+          <button @click="limitNumber += 60">Show more</button>
       </div>
       <div v-else class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../assets/coco.svg" />
@@ -138,6 +138,15 @@ export default {
         : 'all'
       return `https://cocomaterial.com/api/download/?tags=${tags}&img_format=svg`
     }
+  },
+  mounted: function () {
+    window.addEventListener('scroll', () => {
+      if ((window.innerHeight + window.scrollY) >= document.getElementById('coco-container').offsetHeight) {
+        if (this.limitNumber <= this.filteredVectorsList.length) {
+          this.limitNumber += 60
+        }
+      }
+    })
   },
   methods: {
     ...mapActions({
@@ -505,7 +514,7 @@ export default {
       margin: auto;
 
       &.vertical {
-         height: 125px;
+        height: 125px;
 
         @media (max-width: 1200px) {
           height: 100px;
