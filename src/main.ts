@@ -4,9 +4,6 @@ import VueMatomo from 'vue-matomo'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import InfiniteLoading from 'vue-infinite-loading'
-
-Vue.use(InfiniteLoading, { /* options */ })
 
 Vue.config.productionTip = false
 
