@@ -81,7 +81,9 @@
       </div>
 
       <transition name="fade" mode="out-in">
-        <button v-if="showScrollToTop" class="scroll-to-top" @click="scrollToTop()">Scroll to top</button>
+        <button v-if="showScrollToTop" class="scroll-to-top" @click="scrollToTop()">
+          <img src="../assets/arrow-top.svg" alt="Scroll to top" />
+        </button>
       </transition>
 
     </section>
@@ -117,7 +119,7 @@ export default {
       autocompleteResults: [],
       customizeBulk: false,
       isHorizontal: true,
-      limitNumber: 60,
+      limitNumber: 30,
       showScrollToTop: false
     }
   },
@@ -152,9 +154,9 @@ export default {
         this.showScrollToTop = false
       }
 
-      if ((window.innerHeight + window.scrollY) >= document.getElementById('coco-container').offsetHeight) {
+      if (((window.innerHeight + window.scrollY) + (window.innerHeight / 3)) >= document.getElementById('coco-container').offsetHeight) {
         if (this.limitNumber <= this.filteredVectorsList.length) {
-          this.limitNumber += 60
+          this.limitNumber += 30
         }
       }
     })
@@ -280,9 +282,22 @@ export default {
   }
 
   .scroll-to-top {
-    bottom: 0;
-    left: 0;
+    align-items: center;
+    background: #7BDFF2;
+    border: 0;
+    border-radius: 100%;
+    bottom: 1.5rem;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    right: 1.5rem;
     position: fixed;
+    width: 50px;
+
+    & img {
+      height: 1rem;
+      width: 1rem;
+    }
   }
 
   .results {
