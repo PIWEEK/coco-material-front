@@ -1,0 +1,100 @@
+<div class="results">
+  <aside class="tags" @click="closeAutocomplete">
+    <p>Popular tags</p>
+    <ul class="tags-list">
+      <li><button class="popular-btn" @click="searchVector('face')">Face</button></li>
+      <li><button class="popular-btn" @click="searchVector('transportation')">Transportation</button></li>
+      <li><button class="popular-btn" @click="searchVector('social')">Social</button></li>
+      <li><button class="popular-btn" @click="searchVector('nature')">Nature</button></li>
+      <li><button class="popular-btn" @click="searchVector('food')">Food</button></li>
+    </ul>
+  </aside>
+  <section class="results-data"  @click="closeAutocomplete">
+    <div class="menu">
+      <form autocomplete="off" class="search" onsubmit="return false;">
+        <label for="search">Search results for: </label>
+        <div class="relative">
+          <div class="search-input-wrapper">
+            <span
+              class="tag"
+              v-for="(tag, index) in searchTags"
+              :key="index"
+              @click="removeTag(tag)">x {{tag}}</span>
+            <input
+              id="search"
+              ref="search"
+              v-model="search"
+              type="text"
+              @keyup.delete="handleDelete"
+              @keyup.enter="searchVector"
+              @keyup="autocompleteSearch"
+              @keydown.down="focusAutocompleteResults(-1, 'down')"/>
+          </div>
+          <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+            <span
+              tabindex="1"
+              v-for="(result, index) in autocompleteResults"
+              :key="index"
+              @click="addTag(result.slug)"
+              @keyup.enter="addTag(result.slug)"
+              @keydown.up="focusAutocompleteResults(index, 'up')"
+              @keydown.down="focusAutocompleteResults(index, 'down')">
+              {{result.slug}}
+            </span>
+          </div>
+        </div>
+      </form>
+      <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
+
+      <div v-if="filteredVectorsList.length" class="vectors-actions" @click="closeAutocomplete">
+        <button class="btn-color" @click="showModal(filteredVectorsList[0], true, 0)">
+          <img alt="Palette icon" src="../../assets/palette.svg"/>
+          <span>Customize all</span></button>
+        <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
+      </div>
+    </div>
+    <div v-if="filteredVectorsList.length" class="results-list"  @click="closeAutocomplete">
+      <div class="vector-container" v-for="(vector, index) in filteredVectorsList.slice(0, limitNumber)" :key="index">
+        <div class="img-container">
+          <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
+        </div>
+        <div class="download-btn">
+          <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
+          <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
+        </div>
+      </div>
+    </div>
+    <div v-else class="no-results"  @click="closeAutocomplete">
+      <img alt="Coconut illustration" src="../../assets/coco.svg" />
+      <h3>Sorry, this coconut is empty</h3>
+      <div v-if="searchTags.length">
+        <span>We didn't find any result matching "</span>
+        <span class="highlight">
+          <span v-for="(tag, index) in searchTags" :key="index">
+            {{tag}}
+          </span>
+        </span>
+        <span>".</span>
+      </div>
+      <p>Please try a different search term or look within our <strong>popular tags</strong></p>
+    </div>
+
+    <transition name="fade" mode="out-in">
+      <button v-if="showScrollToTop" class="scroll-to-top" @click="scrollToTop()">
+        <img src="../../assets/arrow-top.svg" alt="Scroll to top" />
+      </button>
+    </transition>
+
+  </section>
+  <modal
+    v-if="isModalVisible && filteredVectorsList.length"
+    :vector="svgCode"
+    :customizeBulk="customizeBulk"
+    :vectors="filteredVectorsList.length"
+    :vectorId="selectedVector.id"
+    :tags="searchTags"
+    :isHorizontal="isHorizontal"
+    :svgOriginalWidth="svgOriginalWidth"
+    @close="closeModal"
+  />
+</div>

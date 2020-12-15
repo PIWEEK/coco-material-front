@@ -1,0 +1,76 @@
+<div id="app">
+  <div id="coco-container">
+    <div class="nav">
+      <router-link to="/">
+        <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
+      </router-link>
+      <div class="nav-links">
+        <span class="link">
+          <router-link to="/">Home</router-link>
+        </span>
+        <span class="separator">
+          <img alt="Menu separator" src="./assets/dot.png">
+        </span>
+        <span class="link">
+          <router-link to="/team">The team</router-link>
+        </span>
+        <span class="separator">
+          <img alt="Menu separator" src="./assets/dot.png">
+        </span>
+        <span class="link">
+          <router-link to="/license">License</router-link>
+        </span>
+      </div>
+      <button @click="openNav" :class="`menu-btn ${navOpen ? 'open' : ''}`">
+        <img src="./assets/menu.svg" alt="Menu mobile" />
+      </button>
+    </div>
+    <router-view/>
+  </div>
+  <div :class="`side-nav ${navOpen ? 'open' : ''}`">
+    <div class="header">
+      <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
+      <button @click="openNav" :class="`menu-btn ${navOpen ? 'open' : ''}`">
+        <img src="./assets/close2.svg" alt="Close" />
+      </button>
+    </div>
+    <div class="nav-links">
+      <span class="link" @click="openNav">
+        <router-link to="/">Home</router-link>
+      </span>
+      <span class="separator">
+        <img alt="Menu separator" src="./assets/dot.png">
+      </span>
+      <span class="link" @click="openNav">
+        <router-link to="/team">The team</router-link>
+      </span>
+      <span class="separator">
+        <img alt="Menu separator" src="./assets/dot.png">
+      </span>
+      <span class="link" @click="openNav">
+        <router-link to="/license">License</router-link>
+      </span>
+    </div>
+  </div>
+  <footer :style="{ backgroundImage: 'url(' + require('@/assets/waves.svg') + ')' }">
+    <div class="inner-footer">
+      <div class="left-side">
+        <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
+        <ul class="menu-list">
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/team">The team</router-link></li>
+          <li><router-link to="/license">License</router-link></li>
+        </ul>
+      </div>
+      <div class="right-side">
+        <ul class="social">
+          <li><a href="https://tree.taiga.io/project/esthermoreno-cocomaterial/kanban" target="blank"><img src="./assets/taiga.svg" alt="Taiga" /></a></li>
+          <li><a href="https://github.com/PIWEEK/coco-material-front" target="blank"><img src="./assets/github.svg" alt="Github" /></a></li>
+          <li><a href="https://twitter.com/cocomaterial" target="blank"><img src="./assets/twitter.svg" alt="Twitter" /></a></li>
+          <li><a href="https://www.instagram.com/cocomaterial/" target="blank"><img src="./assets/instagram.svg" alt="Instagram" /></a></li>
+        </ul>
+        <span class="text">Cocomaterial © 2020 | Made with &lt;3 and open source</span>
+      </div>
+    </div>
+  </footer>
+</div>
