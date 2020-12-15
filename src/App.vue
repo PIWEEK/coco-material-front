@@ -63,7 +63,15 @@
             <li><router-link to="/license">License</router-link></li>
           </ul>
         </div>
-        <span class="text">Cocomaterial © 2020 | Made with &lt;3 and open source</span>
+        <div class="right-side">
+          <ul class="social">
+            <li><a href="https://tree.taiga.io/project/esthermoreno-cocomaterial/kanban" target="blank"><img src="./assets/taiga.svg" alt="Taiga" /></a></li>
+            <li><a href="https://github.com/PIWEEK/coco-material-front" target="blank"><img src="./assets/github.svg" alt="Github" /></a></li>
+            <li><a href="https://twitter.com/cocomaterial" target="blank"><img src="./assets/twitter.svg" alt="Twitter" /></a></li>
+            <li><a href="https://www.instagram.com/cocomaterial/" target="blank"><img src="./assets/instagram.svg" alt="Instagram" /></a></li>
+          </ul>
+          <span class="text">Cocomaterial © 2020 | Made with &lt;3 and open source</span>
+        </div>
       </div>
     </footer>
   </div>
@@ -244,21 +252,48 @@ footer {
       }
     }
 
+    & .right-side {
+      display: flex;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        display: block;
+        margin-bottom: 50px;
+        padding: 0 30px;
+        text-align: center;
+      }
+    }
+
     & .menu-list {
       list-style-type: none;
-      margin: 0;
+      margin: 0 0 0 30px;
 
       & li {
         margin-top: 15px;
       }
+
+      & a {
+        color: $color-black;
+        font-size: 14px;
+        font-weight: 700;
+        margin-top: 15px;
+        text-decoration: none;
+      }
     }
 
-    & a{
-      color: $color-black;
-      font-size: 14px;
-      font-weight: 700;
-      margin-top: 15px;
-      text-decoration: none;
+    & .social {
+      display: flex;
+      margin-right: 25px;
+
+      @media (max-width: 768px) {
+        justify-content: center;
+        margin-bottom: 50px;
+        margin-right: 0;
+      }
+
+      & a {
+        margin: 0 15px;
+      }
     }
 
     & .text {
