@@ -1,5 +1,5 @@
 <template src="./App.html" lang="html"></template>
-<style src="./App.scss"  lang="scss" scoped></style>
+<style src="./App.scss"  lang="scss"></style>
 
 <script>
 export default {
