@@ -66,6 +66,12 @@
                     <span class="size">512px</span>
                   </div>
                 </div>
+                <div class="buttons">
+                  <div class="btn-container original">
+                    <a class="btn-download" :href="downloadPng(`${svgOriginalWidth}`)" @click="handleDownloadPng('original')">Original size</a>
+                    <div class="size">Use this if you want to combine it with similar images</div>
+                  </div>
+                </div>
               </div>
             </div>
           </slot>
@@ -84,7 +90,8 @@ export default {
     customizeBulk: null,
     vectors: null,
     tags: null,
-    isHorizontal: null
+    isHorizontal: null,
+    svgOriginalWidth: null
   },
   data () {
     return {
@@ -394,6 +401,15 @@ export default {
 
       @media (max-width: 768px) {
         margin-right: 0;
+      }
+
+      &.original {
+        display: block;
+        margin-top: 20px;
+
+        & .size {
+          margin-top: 15px;
+        }
       }
     }
 

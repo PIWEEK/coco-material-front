@@ -95,6 +95,7 @@
       :vectorId="selectedVector.id"
       :tags="searchTags"
       :isHorizontal="isHorizontal"
+      :svgOriginalWidth="svgOriginalWidth"
       @close="closeModal"
     />
   </div>
@@ -120,7 +121,8 @@ export default {
       customizeBulk: false,
       isHorizontal: true,
       limitNumber: 30,
-      showScrollToTop: false
+      showScrollToTop: false,
+      svgOriginalWidth: null
     }
   },
   beforeMount () {
@@ -179,10 +181,12 @@ export default {
       xmlHttp.open('GET', vector.url, false)
       xmlHttp.send(null)
 
-      const height = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientHeight
-      const width = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientWidth
-
+      const image = new Image()
+      image.src = window.getComputedStyle(document.getElementById(`${id}`), false).backgroundImage.slice(4, -1).replace(/"/g, '')
+      const height = image.height
+      const width = image.width
       this.isHorizontal = height < width
+      this.svgOriginalWidth = width
       this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
       this.customizeBulk = bulk
       this.isModalVisible = true
@@ -191,11 +195,11 @@ export default {
       this.isModalVisible = false
     },
     loaded (id) {
-      const height = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientHeight
-      const width = document.getElementById(`${id}`) && document.getElementById(`${id}`).clientWidth
-      if (document.getElementById(id)) {
-        document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
-      }
+      const image = new Image()
+      image.src = window.getComputedStyle(document.getElementById(`${id}`), false).backgroundImage.slice(4, -1).replace(/"/g, '')
+      const height = image.height
+      const width = image.width
+      document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     },
     autocompleteSearch () {
       this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
