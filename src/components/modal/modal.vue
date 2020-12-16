@@ -19,7 +19,14 @@ export default {
       strokeColor: ['#1C2541', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF', '#FFFFFF'],
       svgCode: null,
       strokeHexValue: '#1C2541',
-      backgroundHexValue: '#FFFFFF'
+      backgroundHexValue: '#FFFFFF',
+      hasJustStroke: false
+    }
+  },
+  mounted () {
+    const paths = document.querySelectorAll('#preview path')
+    if (paths.length === 1) {
+      this.hasJustStroke = true
     }
   },
   methods: {
@@ -37,7 +44,13 @@ export default {
     selectFill (color) {
       if (color.length === 7 || color === 'none') {
         document.querySelectorAll('#preview path')[0].style.fill = color
-        this.backgroundHexValue = color
+        if (this.hasJustStroke && color !== 'none') {
+          this.strokeHexValue = color
+        } else if (this.hasJustStroke && color === 'none') {
+          document.querySelectorAll('#preview path')[0].style.fill = '#1C2541'
+        } else {
+          this.backgroundHexValue = color
+        }
       } else {
         document.querySelectorAll('#preview path')[0].style.fill = 'none'
       }
@@ -46,7 +59,6 @@ export default {
       const bgColor = (this.backgroundHexValue === 'none' || !this.backgroundHexValue)
         ? 'none'
         : this.backgroundHexValue.replace('#', '')
-
       if (this.customizeBulk) {
         const tags = this.tags.length
           ? this.tags.join()

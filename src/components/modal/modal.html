@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="colors">
-            <div class="stroke">
+            <div v-if="!hasJustStroke" class="stroke">
               <label class="title" for="strokeHex"> Stroke </label>
               <div class="color-options">
                 <div class="rounds">
@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="fill">
-              <label class="title" for="fillHex"> Background </label>
+              <label class="title" for="fillHex"> {{hasJustStroke ? 'Stroke' : 'Background'}} </label>
               <div class="color-options">
                 <div class="rounds">
                   <span :class="`round ${color === 'none' ? 'transparent' : ''} ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
