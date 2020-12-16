@@ -53,21 +53,21 @@
               </div>
               <div class="buttons">
                 <div class="btn-container">
-                  <a class="btn-download" :href="downloadPng('128')" @click="handleDownloadPng('128')">S</a>
+                  <a class="btn-primary btn-download" :href="downloadPng('128')" @click="handleDownloadPng('128')">S</a>
                   <span class="size">128px</span>
                 </div>
                 <div class="btn-container">
-                  <a class="btn-download" :href="downloadPng('256')" @click="handleDownloadPng('256')">M</a>
+                  <a class="btn-primary btn-download" :href="downloadPng('256')" @click="handleDownloadPng('256')">M</a>
                   <span class="size">256px</span>
                 </div>
                 <div class="btn-container">
-                  <a class="btn-download" :href="downloadPng('512')" @click="handleDownloadPng('512')">L</a>
+                  <a class="btn-primary btn-download" :href="downloadPng('512')" @click="handleDownloadPng('512')">L</a>
                   <span class="size">512px</span>
                 </div>
               </div>
               <div class="buttons">
                 <div class="btn-container original">
-                  <a class="btn-download" :href="downloadPng(`${svgOriginalWidth}`)" @click="handleDownloadPng('original')">Original size</a>
+                  <a class="btn-primary btn-download" :href="downloadPng(`${svgOriginalWidth}`)" @click="handleDownloadPng('original')">Original size</a>
                   <div class="size">Use this if you want to combine it with similar images</div>
                 </div>
               </div>

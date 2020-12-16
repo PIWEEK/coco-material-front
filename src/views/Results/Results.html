@@ -50,7 +50,7 @@
         <button class="btn-color" @click="showModal(filteredVectors[0], true, 0)">
           <img alt="Palette icon" src="../../assets/palette.svg"/>
           <span>Customize all</span></button>
-        <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
+        <a :href="downloadAllSvg" target="_blank" class="btn-primary btn-download">Download all SVG</a>
       </div>
     </div>
     <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">

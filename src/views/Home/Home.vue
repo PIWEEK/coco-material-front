@@ -17,15 +17,18 @@ export default {
   beforeMount () {
     this.getTags()
     this.clearSearchTags()
+    this.getFeaturedVectors()
   },
   computed: {
     ...mapState({
-      tags: 'tags'
+      tags: 'tags',
+      featuredVectors: 'featuredVectors'
     })
   },
   methods: {
     ...mapActions({
-      getTags: 'getTags'
+      getTags: 'getTags',
+      getFeaturedVectors: 'getFeaturedVectors'
     }),
     ...mapMutations({
       clearSearchTags: 'clearSearchTags'

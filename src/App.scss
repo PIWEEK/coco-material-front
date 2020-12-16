@@ -229,3 +229,19 @@ footer {
     }
   }
 }
+.btn-primary {
+  background-color: $color-white;
+  border: 2px solid $color-turquoise;
+  border-radius: 4px;
+  color: #222;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px;
+  transition: all ease .3s;
+
+  &:hover {
+    background-color: $color-turquoise;
+    color: $color-white;
+  }
+}

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     searchTags: [],
     loading: false,
     totalResults: null,
-    paginationArray: []
+    paginationArray: [],
+    featuredVectors: null
   },
   mutations: {
     getTagsSuccess (state, tags) {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     setLoading (state, activate) {
       state.loading = activate
+    },
+    getFeaturedVectorsSuccess (state, vectors) {
+      state.featuredVectors = vectors
     }
   },
   actions: {
@@ -64,6 +68,12 @@ export default new Vuex.Store({
       appService.getVectorByTag(payload)
         .then(vectors => {
           commit('getVectorsByTagSuccess', { vectors, tags: payload.tags, pageSize: payload.pageSize })
+        })
+    },
+    getFeaturedVectors ({ commit }) {
+      appService.getFeaturedVectors()
+        .then(featuredVectors => {
+          commit('getFeaturedVectorsSuccess', featuredVectors)
         })
     }
   },

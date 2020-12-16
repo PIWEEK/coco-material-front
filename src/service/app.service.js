@@ -26,6 +26,13 @@ const appService = {
         resolve(response.data)
       })
     })
+  },
+  getFeaturedVectors () {
+    return new Promise((resolve) => {
+      axios.get('/vectors/featured/').then(response => {
+        resolve(response.data)
+      })
+    })
   }
 }
 export default appService
