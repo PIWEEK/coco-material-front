@@ -520,6 +520,7 @@
   & .svg-wrapper {
     height: calc(100% - 2rem);
     padding: .5rem;
+    padding-top: 1rem;
     width: 100%;
   }
 
@@ -555,7 +556,7 @@
     @media (min-width: 1023px) {
       flex-direction: column;
       padding-bottom: 0;
-      justify-content: end;
+      justify-content: center;
       padding-right: 1rem;
     }
 
