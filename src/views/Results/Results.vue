@@ -2,7 +2,7 @@
 <style src="./Results.scss"  lang="scss" scoped></style>
 <script>
 
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import modal from '../../components/modal/modal.vue'
 
 export default {
@@ -19,26 +19,36 @@ export default {
       autocompleteResults: [],
       customizeBulk: false,
       isHorizontal: true,
-      limitNumber: 30,
       showScrollToTop: false,
-      svgOriginalWidth: null
+      svgOriginalWidth: null,
+      currentPage: 1,
+      pageSize: 40
     }
   },
   beforeMount () {
     !this.searchTags.length && this.getTags()
 
     if (this.$route.query.q) {
-      this.getVectorsByTag(this.$route.query.q.split(','))
+      this.getVectorsByTag({
+        tags: this.$route.query.q.split(','),
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      })
     } else {
-      this.getVectors()
+      this.getVectors({
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      })
     }
   },
   computed: {
-    ...mapGetters({
-      filteredVectorsList: 'filteredVectorsList',
+    ...mapState({
+      filteredVectors: 'filteredVectors',
       searchTags: 'searchTags',
-      tagsList: 'tagsList',
-      loading: 'loading'
+      tags: 'tags',
+      loading: 'loading',
+      totalResults: 'totalResults',
+      paginationArray: 'paginationArray'
     }),
     downloadAllSvg () {
       const tags = this.searchTags.length
@@ -53,12 +63,6 @@ export default {
         this.showScrollToTop = true
       } else {
         this.showScrollToTop = false
-      }
-
-      if (((window.innerHeight + window.scrollY) + (window.innerHeight / 3)) >= document.getElementById('coco-container').offsetHeight) {
-        if (this.limitNumber <= this.filteredVectorsList.length) {
-          this.limitNumber += 30
-        }
       }
     })
   },
@@ -101,7 +105,7 @@ export default {
       document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     },
     autocompleteSearch () {
-      this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search))
     },
     focusAutocompleteResults (index, key) {
       if (this.autocompleteResults.length) {
@@ -130,16 +134,27 @@ export default {
       this.autocompleteResults = []
       this.updateSearchTags(tag.toLocaleLowerCase())
 
-      this.getVectorsByTag(this.searchTags)
+      this.getVectorsByTag({
+        tags: this.searchTags,
+        currentPage: 1,
+        pageSize: this.pageSize
+      })
       this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
     },
     removeTag (tag) {
       this.removeSearchTag(tag)
       if (this.searchTags.length) {
-        this.getVectorsByTag(this.searchTags)
+        this.getVectorsByTag({
+          tags: this.searchTags,
+          currentPage: 1,
+          pageSize: this.pageSize
+        })
         this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
       } else {
-        this.getVectors()
+        this.getVectors({
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+        })
         this.$router.push({ path: '/results' })
       }
     },
@@ -151,11 +166,16 @@ export default {
       this.$matomo.trackEvent('downloads', 'svg', vector.name)
     },
     searchVector (search) {
-      if (this.search !== '') {
-        this.addTag(this.search.toLocaleLowerCase())
+      const searchValue = typeof search === 'string' ? search : this.search
+      if (searchValue !== '') {
+        this.addTag(searchValue.toLocaleLowerCase())
       }
-      this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
-      this.getVectorsByTag([search.toLocaleLowerCase()])
+      this.$router.push({ path: '/results', query: { q: searchValue.toLocaleLowerCase() } })
+      this.getVectorsByTag({
+        tags: [searchValue.toLocaleLowerCase()],
+        currentPage: 1,
+        pageSize: this.pageSize
+      })
     },
     handleDelete () {
       if (this.search === '') {
@@ -166,6 +186,21 @@ export default {
       window.scrollTo(
         { top: 0, behavior: 'smooth' }
       )
+    },
+    handlePagination (page) {
+      this.currentPage = page
+      if (this.searchTags.length) {
+        this.getVectorsByTag({
+          tags: this.searchTags,
+          currentPage: page,
+          pageSize: this.pageSize
+        })
+      } else {
+        this.getVectors({
+          currentPage: page,
+          pageSize: this.pageSize
+        })
+      }
     }
   }
 }

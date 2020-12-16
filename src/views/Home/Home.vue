@@ -2,7 +2,7 @@
 <template src="./Home.html" lang="html"></template>
 <style src="./Home.scss"  lang="scss" scoped></style>
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Home',
@@ -19,20 +19,19 @@ export default {
     this.clearSearchTags()
   },
   computed: {
-    ...mapGetters({
-      tagsList: 'tagsList'
+    ...mapState({
+      tags: 'tags'
     })
   },
   methods: {
     ...mapActions({
-      getTags: 'getTags',
-      getVectorsByTag: 'getVectorByTag'
+      getTags: 'getTags'
     }),
     ...mapMutations({
       clearSearchTags: 'clearSearchTags'
     }),
     autocompleteSearch () {
-      this.autocompleteResults = this.tagsList.filter(it => it.slug.includes(this.search))
+      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search))
     },
     focusAutocompleteResults (index, key) {
       if (this.autocompleteResults.length) {

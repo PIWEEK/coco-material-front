@@ -1,21 +1,22 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://cocomaterial.com/api'
+// axios.defaults.baseURL = 'https://cocomaterial.com/api'
+axios.defaults.baseURL = 'http://localhost:8000/api/'
 
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common.Accept = 'application/json'
 
 const appService = {
-  getVectors () {
+  getVectors (payload) {
     return new Promise((resolve) => {
-      axios.get('/vectors/').then(response => {
+      axios.get(`/vectors/?page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
         resolve(response.data)
       })
     })
   },
-  getVectorByTag (tags) {
+  getVectorByTag (payload) {
     return new Promise((resolve) => {
-      axios.get(`/vectors/?tags=${tags.join()}`).then(response => {
+      axios.get(`/vectors/?tags=${payload.tags.join()}&page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
         resolve(response.data)
       })
     })

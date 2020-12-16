@@ -44,17 +44,17 @@
           </div>
         </div>
       </form>
-      <span v-if="filteredVectorsList.length" class="info-text">Showing {{filteredVectorsList.length}} results</span >
+      <span v-if="filteredVectors.length" class="info-text">Showing {{totalResults}} results</span >
 
-      <div v-if="filteredVectorsList.length" class="vectors-actions" @click="closeAutocomplete">
-        <button class="btn-color" @click="showModal(filteredVectorsList[0], true, 0)">
+      <div v-if="filteredVectors.length" class="vectors-actions" @click="closeAutocomplete">
+        <button class="btn-color" @click="showModal(filteredVectors[0], true, 0)">
           <img alt="Palette icon" src="../../assets/palette.svg"/>
           <span>Customize all</span></button>
         <a :href="downloadAllSvg" target="_blank" class="btn-download">Download all SVG</a>
       </div>
     </div>
-    <div v-if="filteredVectorsList.length" class="results-list"  @click="closeAutocomplete">
-      <div class="vector-container" v-for="(vector, index) in filteredVectorsList.slice(0, limitNumber)" :key="index">
+    <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">
+      <div class="vector-container" v-for="(vector, index) in filteredVectors" :key="index">
         <div class="img-container">
           <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
         </div>
@@ -64,7 +64,52 @@
         </div>
       </div>
     </div>
-    <div v-else class="no-results"  @click="closeAutocomplete">
+    <div v-if="filteredVectors.length && paginationArray.length > 1 && 6 > paginationArray.length" class="pagination-container">
+      <button class="prev" @click="handlePagination(currentPage - 1)" :disabled="currentPage == 1">
+        <img v-if="currentPage == 1" src="../../assets/prev-disabled.svg" alt="Previous page disabled" />
+        <img v-else src="../../assets/prev.svg" alt="Previous page" />
+      </button>
+      <ul class="pages">
+        <li v-for="(page, index) in paginationArray" :key="index">
+          <button :class="`page ${currentPage === page + 1 ? 'current' : ''}`" @click="handlePagination(page + 1)">{{page + 1}}</button>
+          <span v-if="page + 1 !== paginationArray.length" class="separator">|</span>
+        </li>
+      </ul>
+      <button class="next" @click="handlePagination(currentPage + 1)" :disabled="currentPage == paginationArray.length">
+        <img v-if="currentPage == paginationArray.length" src="../../assets/next-disabled.svg" alt="Next page disabled" />
+        <img v-else src="../../assets/next.svg" alt="Next page" />
+      </button>
+    </div>
+    <div v-if="paginationArray.length > 6" class="pagination-container">
+      <button class="prev" @click="handlePagination(currentPage - 1)" :disabled="currentPage == 1">
+        <img v-if="currentPage == 1" src="../../assets/prev-disabled.svg" alt="Previous page disabled" />
+        <img v-else src="../../assets/prev.svg" alt="Previous page" />
+      </button>
+      <ul class="pages">
+        <li v-if="currentPage !== 1">
+          <button class="page" @click="handlePagination(1)">1</button>
+          <span v-if="![1, 2, 3].includes(currentPage)" class="separator">...</span>
+        </li>
+        <li v-if="currentPage > 2">
+          <button class="page" @click="handlePagination(currentPage - 1)">{{currentPage - 1}}</button>
+        </li>
+        <li>
+          <button class="page current">{{currentPage}}</button>
+        </li>
+        <li v-if="paginationArray.length > currentPage && currentPage !== paginationArray.length - 1">
+          <button class="page"  @click="handlePagination(currentPage + 1)">{{currentPage + 1}}</button>
+        </li>
+        <li v-if="currentPage !== paginationArray.length">
+          <span v-if="![paginationArray.length - 2, paginationArray.length - 1, paginationArray.length].includes(currentPage)" class="separator">...</span>
+          <button class="page" @click="handlePagination(paginationArray.length)">{{paginationArray.length}}</button>
+        </li>
+      </ul>
+      <button class="next" @click="handlePagination(currentPage + 1)" :disabled="currentPage == paginationArray.length">
+        <img v-if="currentPage == paginationArray.length" src="../../assets/next-disabled.svg" alt="Next page disabled" />
+        <img v-else src="../../assets/next.svg" alt="Next page" />
+      </button>
+    </div>
+    <div v-if="filteredVectors.length === 0" class="no-results"  @click="closeAutocomplete">
       <img alt="Coconut illustration" src="../../assets/coco.svg" />
       <h3>Sorry, this coconut is empty</h3>
       <div v-if="searchTags.length">
@@ -87,10 +132,10 @@
 
   </section>
   <modal
-    v-if="isModalVisible && filteredVectorsList.length"
+    v-if="isModalVisible && filteredVectors.length"
     :vector="svgCode"
     :customizeBulk="customizeBulk"
-    :vectors="filteredVectorsList.length"
+    :vectors="filteredVectors.length"
     :vectorId="selectedVector.id"
     :tags="searchTags"
     :isHorizontal="isHorizontal"

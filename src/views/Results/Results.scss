@@ -330,3 +330,37 @@
     color: $color-turquoise;
   }
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0 50px;
+
+  & .pages {
+    display: flex;
+    margin: 2px 20px 0 25px;
+  }
+
+  & .page {
+    color: $color-turquoise;
+    font-weight: 700;
+    margin-right: 10px;
+
+    &.current {
+      color: $color-black;
+    }
+  }
+
+  & .separator {
+    color: $color-medium-grey;
+    font-weight: 500;
+    margin-right: 10px;
+  }
+
+  & .page,
+  & .prev,
+  & .next {
+    background-color: transparent;
+    border: none;
+  }
+}

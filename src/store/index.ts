@@ -7,31 +7,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tags: [],
-    vectors: [],
     filteredVectors: [],
     searchTags: [],
-    loading: false
-  },
-  getters: {
-    tagsList: state => state.tags,
-    vectors: state => state.vectors,
-    filteredVectorsList: state => state.filteredVectors,
-    searchTags: state => state.searchTags,
-    loading: state => state.loading
+    loading: false,
+    totalResults: null,
+    paginationArray: []
   },
   mutations: {
     getTagsSuccess (state, tags) {
       state.tags = tags
     },
-    getVectorsSuccess (state, vectors) {
-      state.vectors = vectors
+    getVectorsSuccess (state, payload) {
+      state.filteredVectors = payload.vectors.results
+      state.totalResults = payload.vectors.count
+      state.paginationArray = Array.from(Array(Math.ceil(payload.vectors.count / payload.pageSize)).keys())
     },
     getVectorsByTagSuccess (state, payload) {
-      state.filteredVectors = payload.vectors
+      state.filteredVectors = payload.vectors.results
+      state.totalResults = payload.vectors.count
+      state.paginationArray = Array.from(Array(Math.ceil(payload.vectors.count / payload.pageSize)).keys())
       state.searchTags = payload.tags
-    },
-    updateVectors (state) {
-      state.filteredVectors = state.vectors
     },
     clearSearchTags (state) {
       state.searchTags = []
@@ -57,23 +52,18 @@ export default new Vuex.Store({
           commit('getTagsSuccess', tags)
         })
     },
-    getVectors ({ commit }) {
-      if (this.state.vectors.length) {
-        commit('updateVectors')
-      } else {
-        commit('setLoading', true)
-        appService.getVectors()
-          .then(vectors => {
-            commit('getVectorsSuccess', vectors)
-            commit('updateVectors')
-            commit('setLoading', false)
-          })
-      }
-    },
-    getVectorByTag ({ commit }, tags) {
-      appService.getVectorByTag(tags)
+    getVectors ({ commit }, payload) {
+      commit('setLoading', true)
+      appService.getVectors(payload)
         .then(vectors => {
-          commit('getVectorsByTagSuccess', { vectors, tags })
+          commit('getVectorsSuccess', { vectors: vectors, pageSize: payload.pageSize })
+          commit('setLoading', false)
+        })
+    },
+    getVectorByTag ({ commit }, payload) {
+      appService.getVectorByTag(payload)
+        .then(vectors => {
+          commit('getVectorsByTagSuccess', { vectors, tags: payload.tags, pageSize: payload.pageSize })
         })
     }
   },
