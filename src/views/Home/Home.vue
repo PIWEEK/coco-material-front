@@ -50,6 +50,8 @@ export default {
       this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
     },
     focusAutocompleteResults (index, key) {
+      event.stopPropagation()
+      event.preventDefault()
       let topPos
       let elementHeight
       let element
@@ -59,7 +61,7 @@ export default {
           topPos = element.offsetTop
           elementHeight = element.clientHeight
           document.querySelector('#results').scrollTop = topPos - elementHeight
-          element.focus()
+          element.focus({ preventScroll: true })
           if (index === -1) {
             setTimeout(() => {
               document.querySelector('#results').scrollTop = 0
@@ -72,7 +74,7 @@ export default {
           topPos = element.offsetTop
           elementHeight = element.clientHeight
           document.querySelector('#results').scrollTop = topPos - elementHeight
-          element.focus()
+          element.focus({ preventScroll: true })
         }
       }
     },
