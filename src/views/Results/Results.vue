@@ -20,7 +20,6 @@ export default {
       customizeBulk: false,
       isHorizontal: true,
       showScrollToTop: false,
-      svgOriginalWidth: null,
       currentPage: 1,
       pageSize: 40
     }
@@ -89,7 +88,6 @@ export default {
       const height = image.height
       const width = image.width
       this.isHorizontal = height < width
-      this.svgOriginalWidth = width
       this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
       this.customizeBulk = bulk
       this.isModalVisible = true

@@ -10,8 +10,7 @@ export default {
     customizeBulk: null,
     vectors: null,
     tags: null,
-    isHorizontal: null,
-    svgOriginalWidth: null
+    isHorizontal: null
   },
   data () {
     return {
