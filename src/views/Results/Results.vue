@@ -74,7 +74,8 @@ export default {
     ...mapMutations({
       clearFilteredVectors: 'clearFilteredVectors',
       updateSearchTags: 'updateSearchTags',
-      removeSearchTag: 'removeSearchTag'
+      removeSearchTag: 'removeSearchTag',
+      clearSearchTags: 'clearSearchTags'
     }),
     showModal (vector, bulk, id) {
       this.selectedVector = vector
@@ -171,6 +172,13 @@ export default {
       this.$router.push({ path: '/results', query: { q: searchValue.toLocaleLowerCase() } })
       this.getVectorsByTag({
         tags: [searchValue.toLocaleLowerCase()],
+        currentPage: 1,
+        pageSize: this.pageSize
+      })
+    },
+    showAll () {
+      this.clearSearchTags()
+      this.getVectors({
         currentPage: 1,
         pageSize: this.pageSize
       })

@@ -35,12 +35,12 @@
   margin: 70px auto;
   max-width: 1440px;
 
-  @media (max-width: 1500px) {
-    margin: 0 20px;
+  @media (max-width: 1440px) {
+    margin: 70px 20px;
   }
 
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 1024px) {
+    display: block;
   }
 }
 
@@ -160,6 +160,11 @@
   @media (max-width: 1200px) {
     width: 100%;
   }
+
+  @media (max-width: 768px) {
+    display: flex;
+    margin-top: 36px;
+  }
 }
 
 .btn-color,
@@ -178,11 +183,22 @@
     margin-right: 10px;
     vertical-align: middle;
   }
+
+  @media (max-width: 768px) {
+    width: 50%;
+  }
 }
 
 .btn-download {
   font: 500 14px 'Red Hat Display';
   text-decoration: none;
+
+  @media (max-width: 768px) {
+    display: inline-block;
+    padding: 5px 0;
+    text-align: center;
+    width: 50%;
+  }
 }
 
 .menu {
@@ -196,13 +212,13 @@
 }
 
 .tags {
-  @media (max-width: 900px) {
-    display: none;
-  }
+  width: 190px;
+  margin-right: 20px;
+
   & p {
-    font-weight: 700;
-    font-size: 14px;
-    margin: 50px 0 30px;
+    font-weight: 500;
+    font-size: 18px;
+    margin: 5px 0 20px;
   }
 
   & .tags-list {
@@ -216,11 +232,79 @@
   }
 
   & .popular-btn {
-    background: none;
+    background: $color-light-grey;
     border: none;
+    border-radius: 15px;
     font-weight: 500;
     font-size: 14px;
     font-family: 'Red Hat Display';
+    max-width: 190px;
+    overflow: hidden;
+    padding: 4px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $color-turquoise-dark;
+      color: $color-white;
+    }
+  }
+
+  & .link {
+    background: transparent;
+    border: none;
+    display: block;
+    color: $color-turquoise-dark;
+    font-family: 'Red Hat Display';
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 25px;
+    text-decoration: underline;
+
+    &.desktop {
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    }
+
+    &.mobile {
+      display: none;
+
+      @media (max-width: 1024px) {
+        display: inline;
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
+
+    & p {
+      display: inline;
+    }
+
+    & .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 16px 0 40px;
+
+      & li {
+        margin: 0 0 10px 0;
+      }
+    }
+
+    & .popular-btn {
+      margin-right: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    & .tags-list {
+      margin: 16px 0 30px;
+    }
   }
 }
 

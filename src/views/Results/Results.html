@@ -1,13 +1,20 @@
 <div class="results">
   <aside class="tags" @click="closeAutocomplete">
     <p>Popular tags</p>
+    <button class="link mobile" @click="showAll()">View all images</button>
     <ul class="tags-list">
-      <li><button class="popular-btn" @click="searchVector('face')">Face</button></li>
-      <li><button class="popular-btn" @click="searchVector('transportation')">Transportation</button></li>
-      <li><button class="popular-btn" @click="searchVector('social')">Social</button></li>
-      <li><button class="popular-btn" @click="searchVector('nature')">Nature</button></li>
-      <li><button class="popular-btn" @click="searchVector('food')">Food</button></li>
+      <li><button class="popular-btn" @click="searchVector('faces')">faces</button></li>
+      <li><button class="popular-btn" @click="searchVector('family')">family</button></li>
+      <li><button class="popular-btn" @click="searchVector('science')">science</button></li>
+      <li><button class="popular-btn" @click="searchVector('office')">office</button></li>
+      <li><button class="popular-btn" @click="searchVector('tools')">tools</button></li>
+      <li><button class="popular-btn" @click="searchVector('agile')">agile</button></li>
+      <li><button class="popular-btn" @click="searchVector('code')">code</button></li>
+      <li><button class="popular-btn" @click="searchVector('fiction')">fiction</button></li>
+      <li><button class="popular-btn" @click="searchVector('chart')">chart</button></li>
+      <li><button class="popular-btn" @click="searchVector('logo')">logo</button></li>
     </ul>
+    <button class="link desktop" @click="showAll()">View all images</button>
   </aside>
   <section class="results-data"  @click="closeAutocomplete">
     <div class="menu">
