@@ -9,13 +9,16 @@
 }
 
 .cta {
-  // background-position: 0% 72%;
-  // background-repeat: no-repeat;
   padding: 80px 0;
   background-image: url("../../assets/pink-buble.svg");
   background-repeat: no-repeat;
-  background-position: -16% -60px;
+  background-position: 15% -60px;
   background-size: auto;
+
+  @media (max-width: 2200px) {
+    background-position: 5% 65%;
+    background-size: 35%;
+  }
 
   @media (max-width: 1920px) {
     background-position: -22% 65%;
