@@ -34,7 +34,7 @@ export default {
       clearSearchTags: 'clearSearchTags'
     }),
     autocompleteSearch () {
-      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search))
+      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
     },
     focusAutocompleteResults (index, key) {
       if (this.autocompleteResults.length) {

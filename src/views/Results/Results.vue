@@ -103,7 +103,7 @@ export default {
       document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     },
     autocompleteSearch () {
-      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search))
+      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
     },
     focusAutocompleteResults (index, key) {
       if (this.autocompleteResults.length) {
