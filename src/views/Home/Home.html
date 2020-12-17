@@ -163,4 +163,10 @@
       <a class="btn-piweek" href="https://piweek.com/" target="_blank">Know more about PIWEEK</a>
     </div>
   </div>
+
+  <transition name="fade" mode="out-in">
+    <button v-if="showScrollToTop" class="scroll-to-top" @click="scrollToTop()">
+      <img src="../../assets/arrow-top.svg" alt="Scroll to top" />
+    </button>
+  </transition>
 </section>

@@ -1,33 +1,6 @@
 @import '@/variables';
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .5s
-}
 
-.fade-enter,
-.fade-leave-to {
-  opacity: 0
-}
-
-.scroll-to-top {
-  align-items: center;
-  background: #7BDFF2;
-  border: 0;
-  border-radius: 100%;
-  bottom: 1.5rem;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  right: 1.5rem;
-  position: fixed;
-  width: 50px;
-
-  & img {
-    height: 1rem;
-    width: 1rem;
-  }
-}
 
 .results {
   display: grid;

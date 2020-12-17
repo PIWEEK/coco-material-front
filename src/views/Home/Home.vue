@@ -11,7 +11,8 @@ export default {
       vectors: null,
       search: '',
       tagsToSearch: [],
-      autocompleteResults: []
+      autocompleteResults: [],
+      showScrollToTop: false
     }
   },
   beforeMount () {
@@ -19,6 +20,15 @@ export default {
     this.clearSearchTags()
     this.getFeaturedVectors()
     this.getLatestVectors()
+  },
+  mounted: function () {
+    window.addEventListener('scroll', () => {
+      if ((window.innerHeight + window.scrollY) >= window.innerHeight * 1.5) {
+        this.showScrollToTop = true
+      } else {
+        this.showScrollToTop = false
+      }
+    })
   },
   computed: {
     ...mapState({
@@ -86,6 +96,11 @@ export default {
     },
     tagsSeparator (tags) {
       return tags.replace(/\s/g, '').split(',')
+    },
+    scrollToTop () {
+      window.scrollTo(
+        { top: 0, behavior: 'smooth' }
+      )
     }
   }
 }

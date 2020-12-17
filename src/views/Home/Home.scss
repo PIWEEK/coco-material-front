@@ -379,11 +379,16 @@
   font-family: "Red Hat Display", sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 24px;
   line-height: 40px;
   max-width: 1440px;
   margin: 1.5rem auto;
   padding: 0 1.5rem;
+
+  @media (min-width: 720px) {
+    font-size: 30px;
+  }
+
 
   @media (min-width: 1023px) {
     margin: 3rem auto;
