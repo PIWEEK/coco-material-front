@@ -111,7 +111,7 @@
       text-align: right;
     }
     & img {
-      @media (max-width: 1280px) {
+      @media (max-width: 1440px) {
         max-width: 305px;
       }
       @media (max-width: 768px) {
@@ -369,18 +369,26 @@
 }
 
 .home-title {
+  align-items: center;
   color: #1C2541;
+  display: flex;
+  justify-content: space-between;
   font-family: "Red Hat Display", sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
   line-height: 40px;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 1.5rem auto;
   padding: 0 1.5rem;
 
   @media (min-width: 1023px) {
     margin: 3rem auto;
+  }
+
+  .btn-primary {
+    min-width: 101px;
+    max-height: 32px;
   }
 }
 
@@ -394,7 +402,7 @@
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1240px;
+  max-width: 1400px;
 
   @media (min-width: 1023px) {
     flex-direction: row;
@@ -593,3 +601,93 @@
   padding: 0 1.5rem .5rem;
 }
 
+
+.latest-wrapper {
+  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 0 1.5rem;
+  row-gap: 1.5rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  & .svg-container {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+  }
+
+  & .svg-wrapper {
+    height: calc(100% - 2rem);
+    padding: .5rem;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+
+  & .img-container {
+    background: #FFF;
+    display: flex;
+    height: 90px;
+    margin: 0 auto;
+    max-width: 188px;
+    min-width: 172px;
+    position: relative;
+    transition: all .3s ease;
+
+    @media (min-width: 468px) {
+      height: 110px
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: .7;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  & .latest-vector-wrapper {
+    margin: 0 auto;
+  }
+
+  & .tags-container {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  & .tag {
+    background: #F1F1F1;
+    border: 0;
+    border-radius: 62px;
+    color: #1C2541;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 .5rem .5rem 0;
+    line-height: 15px;
+
+    &:hover {
+      color: white;
+      background: #00C2FF;
+    }
+  }
+}

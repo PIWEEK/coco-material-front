@@ -18,17 +18,20 @@ export default {
     this.getTags()
     this.clearSearchTags()
     this.getFeaturedVectors()
+    this.getLatestVectors()
   },
   computed: {
     ...mapState({
       tags: 'tags',
-      featuredVectors: 'featuredVectors'
+      featuredVectors: 'featuredVectors',
+      latestVectors: 'latestVectors'
     })
   },
   methods: {
     ...mapActions({
       getTags: 'getTags',
-      getFeaturedVectors: 'getFeaturedVectors'
+      getFeaturedVectors: 'getFeaturedVectors',
+      getLatestVectors: 'getLatestVectors'
     }),
     ...mapMutations({
       clearSearchTags: 'clearSearchTags'
@@ -80,6 +83,9 @@ export default {
       if (this.search === '') {
         this.removeTag(this.tagsToSearch.slice(-1).pop())
       }
+    },
+    tagsSeparator (tags) {
+      return tags.replace(/\s/g, '').split(',')
     }
   }
 }

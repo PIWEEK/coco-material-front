@@ -33,6 +33,13 @@ const appService = {
         resolve(response.data)
       })
     })
+  },
+  getLatestVectors () {
+    return new Promise((resolve) => {
+      axios.get('/vectors/latest/').then(response => {
+        resolve(response.data)
+      })
+    })
   }
 }
 export default appService

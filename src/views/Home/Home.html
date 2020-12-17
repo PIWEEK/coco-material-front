@@ -49,6 +49,26 @@
       </form>
     </div>
   </div>
+  <h1 class="home-title">
+    Recently added
+    <button class="btn-primary" @click="searchVectorByTopic('')">View all</button>
+  </h1>
+  <div class="latest-wrapper" v-if="latestVectors && latestVectors.length">
+    <div class="latest-vector-wrappers" v-for="(vector, index) in latestVectors"  :key="index">
+      <div class="img-container">
+        <div class="svg-wrapper" @click="searchVectorByTopic(vector.tags.replace(/\s/g,''))">
+          <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
+        </div>
+      </div>
+      <div class="tags-container">
+        <button class="tag" v-for="tag in tagsSeparator(vector.tags)" @click="searchVectorByTopic(tag)">
+          {{ tag }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+
   <h1 class="home-title">Featured Tags</h1>
   <div class="featured-wrapper" v-if="featuredVectors && featuredVectors.length">
     <div class="featured-container" v-for="(featured, index) in featuredVectors"  :key="index">
