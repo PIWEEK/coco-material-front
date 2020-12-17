@@ -50,9 +50,15 @@ export default {
       this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
     },
     focusAutocompleteResults (index, key) {
+      let topPos
+      let elementHeight
+      let element
       if (this.autocompleteResults.length) {
         if (key === 'down') {
-          const element = document.querySelectorAll('#results span')[index + 1]
+          element = document.querySelectorAll('#results span')[index + 1]
+          topPos = element.offsetTop
+          elementHeight = element.clientHeight
+          document.querySelector('#results').scrollTop = topPos - elementHeight
           element.focus()
           if (index === -1) {
             setTimeout(() => {
@@ -62,7 +68,10 @@ export default {
         } else if (key === 'up' && index === 0) {
           document.querySelector('#search').focus()
         } else {
-          const element = document.querySelectorAll('#results span')[index - 1]
+          element = document.querySelectorAll('#results span')[index - 1]
+          topPos = element.offsetTop
+          elementHeight = element.clientHeight
+          document.querySelector('#results').scrollTop = topPos - elementHeight
           element.focus()
         }
       }
