@@ -605,11 +605,16 @@
 .latest-wrapper {
   column-gap: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   margin: 0 auto;
   max-width: 1440px;
   padding: 0 1.5rem;
   row-gap: 1.5rem;
+
+  @media (max-width: 1220px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -684,6 +689,7 @@
     font-size: 14px;
     margin: 0 .5rem .5rem 0;
     line-height: 20px;
+    transition: all .2s ease;
 
     &:hover {
       color: white;
