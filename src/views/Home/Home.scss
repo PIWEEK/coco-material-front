@@ -9,14 +9,45 @@
 }
 
 .cta {
-  background-position: 0% 72%;
-  background-repeat: no-repeat;
+  // background-position: 0% 72%;
+  // background-repeat: no-repeat;
   padding: 80px 0;
-  background-size: 30%;
-  background-image:none;
+  background-image: url("../../assets/pink-buble.svg");
+  background-repeat: no-repeat;
+  background-position: -16% -60px;
+  background-size: auto;
+
+  @media (max-width: 1920px) {
+    background-position: -22% 65%;
+    background-size: 38%;
+  }
 
   @media (max-width: 1440px) {
+    background-position: -27% 65%;
     padding: 30px 0;
+  }
+
+  @media (max-width: 1024px) {
+    background-position: -51% 59%;
+    background-size: 52%;
+  }
+
+  @media (max-width: 920px) {
+    background-position: -78% 62%;
+    background-size: 63%;
+  }
+
+  @media (max-width: 768px) {
+    background-position: -20% -40px;
+    background-size: 250px;
+  }
+
+  @media (max-width: 500px) {
+    background-position: -45% -40px;
+  }
+
+  @media (max-width: 400px) {
+    background-position: -60% -40px;
   }
 }
 
@@ -30,11 +61,11 @@
     padding: 0 70px;
   }
 
+  @media (max-width: 920px) {
+    padding: 0 50px;
+  }
+
   @media (max-width: 768px) {
-    background-image: url("../../assets/pink-buble.svg");
-    background-repeat: no-repeat;
-    background-position: -100px -40px;
-    background-size: 50%;
     grid-template-columns: 2fr 1fr;
     padding: 0 20px;
   }
@@ -42,24 +73,6 @@
   & .section-text {
     margin: auto;
     position:relative;
-
-    &:before{
-      content: url("../../assets/pink-buble.svg");
-      display: block;
-      position: absolute;
-      z-index: -1;
-      top: -50%;
-      left: -40%;
-
-      @media (max-width:1440px) {
-        top: -70%;
-        left: -45%;
-      }
-
-      @media (max-width: 768px) {
-        display: none;
-      }
-    }
   }
 
   & .title {
@@ -95,13 +108,14 @@
   & .section-img {
     @media (max-width: 768px) {
       align-self: end;
+      text-align: right;
     }
     & img {
       @media (max-width: 1280px) {
         max-width: 305px;
       }
       @media (max-width: 768px) {
-       display: none;
+        max-width: 156px;
       }
     }
   }
@@ -123,17 +137,15 @@
 .search-section {
   background-size: 1600px;
   background-repeat: repeat-x;
-  background-position: center;
   padding: 40px;
   text-align: center;
 
   @media (max-width: 1440px) {
-    background-position: top;
-    padding: 20px 0 40px;
+    background-size: contain;
   }
 
-  @media (max-width: 768px) {
-    background-size: 100%;
+  @media (max-width: 920px) {
+    background-position: center;
   }
 
   & .title {
