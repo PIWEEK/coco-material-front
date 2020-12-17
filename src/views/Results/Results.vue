@@ -96,6 +96,9 @@ export default {
     closeModal () {
       this.isModalVisible = false
     },
+    resetAutocompleteResults () {
+      this.autocompleteResults = []
+    },
     loaded (id) {
       const image = new Image()
       image.src = window.getComputedStyle(document.getElementById(`${id}`), false).backgroundImage.slice(4, -1).replace(/"/g, '')

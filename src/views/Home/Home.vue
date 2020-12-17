@@ -67,6 +67,9 @@ export default {
         }
       }
     },
+    resetAutocompleteResults () {
+      this.autocompleteResults = []
+    },
     closeAutocomplete () {
       this.autocompleteResults = []
     },
