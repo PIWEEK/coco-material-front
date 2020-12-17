@@ -19,6 +19,7 @@ p {
 
 img {
   margin: auto;
+  max-width: 900px;
 
   @media (max-width: 768px) {
     max-width: 100%;
@@ -44,7 +45,7 @@ img {
 
 .group {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   margin: auto;
   column-gap: 20px;
 }

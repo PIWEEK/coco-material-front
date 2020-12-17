@@ -3,16 +3,16 @@
     <p>Popular tags</p>
     <button class="link mobile" @click="showAll()">View all images</button>
     <ul class="tags-list">
-      <li><button class="popular-btn" @click="searchVector('faces')">faces</button></li>
-      <li><button class="popular-btn" @click="searchVector('family')">family</button></li>
-      <li><button class="popular-btn" @click="searchVector('science')">science</button></li>
-      <li><button class="popular-btn" @click="searchVector('office')">office</button></li>
-      <li><button class="popular-btn" @click="searchVector('tools')">tools</button></li>
-      <li><button class="popular-btn" @click="searchVector('agile')">agile</button></li>
-      <li><button class="popular-btn" @click="searchVector('code')">code</button></li>
-      <li><button class="popular-btn" @click="searchVector('fiction')">fiction</button></li>
-      <li><button class="popular-btn" @click="searchVector('chart')">chart</button></li>
-      <li><button class="popular-btn" @click="searchVector('logo')">logo</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('face')" @click="searchVector('face')">face</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('family')" @click="searchVector('family')">family</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('science')" @click="searchVector('science')">science</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('office')" @click="searchVector('office')">office</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('tools')" @click="searchVector('tools')">tools</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('agile')" @click="searchVector('agile')">agile</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('code')" @click="searchVector('code')">code</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('fiction')" @click="searchVector('fiction')">fiction</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('chart')" @click="searchVector('chart')">chart</button></li>
+      <li><button class="popular-btn" :disabled="searchTags.includes('logo')" @click="searchVector('logo')">logo</button></li>
     </ul>
     <button class="link desktop" @click="showAll()">View all images</button>
   </aside>
