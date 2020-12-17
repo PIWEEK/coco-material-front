@@ -69,6 +69,7 @@ export default {
     },
     resetAutocompleteResults () {
       this.autocompleteResults = []
+      document.getElementById('search').focus()
     },
     closeAutocomplete () {
       this.autocompleteResults = []

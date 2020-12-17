@@ -98,6 +98,7 @@ export default {
     },
     resetAutocompleteResults () {
       this.autocompleteResults = []
+      document.getElementById('search').focus()
     },
     loaded (id) {
       const image = new Image()
