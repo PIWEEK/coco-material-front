@@ -1,6 +1,18 @@
 @import '@/variables';
 
+.slide-enter-active,
+.slide-leave-active {
+  transition: height .5s;
+  height: 73px;
+  overflow: hidden;
+}
 
+.slide-enter,
+.slide-leave-to {
+  height: 0;
+  overflow: hidden;
+
+}
 
 .results {
   display: grid;
