@@ -233,6 +233,7 @@ export default {
           pageSize: this.pageSize
         })
       }
+      this.scrollToTop()
     }
   }
 }
