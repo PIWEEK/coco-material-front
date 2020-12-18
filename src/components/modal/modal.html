@@ -34,7 +34,11 @@
                 <div class="rounds">
                   <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
                 </div>
-                <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
+                <div class="color-title-container">
+                  <label class="title" for="strokeHex"> Stroke </label>
+                  <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
+                </div>
+
               </div>
             </div>
             <div class="fill">
@@ -43,7 +47,11 @@
                 <div class="rounds">
                   <span :class="`round ${color === 'none' ? 'transparent' : ''} ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
                 </div>
-                <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
+                <div class="color-title-container">
+                  <label class="title" for="fillHex"> {{hasJustStroke ? 'Stroke' : 'Background'}} </label>
+                  <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
+                </div>
+
               </div>
             </div>
             <div class="download">

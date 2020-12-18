@@ -24,6 +24,8 @@ export default {
     }
   },
   mounted () {
+    document.body.style.top = `-${window.scrollY}px`
+    document.body.style.position = 'fixed'
     const paths = document.querySelectorAll('#preview path')
     if (paths.length === 1) {
       this.hasJustStroke = true
@@ -31,7 +33,11 @@ export default {
   },
   methods: {
     close () {
+      const actualScroll = document.body.style.top
       this.$emit('close')
+      document.body.style.position = null
+      document.body.style.top = null
+      window.scrollTo(0, parseInt(actualScroll || '0') * -1)
     },
     selectStroke (color) {
       if (color.length === 7) {
