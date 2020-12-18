@@ -102,14 +102,14 @@
   justify-content: center;
   height: 335px;
   margin-right: 50px;
-  max-width: 335px;
-  width: 100%;
+  width: 335px;
 
   @media (max-width: 768px) {
     margin-right: 0;
     margin-bottom: 30px;
     height: 207px;
-    max-width: 326px;
+    max-width: 335px;
+    width: 100%;
   }
 }
 
