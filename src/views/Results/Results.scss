@@ -3,8 +3,13 @@
 .slide-enter-active,
 .slide-leave-active {
   transition: height .5s;
-  height: 73px;
+  height: 66px;
   overflow: hidden;
+  z-index: 1;
+
+  @media (max-width: 1024px) {
+    height: 58px;
+  }
 }
 
 .slide-enter,
@@ -187,6 +192,7 @@
 }
 
 .menu {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   margin-bottom: 35px;
@@ -440,11 +446,11 @@
   & .container {
     display: flex;
     justify-content: space-between;
-    padding: 13px 40px 13px 60px;
+    padding: 10px 40px 10px 60px;
 
     @media (max-width: 768px) {
       align-items: center;
-      padding: 14px 17px;
+      padding: 10px 17px;
     }
   }
 
