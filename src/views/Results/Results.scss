@@ -418,3 +418,50 @@
     border: none;
   }
 }
+
+.nav-search {
+  background: linear-gradient(180deg, #7BDFF2 -7.61%, #B2F7EF 87.82%);
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  & .container {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 40px 13px 60px;
+
+    @media (max-width: 768px) {
+      align-items: center;
+      padding: 14px 17px;
+    }
+  }
+
+  & .logo {
+    max-width: 130px;
+
+    @media (max-width: 768px) {
+      margin-right: 30px;
+    }
+  }
+
+  & .search {
+    margin-bottom: 0;
+
+    label {
+      font-size: 14px;
+      margin-right: 20px;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+
+    .search-input-wrapper {
+      margin-right: 0;
+    }
+
+    .relative {
+      margin-bottom: 0;
+    }
+  }
+}

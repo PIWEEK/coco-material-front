@@ -21,7 +21,9 @@ export default {
       isHorizontal: true,
       showScrollToTop: false,
       currentPage: 1,
-      pageSize: 40
+      pageSize: 40,
+      showNavBar: false,
+      mobileView: false
     }
   },
   beforeMount () {
@@ -63,6 +65,9 @@ export default {
       } else {
         this.showScrollToTop = false
       }
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+      this.showNavBar = currentScrollPosition > (document.getElementById('formSearch').offsetTop + 30)
+      this.mobileView = window.innerWidth < 768
     })
   },
   methods: {
