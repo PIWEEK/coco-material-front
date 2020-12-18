@@ -75,6 +75,12 @@
           </div>
         </slot>
       </section>
+      <footer class="tags">
+        <ul class="tags-list">
+          <li v-for="(tag, index) in vectorTags" :key="index"><button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+          </li>
+        </ul>
+      </footer>
     </div>
   </div>
 </transition>

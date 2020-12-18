@@ -297,3 +297,30 @@
     text-align: center;
   }
 }
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 30px 30px;
+}
+
+.popular-btn {
+  background: #F2F2F2;
+  border: none;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Red Hat Display';
+  max-width: 190px;
+  margin: 0 5px 5px 0;
+  overflow: hidden;
+  padding: 4px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #00C2FF;
+    color: #FFFFFF;
+  }
+}

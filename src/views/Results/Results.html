@@ -10,7 +10,6 @@
       <li><button class="popular-btn" :disabled="searchTags.includes('tools')" @click="searchVector('tools')">tools</button></li>
       <li><button class="popular-btn" :disabled="searchTags.includes('agile')" @click="searchVector('agile')">agile</button></li>
       <li><button class="popular-btn" :disabled="searchTags.includes('code')" @click="searchVector('code')">code</button></li>
-      <li><button class="popular-btn" :disabled="searchTags.includes('fiction')" @click="searchVector('fiction')">fiction</button></li>
       <li><button class="popular-btn" :disabled="searchTags.includes('chart')" @click="searchVector('chart')">chart</button></li>
       <li><button class="popular-btn" :disabled="searchTags.includes('logo')" @click="searchVector('logo')">logo</button></li>
     </ul>
@@ -146,8 +145,10 @@
     :customizeBulk="customizeBulk"
     :vectors="totalResults"
     :vectorId="selectedVector.id"
+    :vectorTags="selectedVector.tags.split(',')"
     :tags="searchTags"
     :isHorizontal="isHorizontal"
     @close="closeModal"
+    @search="searchModalVector($event)"
   />
 </div>

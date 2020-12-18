@@ -10,7 +10,8 @@ export default {
     customizeBulk: null,
     vectors: null,
     tags: null,
-    isHorizontal: null
+    isHorizontal: null,
+    vectorTags: null
   },
   data () {
     return {
@@ -69,6 +70,9 @@ export default {
     },
     handleDownloadPng (size) {
       this.$matomo.trackEvent('downloads', `png-${size}`, this.vector.name)
+    },
+    searchVector (tag) {
+      this.$emit('search', tag)
     }
   }
 }

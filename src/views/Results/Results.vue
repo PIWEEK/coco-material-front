@@ -191,6 +191,17 @@ export default {
         pageSize: this.pageSize
       })
     },
+    searchModalVector (tag) {
+      this.clearSearchTags()
+      this.updateSearchTags(tag.replace(/\s/g, ''))
+      this.getVectorsByTag({
+        tags: this.searchTags,
+        currentPage: 1,
+        pageSize: this.pageSize
+      })
+      this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
+      this.isModalVisible = false
+    },
     showAll () {
       this.clearSearchTags()
       this.getVectors({
