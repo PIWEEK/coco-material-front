@@ -24,6 +24,7 @@ export default {
     }
   },
   mounted () {
+    document.body.style.width = document.body.clientWidth + 'px'
     document.body.style.top = `-${window.scrollY}px`
     document.body.style.position = 'fixed'
     const paths = document.querySelectorAll('#preview path')
@@ -37,6 +38,7 @@ export default {
       this.$emit('close')
       document.body.style.position = null
       document.body.style.top = null
+      document.body.style.width = null
       window.scrollTo(0, parseInt(actualScroll || '0') * -1)
     },
     selectStroke (color) {
