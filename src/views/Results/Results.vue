@@ -149,7 +149,7 @@ export default {
     },
     addTag (tag) {
       this.search = ''
-      this.$refs.search.focus()
+      this.$refs.search && this.$refs.search.focus()
       this.autocompleteResults = []
       this.updateSearchTags(tag.toLocaleLowerCase())
 
@@ -189,12 +189,10 @@ export default {
       if (searchValue !== '') {
         this.addTag(searchValue.toLocaleLowerCase())
       }
-      this.$router.push({ path: '/results', query: { q: searchValue.toLocaleLowerCase() } })
-      this.getVectorsByTag({
-        tags: [searchValue.toLocaleLowerCase()],
-        currentPage: 1,
-        pageSize: this.pageSize
-      })
+    },
+    handleSearchVector (search) {
+      this.clearSearchTags()
+      this.addTag(search.toLocaleLowerCase())
     },
     searchModalVector (tag) {
       this.clearSearchTags()

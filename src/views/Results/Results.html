@@ -32,15 +32,15 @@
       <p>Popular tags</p>
       <button class="link mobile" @click="showAll()">View all images</button>
       <ul class="tags-list">
-        <li><button class="popular-btn" :disabled="searchTags.includes('face')" @click="searchVector('face')">face</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('family')" @click="searchVector('family')">family</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('science')" @click="searchVector('science')">science</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('office')" @click="searchVector('office')">office</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('tools')" @click="searchVector('tools')">tools</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('agile')" @click="searchVector('agile')">agile</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('code')" @click="searchVector('code')">code</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('chart')" @click="searchVector('chart')">chart</button></li>
-        <li><button class="popular-btn" :disabled="searchTags.includes('logo')" @click="searchVector('logo')">logo</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('face')" @click="handleSearchVector('face')">face</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('family')" @click="handleSearchVector('family')">family</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('science')" @click="handleSearchVector('science')">science</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('office')" @click="handleSearchVector('office')">office</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('tools')" @click="handleSearchVector('tools')">tools</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('agile')" @click="handleSearchVector('agile')">agile</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('code')" @click="handleSearchVector('code')">code</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('chart')" @click="handleSearchVector('chart')">chart</button></li>
+        <li><button class="popular-btn" :disabled="searchTags.includes('logo')" @click="handleSearchVector('logo')">logo</button></li>
       </ul>
       <button class="link desktop" @click="showAll()">View all images</button>
     </aside>
@@ -100,7 +100,7 @@
           </div>
         </div>
       </div>
-      <div v-if="filteredVectors.length && paginationArray.length > 1 && 6 > paginationArray.length" class="pagination-container">
+      <div v-if="filteredVectors.length && paginationArray.length > 1 && 6 >= paginationArray.length" class="pagination-container">
         <button class="prev" @click="handlePagination(currentPage - 1)" :disabled="currentPage == 1">
           <img v-if="currentPage == 1" src="../../assets/prev-disabled.svg" alt="Previous page disabled" />
           <img v-else src="../../assets/prev.svg" alt="Previous page" />
