@@ -1,44 +1,36 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'https://cocomaterial.com/api'
+axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common.Accept = 'application/json'
 
 const appService = {
+  // Vectors
   getVectors (payload) {
-    return new Promise((resolve) => {
-      axios.get(`/vectors/?page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
-        resolve(response.data)
-      })
+    return axios.get(`/vectors/?page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
+      return response.data
     })
   },
   getVectorByTag (payload) {
-    return new Promise((resolve) => {
-      axios.get(`/vectors/?tags=${payload.tags.join()}&page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
-        resolve(response.data)
-      })
-    })
-  },
-  getTags () {
-    return new Promise((resolve) => {
-      axios.get('/tags/').then(response => {
-        resolve(response.data)
-      })
+    return axios.get(`/vectors/?tags=${payload.tags.join()}&page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
+      return response.data
     })
   },
   getFeaturedVectors () {
-    return new Promise((resolve) => {
-      axios.get('/vectors/featured/').then(response => {
-        resolve(response.data)
-      })
+    return axios.get('/vectors/featured/').then(response => {
+      return response.data
     })
   },
   getLatestVectors () {
-    return new Promise((resolve) => {
-      axios.get('/vectors/latest/').then(response => {
-        resolve(response.data)
-      })
+    return axios.get('/vectors/latest/').then(response => {
+      return response.data
+    })
+  },
+  // Tags
+  getTags () {
+    return axios.get('/tags/').then(response => {
+      return response.data
     })
   }
 }
