@@ -94,7 +94,7 @@ export default {
       const height = image.height
       const width = image.width
       this.isHorizontal = height < width
-      this.svgCode = JSON.parse(xmlHttp.responseText).svg_content
+      this.svgCode = JSON.parse(xmlHttp.responseText).svgContent
       this.customizeBulk = bulk
       this.isModalVisible = true
     },
