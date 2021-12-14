@@ -7,12 +7,17 @@ axios.defaults.headers.common.Accept = 'application/json'
 
 const appService = {
   // Vectors
+  getVector (payload) {
+    return axios.get(`/vectors/${payload.id}`).then(response => {
+      return response.data
+    })
+  },
   getVectors (payload) {
     return axios.get(`/vectors/?page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
       return response.data
     })
   },
-  getVectorByTag (payload) {
+  getVectorsByTags (payload) {
     return axios.get(`/vectors/?tags=${payload.tags.join()}&page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
       return response.data
     })

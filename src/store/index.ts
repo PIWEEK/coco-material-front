@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import appService from '../service/app.service.js'
+import appService from '@/service/app.service.js'
 
 Vue.use(Vuex)
 
@@ -24,11 +24,16 @@ export default new Vuex.Store({
       state.totalResults = payload.vectors.count
       state.paginationArray = Array.from(Array(Math.ceil(payload.vectors.count / payload.pageSize)).keys())
     },
-    getVectorsByTagSuccess (state, payload) {
+    getVectorsByTagsSuccess (state, payload) {
       state.filteredVectors = payload.vectors.results
       state.totalResults = payload.vectors.count
       state.paginationArray = Array.from(Array(Math.ceil(payload.vectors.count / payload.pageSize)).keys())
       state.searchTags = payload.tags
+    },
+    clearVectors (state) {
+      state.filteredVectors = []
+      state.totalResults = null
+      state.paginationArray = []
     },
     clearSearchTags (state) {
       state.searchTags = []
@@ -55,38 +60,41 @@ export default new Vuex.Store({
   },
   actions: {
     getTags ({ commit }) {
-      appService.getTags()
+      return appService.getTags()
         .then(tags => {
           commit('getTagsSuccess', tags)
         })
     },
     getVectors ({ commit }, payload) {
+      commit('clearVectors')
       commit('setLoading', true)
-      appService.getVectors(payload)
+      return appService.getVectors(payload)
         .then(vectors => {
           commit('getVectorsSuccess', { vectors: vectors, pageSize: payload.pageSize })
           commit('setLoading', false)
         })
     },
-    getVectorByTag ({ commit }, payload) {
-      appService.getVectorByTag(payload)
+    getVectorsByTags ({ commit }, payload) {
+      commit('clearVectors')
+      commit('setLoading', true)
+      return appService.getVectorsByTags(payload)
         .then(vectors => {
-          commit('getVectorsByTagSuccess', { vectors, tags: payload.tags, pageSize: payload.pageSize })
+          commit('getVectorsByTagsSuccess', { vectors, tags: payload.tags, pageSize: payload.pageSize })
+          commit('setLoading', false)
         })
     },
     getFeaturedVectors ({ commit }) {
-      appService.getFeaturedVectors()
+      return appService.getFeaturedVectors()
         .then(featuredVectors => {
           commit('getFeaturedVectorsSuccess', featuredVectors)
         })
     },
     getLatestVectors ({ commit }) {
-      appService.getLatestVectors()
+      return appService.getLatestVectors()
         .then(latestVectors => {
           commit('getLatestVectorsSuccess', latestVectors)
         })
     }
   },
-  modules: {
-  }
+  modules: {}
 })

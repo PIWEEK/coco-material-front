@@ -10,9 +10,19 @@
           <label for="search">Search results for: </label>
           <div class="relative">
             <div class="search-input-wrapper">
-              <span class="tag" v-for="(tag, index) in searchTags" :key="index" @click="removeTag(tag)">x {{tag}}</span>
-              <input id="search" ref="search" v-model="search" type="text" @keyup.enter="searchVector"
-                @keyup.delete="handleDelete" @keyup="autocompleteSearch" @keyup.esc="resetAutocompleteResults()"
+              <span
+                class="tag"
+                v-for="(tag, index) in searchTags"
+                :key="index" @click="removeTag(tag)">x {{tag}}</span>
+              <input
+                id="search"
+                ref="search"
+                v-model="search"
+                type="text"
+                @keyup.enter="searchVector"
+                @keyup.delete="handleDelete"
+                @keyup="autocompleteSearch"
+                @keyup.esc="resetAutocompleteResults()"
                 @keydown.down="focusAutocompleteResults(-1, 'down')" />
             </div>
             <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
@@ -92,11 +102,16 @@
       <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">
         <div class="vector-container" v-for="(vector, index) in filteredVectors" :key="index">
           <div class="img-container">
-            <div class="svg-container" :id="index" :alt="vector.name" @load="loaded(index)" v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
+            <div
+              class="svg-container"
+              :id="index"
+              :alt="vector.name"
+              @load="loaded(index)"
+              v-bind:style="{ backgroundImage: 'url(' + vector.svg + ')' }"></div>
           </div>
           <div class="download-btn">
-            <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">SVG</a>
-            <button class="btn png" @click="showModal(vector, false, index)">PNG</button>
+            <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">Download</a>
+            <button class="btn png" @click="showModal(vector, false, index)">Customize</button>
           </div>
         </div>
       </div>
@@ -136,7 +151,11 @@
             <button class="page"  @click="handlePagination(currentPage + 1)">{{currentPage + 1}}</button>
           </li>
           <li v-if="currentPage !== paginationArray.length">
-            <span v-if="![paginationArray.length - 2, paginationArray.length - 1, paginationArray.length].includes(currentPage)" class="separator">...</span>
+            <span
+              class="separator"
+              v-if="![paginationArray.length - 2, paginationArray.length - 1, paginationArray.length].includes(currentPage)">
+              ...
+            </span>
             <button class="page" @click="handlePagination(paginationArray.length)">{{paginationArray.length}}</button>
           </li>
         </ul>
@@ -145,6 +164,7 @@
           <img v-else src="../../assets/next.svg" alt="Next page" />
         </button>
       </div>
+
       <div v-if="filteredVectors.length === 0" class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../../assets/coco.svg" />
         <h3>Sorry, this coconut is empty</h3>
@@ -169,13 +189,11 @@
     </section>
     <modal
       v-if="isModalVisible && filteredVectors.length"
-      :vector="svgCode"
-      :customizeBulk="customizeBulk"
-      :vectors="totalResults"
       :vectorId="selectedVector.id"
-      :vectorTags="selectedVector.tags.split(',')"
-      :tags="searchTags"
       :isHorizontal="isHorizontal"
+      :customizeBulk="customizeBulk"
+      :totalVectors="totalResults"
+      :tags="searchTags"
       @close="closeModal"
       @search="searchModalVector($event)"
     />

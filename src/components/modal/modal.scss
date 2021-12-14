@@ -1,3 +1,6 @@
+@import '@/variables';
+
+/* Modal style */
 .modal-backdrop {
   align-items: center;
   background-color: rgba(94, 100, 114, 0.61);
@@ -11,7 +14,7 @@
 }
 
 .modal {
-  background: #FFFFFF;
+  background: $color-white;
   border-radius: 6px;
   box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.07);
   display: flex;
@@ -36,29 +39,6 @@
   @media (max-width: 768px) {
     padding: 20px 10px 5px;
   }
-
-  & .title-container {
-    margin: auto;
-  }
-
-  & .title {
-    color: #1C2541;
-    display: block;
-    font-size: 18px;
-    font-weight: 500;
-    height: 26px;
-    text-align: center;
-  }
-
-  & .subtitle {
-    color: #5E6472;
-    font-size: 14px;
-    font-weight: 400;
-
-    &strong {
-      font-weight: 700;
-    }
-  }
 }
 
 .modal-body {
@@ -72,6 +52,87 @@
   }
 }
 
+.modal-fade-enter,
+.modal-fade-leave-active {
+  opacity: 0;
+}
+
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity .5s ease
+}
+
+/* Title */
+.title-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: auto 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  & .title {
+    color: $color-black;
+    display: flex;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  & .subtitle {
+    color: $color-grey;
+    display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 0 0 10px;
+
+    @media (max-width: 768px) {
+        margin: 10px 0 0 0;
+    }
+
+    &strong {
+      font-weight: 700;
+    }
+  }
+}
+
+/* Tags list */
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 0 0 20px;
+
+  @media (max-width: 768px) {
+      margin: 20px 0 0 0;
+  }
+
+  .popular-btn {
+    background: $color-light-grey;
+    border: none;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Red Hat Display';
+    max-width: 190px;
+    margin: 0 5px 5px 0;
+    overflow: hidden;
+    padding: 4px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $color-turquoise-dark;
+      color: $color-white;
+    }
+  }
+}
+
+/* Close button */
 .btn-close {
   background: transparent;
   border: none;
@@ -84,45 +145,42 @@
   padding: 0 10px;
 }
 
-.modal-fade-enter,
-.modal-fade-leave-active {
-  opacity: 0;
-}
-
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity .5s ease
-}
-
-.preview {
-  align-items: center;
-  background-image: url('../../assets/square.svg');
-  background-color: #E5E5E5;
-  display: flex;
-  justify-content: center;
-  height: 335px;
+/* Preview */
+.preview-container {
   margin-right: 50px;
-  overflow: hidden;
-  width: 335px;
 
   @media (max-width: 768px) {
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 30px;
-    height: 207px;
-    max-width: 335px;
-    width: 100%;
   }
-}
 
-.preview-title {
-  color: #5E6472;
-  display: block;
-  font-size: 12px;
-  font-style: italic;
-  font-weight: 500;
-  margin-bottom: 10px;
-  text-align: center;
+  .preview {
+    align-items: center;
+    background-image: url('../../assets/square.svg');
+    background-color: $color-light-grey;
+    display: flex;
+    justify-content: center;
+    height: 335px;
+    overflow: hidden;
+    width: 335px;
+
+    @media (max-width: 768px) {
+      height: 207px;
+      min-width: 310px;
+      width: 100%;
+    }
+  }
+
+  .preview-title {
+    color: $color-grey;
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 500;
+    margin-top: 10px;
+    text-align: center;
+  }
 }
 
 .round {
@@ -137,7 +195,7 @@
     position: relative;
 
     &:before {
-      border: 2px solid #FF0404;
+      border: 2px solid $color-red;
       border-radius: 2px;
       content: '';
       left: -6px;
@@ -149,32 +207,124 @@
   }
 
   &.selected {
-    border: 2px solid #7BDFF2;
+    border: 2px solid $color-light-blue;
   }
 }
 
-.colors {
+/* Choices (common css)*/
+.choices-container {
+  display: flex;
+
+  & > :not(:first-child) {
+    padding-left: 10px;
+  }
+
+  & input {
+    display: none;
+  }
+
+  & label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 2px solid $color-turquoise;
+    border-radius: 4px;
+    color: $color-black;
+    cursor: pointer;
+    font-family: "Red Hat Display", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px 10px;
+    text-decoration: none;
+    transition: all ease 0.3s;
+  }
+
+  & input:checked + label {
+    background-color: $color-light-turquoise;
+  }
+}
+
+/* Download type selector */
+.types-container {
+  display: flex;
+  margin-bottom: 20px;
+
+  & .choices-container {
+    & > * {
+      padding: 0 15px;
+    }
+
+    & > :first-child {
+      padding-left: 0;
+    }
+
+    & > :not(:first-child) {
+      border-left: 1px solid $color-black;
+    }
+
+    & label {
+      color: $color-black;
+      border: none;
+      height: 20px;
+      padding: 0;
+    }
+    & input:checked + label {
+      background-color: transparent;
+      font-weight: 700;
+    }
+  }
+}
+
+
+.type-settings-container {
+  margin-left: 40px;
+  margin-top: 40px;
+
+  @media (max-width: 768px) {
+    margin-left: 0px;
+  }
+
+}
+
+/* Colors options */
+.colors-container {
+  display: flex;
+  flex-direction: column;
+
+  & .edit-color-settings-container {
+    margin-top: 15px;
+    margin-left: 15px;
+
+    & > :not(:first-child) {
+      margin-top: 10px;
+
+      @media (max-width: 768px) {
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
   & .title {
     display: block;
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: 15px;
 
     @media (max-width: 768px) {
       display: none;
-      margin-bottom: 0;
     }
   }
 
   & .hex {
-    border: 1px solid #C4C4C4;
+    border: 1px solid $color-medium-grey;
     border-radius: 2px;
     margin-left: 15px;
     padding: 5px;
     width: 70px;
 
     @media (max-width: 768px) {
-      border: 1px solid #1C2541;
+      border: 1px solid $color-black;
       margin-left: 0;
       align-self: flex-end;
     }
@@ -218,121 +368,66 @@
   }
 }
 
-.stroke {
-  margin-bottom: 30px;
+/* Sizes options */
+.sizes-container {
+  display: flex;
+  margin-top: 20px;
 
-  @media (max-width: 768px) {
-    margin-bottom: 20px;
+  & .choice-container {
+    max-width: 120px;
+    min-width: 50px;
+
+    & .size {
+      color: $color-medium-grey;
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 5px;
+    }
   }
 }
 
-.download {
-  margin-top: 30px;
 
-  @media (max-width: 768px) {
-    margin-top: 20px;
+/* Actions */
+.actions-container {
+  display: flex;
+  margin-top: 40px;
 
-    & .title {
-      margin-bottom: 15px;
-    }
-  }
-
-  & .title-container {
-    & .title,
-    & .subtitle {
-      display: inline-block;
-    }
-
-    & .subtitle {
-      display: inline-block;
-      color: #5E6472;
-      font-size: 14px;
-      font-weight: 400;
-      margin: -3px 0 0 5px;
-    }
-  }
-
-  & .buttons {
-    display: flex;
-
-    @media (max-width: 768px) {
-      justify-content: space-between;
-    }
-  }
-
-  & .btn-container {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-
-    @media (max-width: 768px) {
-      margin-right: 0;
-    }
-
-    &.original {
-      display: block;
-      margin-top: 20px;
-
-      & .size {
-        margin-top: 15px;
-      }
-    }
-  }
-
-  & .btn-download {
+  & .btn {
     background-color: transparent;
-    border: 2px solid #3CD7C9;
+    border: 2px solid $color-turquoise;
     border-radius: 4px;
-    color: #5E6472;
+    color: $color-grey;
     font-family: 'Red Hat Display', sans-serif;
     font-size: 14px;
     font-weight: 500;
     padding: 5px 30px;
     text-decoration: none;
+    transition: all ease .3s;
 
     &:hover {
-      background-color: #3CD7C9;
-      color:#ffffff;
-      transition: all ease .3s;
-    }
-
-    @media (max-width: 768px) {
-      padding: 5px 40px;
+      background-color: $color-turquoise;
+      color: $color-white;
     }
   }
 
-  & .size {
-    color: #BDBDBD;
+  & .submit {
+    background-color: $color-black;
+    border-color: $color-black;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-black;
+      color: $color-white;
+    }
+  }
+  & .counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-grey;
     font-size: 12px;
     font-weight: 500;
-    margin-top: 5px;
+    margin-left: 20px;
     text-align: center;
-  }
-}
-
-.tags-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0 30px 30px;
-}
-
-.popular-btn {
-  background: #F2F2F2;
-  border: none;
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 14px;
-  font-family: 'Red Hat Display';
-  max-width: 190px;
-  margin: 0 5px 5px 0;
-  overflow: hidden;
-  padding: 4px 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  &:hover {
-    background-color: #00C2FF;
-    color: #FFFFFF;
   }
 }

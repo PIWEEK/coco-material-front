@@ -101,8 +101,14 @@ export default {
       }
       this.$router.push({ path: '/results', query: { q: this.tagsToSearch.join(',') } })
     },
-    searchVectorByTopic (search) {
-      this.$router.push({ path: '/results', query: { q: search.toLocaleLowerCase() } })
+    searchVectorByTopic (search, vectorId) {
+      const query = { q: search.toLocaleLowerCase() }
+
+      if (vectorId) {
+        query.vectorId = vectorId
+      }
+
+      this.$router.push({ path: '/results', query })
     },
     handleDelete () {
       if (this.search === '') {

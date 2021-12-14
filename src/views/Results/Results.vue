@@ -3,7 +3,7 @@
 <script>
 
 import { mapState, mapActions, mapMutations } from 'vuex'
-import modal from '../../components/modal/modal.vue'
+import modal from '@/components/modal/modal.vue'
 
 export default {
   name: 'Results',
@@ -26,20 +26,30 @@ export default {
       mobileView: false
     }
   },
-  beforeMount () {
+  async beforeMount () {
     !this.searchTags.length && this.getTags()
 
     if (this.$route.query.q) {
-      this.getVectorsByTag({
+      await this.getVectorsByTags({
         tags: this.$route.query.q.split(','),
         currentPage: this.currentPage,
         pageSize: this.pageSize
       })
     } else {
-      this.getVectors({
+      await this.getVectors({
         currentPage: this.currentPage,
         pageSize: this.pageSize
       })
+    }
+
+    // Open the vector detail modal if there is a vectorId
+    if (this.$route.query.vectorId) {
+      // Use strings in the comparation because they could be numbers or strings
+      const index = this.filteredVectors.findIndex((v) => `${v.id}` === `${this.$route.query.vectorId}`)
+      if (index !== -1) {
+        const vector = this.filteredVectors[index]
+        this.showModal(vector, false, index)
+      }
     }
   },
   computed: {
@@ -65,15 +75,19 @@ export default {
       } else {
         this.showScrollToTop = false
       }
-      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-      this.showNavBar = currentScrollPosition > (document.getElementById('formSearch').offsetTop + 30)
-      this.mobileView = window.innerWidth < 768
+
+      const formSearchEl = document.getElementById('formSearch')
+      if (formSearchEl) {
+        const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+        this.showNavBar = currentScrollPosition > (formSearchEl.offsetTop + 30)
+        this.mobileView = window.innerWidth < 768
+      }
     })
   },
   methods: {
     ...mapActions({
       getTags: 'getTags',
-      getVectorsByTag: 'getVectorByTag',
+      getVectorsByTags: 'getVectorsByTags',
       getVectors: 'getVectors'
     }),
     ...mapMutations({
@@ -84,21 +98,20 @@ export default {
     }),
     showModal (vector, bulk, id) {
       this.selectedVector = vector
-      // get svg code
-      var xmlHttp = new XMLHttpRequest()
-      xmlHttp.open('GET', vector.url, false)
-      xmlHttp.send(null)
-
       const image = new Image()
       image.src = window.getComputedStyle(document.getElementById(`${id}`), false).backgroundImage.slice(4, -1).replace(/"/g, '')
       const height = image.height
       const width = image.width
       this.isHorizontal = height < width
-      this.svgCode = JSON.parse(xmlHttp.responseText).svgContent
       this.customizeBulk = bulk
+
       this.isModalVisible = true
     },
     closeModal () {
+      this.selectedVector = null
+      this.isHorizontal = true
+      this.customizeBulk = false
+
       this.isModalVisible = false
     },
     resetAutocompleteResults () {
@@ -153,7 +166,7 @@ export default {
       this.autocompleteResults = []
       this.updateSearchTags(tag.toLocaleLowerCase())
 
-      this.getVectorsByTag({
+      this.getVectorsByTags({
         tags: this.searchTags,
         currentPage: 1,
         pageSize: this.pageSize
@@ -163,7 +176,7 @@ export default {
     removeTag (tag) {
       this.removeSearchTag(tag)
       if (this.searchTags.length) {
-        this.getVectorsByTag({
+        this.getVectorsByTags({
           tags: this.searchTags,
           currentPage: 1,
           pageSize: this.pageSize
@@ -185,9 +198,13 @@ export default {
       this.$matomo.trackEvent('downloads', 'svg', vector.name)
     },
     searchVector (search) {
-      const searchValue = typeof search === 'string' ? search : this.search
-      if (searchValue !== '') {
-        this.addTag(searchValue.toLocaleLowerCase())
+      const searchValues = typeof search === 'string' ? search.toLocaleLowerCase() : this.search.toLocaleLowerCase()
+
+      for (const searchValue of searchValues.split(',')) {
+        const val = searchValue.trim()
+        if (val !== '') {
+          this.addTag(val)
+        }
       }
     },
     handleSearchVector (search) {
@@ -197,7 +214,7 @@ export default {
     searchModalVector (tag) {
       this.clearSearchTags()
       this.updateSearchTags(tag.replace(/\s/g, ''))
-      this.getVectorsByTag({
+      this.getVectorsByTags({
         tags: this.searchTags,
         currentPage: 1,
         pageSize: this.pageSize
@@ -225,7 +242,7 @@ export default {
     handlePagination (page) {
       this.currentPage = page
       if (this.searchTags.length) {
-        this.getVectorsByTag({
+        this.getVectorsByTags({
           tags: this.searchTags,
           currentPage: page,
           pageSize: this.pageSize

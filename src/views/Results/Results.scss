@@ -318,15 +318,26 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 10px;
+
+    @media (max-width: 768px) {
+      column-gap: 2px;
+    }
   }
 
   & .btn {
     background-color: transparent;
     border: 2px solid $color-turquoise;
     border-radius: 4px;
+    font-family: 'Red Hat Display', sans-serif;
     font-size: 14px;
+    line-height: normal;
     padding: 5px;
     transition: all ease .3s;
+    display: block;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
 
     &:hover {
       background-color: $color-turquoise;
@@ -335,11 +346,16 @@
   }
 
   & .svg {
+    background-color: $color-light-turquoise;
     color: $color-black;
-    font: 400 14px 'Red Hat Display';
-    padding: 4px 5px;
+    display: inline-block;
     text-decoration: none;
     text-align: center;
+
+    &:hover {
+      background-color: $color-turquoise;
+      color: $color-white;
+    }
   }
 
   & .img-container {

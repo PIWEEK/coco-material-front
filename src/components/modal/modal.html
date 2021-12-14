@@ -4,91 +4,165 @@
       <header class="modal-header">
         <slot name="header">
           <div class="title-container">
-            <span class="title">
-              {{customizeBulk ? 'Customize selection' : 'Customize illustration'}}
-            </span>
-            <span v-if="customizeBulk" class="subtitle">
-            (<strong>{{vectors}} illustrations </strong>selected for bulk edit)
-            </span>
+            <template v-if="customizeBulk">
+              <span class="title">Customize illustrations</span>
+              <span class="subtitle">({{totalVectors}} illustrations selected for bulk edit)</span>
+              <ul class="tags-list">
+                <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
+                  <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+                </li>
+              </ul>
+            </template>
+            <template v-if="!customizeBulk">
+              <span class="title"> {{ vector &&  vector.name ? vector.name : 'Customize selection' }}</span>
+              <ul class="tags-list">
+                <li v-for="(tag, index) in vectorTags" :key="index">
+                  <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+                </li>
+              </ul>
+            </template>
           </div>
           <button
             type="button"
             class="btn-close"
-            @click="close"
-          >
-            x
+            @click="close">
+            X
           </button>
         </slot>
       </header>
       <section class="modal-body">
         <slot name="body">
           <div class="preview-container">
+            <div
+              :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`"
+              id="preview"
+              ref="preview"
+              v-html="svgCode"></div>
             <span class="preview-title" v-if="customizeBulk">Example illustation for reference</span>
-            <div id="preview" ref="preview" :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`" v-html="vector">
-            </div>
           </div>
-          <div class="colors">
-            <div v-if="!hasJustStroke" class="stroke">
-              <label class="title" for="strokeHex"> Stroke </label>
-              <div class="color-options">
-                <div class="rounds">
-                  <span :class="`round ${strokeHexValue === color ? 'selected' : ''}`" v-for="(color, index) in strokeColor" :key="index" @click="selectStroke(color)" :style="{backgroundColor: `${color}`}"></span>
+          <form
+            class="form-container"
+            @submit.prevent="download()">
+            <div class="types-container">
+              <div class="choices-container">
+                <div class="choice-container">
+                  <input type="radio" id="type-png" value="png" v-model="downloadType" />
+                  <label for="type-png" @click="selectDownloadTypePng()">Download PNG</label>
                 </div>
-                <div class="color-title-container">
-                  <label class="title" for="strokeHex"> Stroke </label>
-                  <input name="strokeHex" v-model="strokeHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectStroke(strokeHexValue)"/>
+                <div class="choice-container">
+                  <input type="radio" id="type-svg" value="svg" v-model="downloadType" />
+                  <label for="type-svg" @click="selectDownloadTypeSvg()">Download SVG</label>
                 </div>
+              </div>
+            </div>
+            <div class="type-settings-container">
+              <fieldset class="colors-container">
+                <div class="choices-container">
+                  <div class="choice-container">
+                    <input type="radio" id="color-black-white" value="black-white" v-model="colorOption" />
+                    <label for="color-black-white" @click="selectColorBlackAndWhite()">Black & White</label>
+                  </div>
+                  <div class="choice-container" v-if="customizeBulk || hasColorSuggestion">
+                    <input type="radio" id="color-suggestion" value="color-suggestion" v-model="colorOption" />
+                    <label for="color-suggestion" @click="selectColorSuggestion()">Color Suggestion</label>
+                  </div>
+                  <div class="choice-container">
+                    <input type="radio" id="color-edit" value="edit" v-model="colorOption" />
+                    <label for="color-edit" @click="selectColorEdit()">Edit</label>
+                  </div>
+                </div>
+                <transition name="fade" mode="out-in">
+                  <div class="edit-color-settings-container" v-if="colorOption == 'edit'">
+                    <div class="stroke-container">
+                      <label class="title" for="strokeHex"> Stroke </label>
+                      <div class="color-options">
+                        <div class="rounds">
+                          <span
+                            :class="`round ${strokeHexValue === color ? 'selected' : ''}`"
+                            v-for="(color, index) in strokeColor"
+                            :key="index"
+                            @click="selectStroke(color)"
+                            :style="{backgroundColor: `${color}`}">
+                          </span>
+                        </div>
+                        <div class="color-title-container">
+                          <label class="title" for="strokeHex"> Stroke </label>
+                          <input
+                            class="hex"
+                            type="text"
+                            name="strokeHex"
+                            placeholder="HEX"
+                            v-model="strokeHexValue"
+                            @keyup="selectStroke(strokeHexValue)" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fill-container">
+                      <label class="title" for="fillHex">Fill</label>
+                      <div class="color-options">
+                        <div class="rounds">
+                          <span
+                            :class="`round ${color === 'none' ? 'transparent' : ''} ${fillHexValue === color ? 'selected' : ''}`"
+                            v-for="(color, index) in fillColor"
+                            :key="index"
+                            @click="selectFill(color)"
+                            :style="{backgroundColor: `${color}`}">
+                          </span>
+                        </div>
+                        <div class="color-title-container">
+                          <label class="title" for="fillHex">Fill</label>
+                          <input
+                            class="hex"
+                            type="text"
+                            name="fillHex"
+                            placeholder="HEX"
+                            v-model="fillHexValue"
+                            @keyup="selectFill(fillHexValue)" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </transition>
+              </fieldset>
 
-              </div>
-            </div>
-            <div class="fill">
-              <label class="title" for="fillHex"> {{hasJustStroke ? 'Stroke' : 'Background'}} </label>
-              <div class="color-options">
-                <div class="rounds">
-                  <span :class="`round ${color === 'none' ? 'transparent' : ''} ${backgroundHexValue === color ? 'selected' : ''}`" v-for="(color, index) in fillColor" :key="index" @click="selectFill(color)" :style="{backgroundColor: `${color}`}"></span>
-                </div>
-                <div class="color-title-container">
-                  <label class="title" for="fillHex"> {{hasJustStroke ? 'Stroke' : 'Background'}} </label>
-                  <input name="fillHex" v-model="backgroundHexValue" type="text" placeholder="HEX" class="hex" @keyup="selectFill(backgroundHexValue)"/>
-                </div>
+              <transition name="fade" mode="out-in">
+                <fieldset class="sizes-container" v-if="downloadType === 'png'">
+                  <div class="choices-container">
+                    <div class="choice-container">
+                      <input type="radio" id="size-original" value="0" v-model="size" />
+                      <label for="size-original">Original size</label>
+                      <div class="size">If you want to combine it with similar images</div>
+                    </div>
+                    <div class="choice-container">
+                      <input type="radio" id="size-s" value="128" v-model="size" />
+                      <label for="size-s">S</label>
+                      <div class="size">128px</div>
+                    </div>
+                    <div class="choice-container">
+                      <input type="radio" id="size-m" value="256" v-model="size" />
+                      <label for="size-m">M</label>
+                      <div class="size">256px</div>
+                    </div>
+                    <div class="choice-container">
+                      <input type="radio" id="size-l" value="512" v-model="size" />
+                      <label for="size-l">L</label>
+                      <div class="size">512px</div>
+                    </div>
+                  </div>
+                </fieldset>
+              </transition>
 
-              </div>
+              <fieldset class="actions-container">
+                <button class="btn submit" type="submit">
+                  Download {{ downloadType.toUpperCase() }}
+                </button>
+                <div class="counter" v-if="customizeBulk">{{totalVectors}} illustrations zipped</div>
+              </fieldset>
             </div>
-            <div class="download">
-              <div class="title-container">
-                <span class="title">Download PNG</span>
-                <span v-if="customizeBulk" class="subtitle">( {{vectors}} illustrations)</span>
-              </div>
-              <div class="buttons">
-                <div class="btn-container">
-                  <a class="btn-primary btn-download" :href="downloadPng('128')" @click="handleDownloadPng('128')">S</a>
-                  <span class="size">128px</span>
-                </div>
-                <div class="btn-container">
-                  <a class="btn-primary btn-download" :href="downloadPng('256')" @click="handleDownloadPng('256')">M</a>
-                  <span class="size">256px</span>
-                </div>
-                <div class="btn-container">
-                  <a class="btn-primary btn-download" :href="downloadPng('512')" @click="handleDownloadPng('512')">L</a>
-                  <span class="size">512px</span>
-                </div>
-              </div>
-              <div class="buttons">
-                <div class="btn-container original">
-                  <a class="btn-primary btn-download" :href="downloadPng('0')" @click="handleDownloadPng('original')">Original size</a>
-                  <div class="size">Use this if you want to combine it with similar images</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </form>
         </slot>
       </section>
-      <footer class="tags">
-        <ul class="tags-list">
-          <li v-for="(tag, index) in vectorTags" :key="index"><button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
-          </li>
-        </ul>
-      </footer>
+      <footer></footer>
     </div>
   </div>
 </transition>
