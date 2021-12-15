@@ -51,6 +51,11 @@ export default {
     // Check if image has color suggestion
     this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
 
+    // If coloredSvg exist, select it by default
+    if (this.vector.coloredSvg) {
+      this.selectColorSuggestion()
+    }
+
     // Add data to the url
     if (!this.customizeBulk && !this.$route.query.vectorId) {
       const query = Object.assign({}, this.$route.query, { vectorId: this.vector.id })
