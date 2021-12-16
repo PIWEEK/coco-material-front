@@ -12,7 +12,9 @@ export default {
         { name: 'Natacha Menjibar', position: 'UX/UI Designer', link: 'https://kaleidos.net/492858/' },
         { name: 'Esther Moreno', position: 'Creator & Illustrator', link: 'https://kaleidos.net/720B34/' },
         { name: 'Yamila Moreno', position: 'Back-End Developer', link: 'https://kaleidos.net/D70A53/' },
-        { name: 'Ramiro Sánchez', position: 'Front-End Developer', link: 'https://kaleidos.net/E32841/' }]
+        { name: 'Ramiro Sánchez', position: 'Front-End Developer', link: 'https://kaleidos.net/E32841/' },
+        { name: 'David Barragán', position: 'Naive Developer', link: 'https://kaleidos.net/FFF8E7/' }
+      ]
     }
   }
 }

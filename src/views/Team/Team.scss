@@ -21,8 +21,8 @@ img {
   margin: auto;
   max-width: 900px;
 
-  @media (max-width: 768px) {
-    max-width: 100%;
+  @media (max-width: 1200px) {
+    max-width: 92vw;
   }
 }
 
@@ -32,22 +32,37 @@ img {
   background-position: center;
   background-size: contain;
   padding-top: 30px;
-  margin-bottom: 90px;
+  margin-bottom: 50px;
+
+  @media (max-width: 1200px) {
+    margin: auto 10px 50px 10px;
+  }
 }
 
 .members {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 60px;
 
-  @media (max-width: 768px) {
-    margin: 0 20px;
+  @media (max-width: 1200px) {
+    margin: 40px 5px;
   }
 }
 
 .group {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  margin: auto;
-  column-gap: 20px;
+  grid-template-columns: repeat(3,  1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  margin: 0 auto 90px auto;
+  max-width: 600px;
+
+  @media (max-width: 768px) {
+    column-gap: 10px;
+    padding: 0 20px;
+    margin-bottom: 50px;
+  }
 }
 
 .person {
@@ -58,11 +73,19 @@ img {
   color: $color-black;
   font-weight: 500;
   font-size: 18px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .position {
   color: $color-grey;
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 }
 
 .contact {
