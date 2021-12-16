@@ -1,55 +1,53 @@
 <section class="home">
-  <div class="cta">
-    <div class="container container-cta">
-      <div class="section-text">
-        <h1 class="title">Looking for the perfect illustration?</h1>
-        <h2 class="subtitle">Discover the CocoMaterial, the Open Source hand-drawn illustration library</h2>
-        <a class="btn" href="#start">Start now</a>
-      </div>
-      <div class="section-img">
-        <img alt="Person thinking illustration" src="../../assets/woman-asking.svg" />
+  <div class="first-container">
+    <div class="cta">
+      <div class="container container-cta">
+        <div class="section-text">
+          <h1 class="title">Looking for the perfect illustration?</h1>
+          <h2 class="subtitle">Discover the CocoMaterial, the Open Source hand-drawn illustration library. Customize & download!</h2>
+          <div class="search-container">
+            <form  id="start" autocomplete="off" class="search" onsubmit="return false;">
+              <label for="search">Search</label>
+              <div class="search-input-wrapper">
+                <span
+                  class="tag"
+                  v-for="(tag, index) in tagsToSearch"
+                  :key="index"
+                  @click="removeTag(tag)">x {{tag}}</span>
+                <input
+                  id="search"
+                  ref="search"
+                  v-model="search"
+                  type="text"
+                  :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
+                  @keyup.enter="searchVector"
+                  @keyup.delete="handleDelete"
+                  @keyup="autocompleteSearch"
+                  @keyup.esc="resetAutocompleteResults()"
+                  @keydown.down="focusAutocompleteResults(-1, 'down')"/>
+              </div>
+              <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
+                <span
+                  tabindex="1"
+                  v-for="(result, index) in autocompleteResults"
+                  :key="index"
+                  @click="addTag(result.slug)"
+                  @keyup.enter="addTag(result.slug)"
+                  @keyup.esc="resetAutocompleteResults()"
+                  @keydown.up="focusAutocompleteResults(index, 'up')"
+                  @keydown.down="focusAutocompleteResults(index, 'down')">
+                  {{result.slug}}
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="section-img">
+          <img alt="Person thinking illustration" src="../../assets/woman-asking.svg" />
+        </div>
       </div>
     </div>
-  </div>
-  <div class="search-section" :style="{ backgroundImage: `url(${require('@/assets/bg-customize.svg')})`}" @click="closeAutocomplete">
-    <div class="container">
-      <h3 id="start"  class="title">Customize & Download</h3>
-      <p class="subtitle">Search by theme and customize the colors of the illustration to match your needs</p>
-      <form autocomplete="off" class="search" onsubmit="return false;">
-        <label for="search">Search</label>
-        <div class="search-input-wrapper">
-          <span
-            class="tag"
-            v-for="(tag, index) in tagsToSearch"
-            :key="index"
-            @click="removeTag(tag)">x {{tag}}</span>
-          <input
-            id="search"
-            ref="search"
-            v-model="search"
-            type="text"
-            :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
-            @keyup.enter="searchVector"
-            @keyup.delete="handleDelete"
-            @keyup="autocompleteSearch"
-            @keyup.esc="resetAutocompleteResults()"
-            @keydown.down="focusAutocompleteResults(-1, 'down')"/>
-        </div>
-        <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
-          <span
-            tabindex="1"
-            v-for="(result, index) in autocompleteResults"
-            :key="index"
-            @click="addTag(result.slug)"
-            @keyup.enter="addTag(result.slug)"
-            @keyup.esc="resetAutocompleteResults()"
-            @keydown.up="focusAutocompleteResults(index, 'up')"
-            @keydown.down="focusAutocompleteResults(index, 'down')">
-            {{result.slug}}
-          </span>
-        </div>
-      </form>
-    </div>
+    <div class="grass"></div>
   </div>
   <h1 class="home-title">
     Recently added
