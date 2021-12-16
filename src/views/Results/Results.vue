@@ -191,11 +191,16 @@ export default {
       }
     },
     downloadSvg (vector) {
-      const id = vector.id
-      return `https://cocomaterial.com/api/download/?id=${id}&img_format=svg`
+      const queryUrl = new URLSearchParams()
+      queryUrl.set('id', vector.id)
+      queryUrl.set('img_format', 'svg')
+      queryUrl.set('suggested', true)
+      return `${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`
     },
-    handleDownloadSvg (vector) {
-      this.$matomo.trackEvent('downloads', 'svg', vector.name)
+    trackDownload (vector) {
+      if (this.$matomo) {
+        this.$matomo.trackEvent('downloads', 'svg', vector.name)
+      }
     },
     searchVector (search) {
       const searchValues = typeof search === 'string' ? search.toLocaleLowerCase() : this.search.toLocaleLowerCase()

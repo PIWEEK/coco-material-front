@@ -110,7 +110,7 @@
               v-bind:style="{ backgroundImage: 'url(' + (vector.coloredSvg || vector.svg) + ')' }"></div>
           </div>
           <div class="download-btn">
-            <a :href="downloadSvg(vector)" @click="handleDownloadSvg(vector)" target="_blank" class="btn svg">Download</a>
+            <a :href="downloadSvg(vector)" @click="trackDownload(vector)" target="_blank" class="btn svg">Download</a>
             <button class="btn png" @click="showModal(vector, false, index)">Customize</button>
           </div>
         </div>

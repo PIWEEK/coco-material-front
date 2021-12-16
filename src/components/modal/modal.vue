@@ -206,10 +206,21 @@ export default {
 
       // and download the image
       window.open(`${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`, '_blank')
+      this.trackDownload()
     },
-    handleDownloadPng (size) {
-      // TODO: Fix me
-      this.$matomo.trackEvent('downloads', `${this.downloadType}-${this.size}`, this.vector.name)
+    trackDownload (name) {
+      if (this.$matomo) {
+        const category = this.customizeBulk
+          ? 'download-bulk'
+          : 'download'
+        const action = this.downloadType === 'svg'
+          ? 'svg'
+          : `${this.downloadType}-${this.size}`
+        const name = this.customizeBulk
+          ? (this.tags.length ? this.tags.join() : 'all')
+          : this.vector.name
+        this.$matomo.trackEvent(category, action, name)
+      }
     }
   }
 }
