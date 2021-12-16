@@ -4,23 +4,14 @@
       <header class="modal-header">
         <slot name="header">
           <div class="title-container">
-            <template v-if="customizeBulk">
-              <span class="title">Customize illustrations</span>
-              <span class="subtitle">({{totalVectors}} illustrations selected for bulk edit)</span>
-              <ul class="tags-list">
-                <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
-                  <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
-                </li>
-              </ul>
-            </template>
-            <template v-if="!customizeBulk">
-              <span class="title"> {{ vector &&  vector.name ? vector.name : 'Customize selection' }}</span>
-              <ul class="tags-list">
-                <li v-for="(tag, index) in vectorTags" :key="index">
-                  <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
-                </li>
-              </ul>
-            </template>
+            <ul class="tags-list">
+              <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
+                <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+              </li>
+              <li v-if="!customizeBulk"  v-else v-for="(tag, index) in vectorTags" :key="index">
+                <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+              </li>
+            </ul>
           </div>
           <button
             type="button"
