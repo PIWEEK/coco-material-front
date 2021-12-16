@@ -20,7 +20,13 @@
   display: flex;
   flex-direction: column;
   overflow-x: auto;
+  min-height: 520px;
+  min-width: 838px;
   max-height: 96vh;
+
+  @media (max-width: 768px) {
+     min-width: 0;
+  }
 }
 
 .modal-header,
