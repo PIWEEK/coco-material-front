@@ -95,8 +95,11 @@
         <div v-if="filteredVectors.length" class="vectors-actions" @click="closeAutocomplete">
           <button class="btn-color" @click="showModal(filteredVectors[0], true, 0)">
             <img alt="Palette icon" src="../../assets/palette.svg"/>
-            <span>Customize all</span></button>
-          <a :href="downloadAllSvg" target="_blank" class="btn-primary btn-download">Download all SVG</a>
+            <span>Customize all</span>
+          </button>
+          <button class="btn-primary btn-download" @click="downloadAll">
+            Download all
+          </button>
         </div>
       </div>
       <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">
@@ -110,7 +113,7 @@
               v-bind:style="{ backgroundImage: 'url(' + (vector.coloredSvg || vector.svg) + ')' }"></div>
           </div>
           <div class="download-btn">
-            <a :href="downloadSvg(vector)" @click="trackDownload(vector)" target="_blank" class="btn svg">Download</a>
+            <button class="btn svg" @click="download(vector)">Download</button>
             <button class="btn png" @click="showModal(vector, false, index)">Customize</button>
           </div>
         </div>

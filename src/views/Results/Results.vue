@@ -60,13 +60,7 @@ export default {
       loading: 'loading',
       totalResults: 'totalResults',
       paginationArray: 'paginationArray'
-    }),
-    downloadAllSvg () {
-      const tags = this.searchTags.length
-        ? this.searchTags.join()
-        : 'all'
-      return `https://cocomaterial.com/api/download/?tags=${tags}&img_format=svg`
-    }
+    })
   },
   mounted: function () {
     window.addEventListener('scroll', () => {
@@ -190,12 +184,24 @@ export default {
         this.$router.push({ path: '/results' })
       }
     },
-    downloadSvg (vector) {
+    async downloadAll () {
+      const tags = this.searchTags.length
+        ? this.searchTags.join()
+        : 'all'
+
       const queryUrl = new URLSearchParams()
-      queryUrl.set('id', vector.id)
-      queryUrl.set('img_format', 'svg')
       queryUrl.set('suggested', true)
-      return `${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`
+      queryUrl.set('tags', tags)
+      queryUrl.set('img_format', 'both')
+      window.open(`${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`, '_blank')
+    },
+    async download (vector) {
+      const queryUrl = new URLSearchParams()
+      queryUrl.set('suggested', true)
+      queryUrl.set('id', vector.id)
+      queryUrl.set('img_format', 'both')
+      window.open(`${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`, '_blank')
+      console.log(queryUrl.toString())
     },
     trackDownload (vector) {
       if (this.$matomo) {
