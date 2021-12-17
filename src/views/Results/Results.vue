@@ -201,7 +201,6 @@ export default {
       queryUrl.set('id', vector.id)
       queryUrl.set('img_format', 'both')
       window.open(`${process.env.VUE_APP_API_URL}/download/?${queryUrl.toString()}`, '_blank')
-      console.log(queryUrl.toString())
     },
     trackDownload (vector) {
       if (this.$matomo) {
@@ -267,7 +266,6 @@ export default {
       this.scrollToTop()
     },
     getSvgImageAsStyleAttr (vector) {
-      console.log(vector)
       var svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
       return {
         backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`

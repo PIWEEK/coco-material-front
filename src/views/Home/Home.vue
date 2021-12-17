@@ -124,7 +124,6 @@ export default {
       )
     },
     getSvgImageAsStyleAttr (vector) {
-      console.log(vector)
       var svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
       return {
         backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`
