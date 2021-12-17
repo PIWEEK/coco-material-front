@@ -51,7 +51,7 @@
   </div>
   <h1 class="home-title">
     Recently added
-    <button class="btn-primary" @click="searchVectorByTopic('')">View all</button>
+    <button class="btn-primary" @click="searchVectorByTopic('', null, '-uploaded')">View all</button>
   </h1>
   <div class="latest-wrapper" v-if="latestVectors && latestVectors.length">
     <div class="latest-vector-wrappers" v-for="(vector, index) in latestVectors"  :key="index">

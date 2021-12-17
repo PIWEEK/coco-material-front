@@ -29,18 +29,17 @@ export default {
   async beforeMount () {
     !this.searchTags.length && this.getTags()
 
-    if (this.$route.query.q) {
-      await this.getVectorsByTags({
-        tags: this.$route.query.q.split(','),
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
-      })
-    } else {
-      await this.getVectors({
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
-      })
+    const payload = {
+      currentPage: this.currentPage,
+      pageSize: this.pageSize,
+      ordering: this.$route.query.ordering
     }
+
+    if (this.$route.query.q) {
+      payload.tags = this.$route.query.q.split(',')
+    }
+
+    await this.getVectors(payload)
 
     // Open the vector detail modal if there is a vectorId
     if (this.$route.query.vectorId) {
@@ -173,13 +172,15 @@ export default {
         this.getVectorsByTags({
           tags: this.searchTags,
           currentPage: 1,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          ordering: this.$route.query.ordering
         })
         this.$router.push({ path: '/results', query: { q: this.searchTags.join(',') } })
       } else {
         this.getVectors({
           currentPage: this.currentPage,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          ordering: this.$route.query.ordering
         })
         this.$router.push({ path: '/results' })
       }
@@ -236,7 +237,8 @@ export default {
       this.clearSearchTags()
       this.getVectors({
         currentPage: 1,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        ordering: this.$route.query.ordering
       })
     },
     handleDelete () {
@@ -255,12 +257,14 @@ export default {
         this.getVectorsByTags({
           tags: this.searchTags,
           currentPage: page,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          ordering: this.$route.query.ordering
         })
       } else {
         this.getVectors({
           currentPage: page,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
+          ordering: this.$route.query.ordering
         })
       }
       this.scrollToTop()

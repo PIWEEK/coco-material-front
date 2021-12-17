@@ -101,11 +101,15 @@ export default {
       }
       this.$router.push({ path: '/results', query: { q: this.tagsToSearch.join(',') } })
     },
-    searchVectorByTopic (search, vectorId) {
+    searchVectorByTopic (search, vectorId, ordering) {
       const query = { q: search.toLocaleLowerCase() }
 
       if (vectorId) {
         query.vectorId = vectorId
+      }
+
+      if (ordering) {
+        query.ordering = ordering
       }
 
       this.$router.push({ path: '/results', query })

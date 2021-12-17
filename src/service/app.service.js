@@ -13,12 +13,27 @@ const appService = {
     })
   },
   getVectors (payload) {
-    return axios.get(`/vectors/?page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
+    const queryUrl = new URLSearchParams()
+    queryUrl.set('page', payload.currentPage)
+    queryUrl.set('page_size', payload.pageSize)
+    if (payload.ordering) {
+      queryUrl.set('ordering', payload.ordering)
+    }
+
+    return axios.get(`/vectors/?${queryUrl.toString()}`).then(response => {
       return response.data
     })
   },
   getVectorsByTags (payload) {
-    return axios.get(`/vectors/?tags=${payload.tags.join()}&page=${payload.currentPage}&page_size=${payload.pageSize}`).then(response => {
+    const queryUrl = new URLSearchParams()
+    queryUrl.set('tags', payload.tags.join())
+    queryUrl.set('page', payload.currentPage)
+    queryUrl.set('page_size', payload.pageSize)
+    if (payload.ordering) {
+      queryUrl.set('ordering', payload.ordering)
+    }
+
+    return axios.get(`/vectors/?${queryUrl.toString()}`).then(response => {
       return response.data
     })
   },
