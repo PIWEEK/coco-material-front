@@ -51,8 +51,8 @@ export default {
     // Check if image has color suggestion
     this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
 
-    // If coloredSvg exist, select it by default
-    if (this.vector.coloredSvg) {
+    // If hasColorSuggesteion select it by default
+    if (this.hasColorSuggestion) {
       this.selectColorSuggestion()
     }
 
@@ -113,11 +113,10 @@ export default {
     selectColorSuggestion () {
       this.colorOption = 'color-suggestion'
 
+      this.svgCode = this.vector.coloredSvgContent
       if (this.vector.coloredSvg) {
-        this.svgCode = this.vector.coloredSvgContent
         this.downloadSuggested = true
       } else {
-        this.svgCode = this.vector.svgContent
         this.downloadSuggested = false
         this.selectFill(this.vector.fillColor)
         this.selectStroke(this.vector.strokeColor)
@@ -130,6 +129,8 @@ export default {
     selectColorEdit () {
       this.colorOption = 'edit'
 
+      this.strokeHexValue = '#000000'
+      this.fillHexValue = '#FFFFFF'
       this.svgCode = this.vector.svgContent
       this.downloadSuggested = false
     },

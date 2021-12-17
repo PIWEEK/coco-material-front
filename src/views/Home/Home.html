@@ -62,7 +62,7 @@
             :id="index"
             :alt="vector.name"
             @load="loaded(index)"
-            v-bind:style="{ backgroundImage: 'url(' + (vector.coloredSvg || vector.svg) + ')' }"></div>
+            :style="getSvgImageAsStyleAttr(vector)"></div>
         </div>
       </div>
       <div class="tags-container">
@@ -92,7 +92,7 @@
               :id="index"
               :alt="vector.name"
               @load="loaded(index)"
-              v-bind:style="{ backgroundImage: 'url(' + (vector.coloredSvg || vector.svg) + ')' }"></div>
+              :style="getSvgImageAsStyleAttr(vector)"></div>
           </div>
         </div>
       </div>

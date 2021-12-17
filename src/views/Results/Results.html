@@ -110,7 +110,7 @@
               :id="index"
               :alt="vector.name"
               @load="loaded(index)"
-              v-bind:style="{ backgroundImage: 'url(' + (vector.coloredSvg || vector.svg) + ')' }"></div>
+              :style="getSvgImageAsStyleAttr(vector)"></div>
           </div>
           <div class="download-btn">
             <button class="btn svg" @click="download(vector)">Download</button>
