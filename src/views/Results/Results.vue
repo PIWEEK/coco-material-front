@@ -39,7 +39,7 @@ export default {
       payload.tags = this.$route.query.q.split(',')
     }
 
-    await this.getVectors(payload)
+    await this.getVectorsByTags(payload)
 
     // Open the vector detail modal if there is a vectorId
     if (this.$route.query.vectorId) {
