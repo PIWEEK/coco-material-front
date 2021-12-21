@@ -90,8 +90,8 @@
               </span>
             </div>
           </div>
+          <span v-if="filteredVectors.length" class="info-text">Showing {{totalResults}} results</span >
         </form>
-        <span v-if="filteredVectors.length" class="info-text">Showing {{totalResults}} results</span >
         <div v-if="filteredVectors.length" class="vectors-actions" @click="closeAutocomplete">
           <button class="btn-color" @click="showModal(filteredVectors[0], true, 0)">
             <img alt="Palette icon" src="../../assets/palette.svg"/>

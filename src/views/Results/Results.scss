@@ -52,6 +52,7 @@
     font-size: 18px;
     font-weight: 500;
     margin-right: 5px;
+    min-width: 170px;
 
     @media (max-width: 768px) {
       font-size: 14px;
@@ -69,72 +70,73 @@
     }
 
   & .search-input-wrapper {
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
+    background-color: $color-white;
+    border: 1px solid $color-black;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 32px;
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+
+  & .tag {
+    background-color: $color-pink;
+    font-size: 14px;
+    margin-right: 5px;
+    padding: 2px 10px;
+    white-space: nowrap;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  & input {
+    background-color: transparent;
+    border: none;
+    height: 30px;
+    font-size: 16px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & .autocomplete-results {
+    background-color: $color-white;
+    position: absolute;
+    top: 32px;
+    border: 1px solid $color-grey;
+    border-radius: 3px;
+    height: 200px;
+    overflow-y: scroll;
+    width: calc(100% - 12px);
+
+    & span {
       background-color: $color-white;
-      border: 1px solid $color-black;
-      border-radius: 3px;
-      box-sizing: border-box;
-      height: 32px;
-      margin-right: 10px;
-      padding: 5px 10px;
-    }
+      font-weight: 500;
+      display: block;
+      padding: 10px 25px;
+      text-align: left;
+      transition: all .3s ease;
 
-    & .tag {
-        background-color: $color-pink;
-        font-size: 14px;
-        margin-right: 5px;
-        padding: 2px 10px;
-        white-space: nowrap;
-
-        &:hover {
-          cursor: pointer;
-        }
-    }
-
-    & input {
-      background-color: transparent;
-      border: none;
-      height: 30px;
-      font-size: 16px;
-      width: 100%;
-
+      &:hover,
       &:focus {
         outline: none;
+        background-color:$color-turquoise;
+        color: $color-white;
+        cursor: pointer;
       }
     }
-
-    & .autocomplete-results {
-      background-color: $color-white;
-      position: absolute;
-      top: 32px;
-      border: 1px solid $color-grey;
-      border-radius: 3px;
-      height: 200px;
-      overflow-y: scroll;
-      width: calc(100% - 12px);
-
-      & span {
-        background-color: $color-white;
-        font-weight: 500;
-        display: block;
-        padding: 10px 25px;
-        text-align: left;
-        transition: all .3s ease;
-
-        &:hover,
-        &:focus {
-          outline: none;
-          background-color:$color-turquoise;
-          color: $color-white;
-          cursor: pointer;
-        }
-      }
-    }
+  }
 
   & .info-text {
     color: $color-grey;
     font-size: 14px;
+    min-width: 200px;
 
     @media (max-width: 768px) {
       font-size: 12px;
