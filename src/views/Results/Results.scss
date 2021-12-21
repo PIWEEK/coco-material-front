@@ -359,11 +359,17 @@
   }
 
   & .img-container {
-    border: 1px solid #F2F2F2;
+    cursor: pointer;
+    border: 1px solid $color-light-grey;
     display: flex;
     height: 150px;
     margin-bottom: 10px;
     padding: 8% 16%;
+    transition: all ease .3s;
+
+    &:hover {
+      border-color: $color-medium-grey;
+    }
   }
 
   & .svg-container {
@@ -454,7 +460,7 @@
 }
 
 .nav-search {
-  background: linear-gradient(180deg, #7BDFF2 -7.61%, #B2F7EF 87.82%);
+  background: linear-gradient(180deg, $color-light-blue -7.61%, $color-light-turquoise 87.82%);
   position: fixed;
   top: 0;
   width: 100%;

@@ -104,7 +104,7 @@
       </div>
       <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">
         <div class="vector-container" v-for="(vector, index) in filteredVectors" :key="index">
-          <div class="img-container">
+          <div class="img-container" @click="showModal(vector, false, index)">
             <div
               class="svg-container"
               :id="index"
