@@ -102,7 +102,11 @@ export default {
       this.$router.push({ path: '/results', query: { q: this.tagsToSearch.join(',') } })
     },
     searchVectorByTopic (search, vectorId, ordering) {
-      const query = { q: search.toLocaleLowerCase() }
+      const query = {}
+
+      if (search) {
+        query.q = search.toLocaleLowerCase()
+      }
 
       if (vectorId) {
         query.vectorId = vectorId
