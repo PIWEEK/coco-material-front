@@ -15,13 +15,22 @@ export default {
       showScrollToTop: false
     }
   },
+  computed: {
+    ...mapState('home', {
+      featuredVectors: state => state.featuredVectors,
+      latestVectors: state => state.latestVectors
+    }),
+    ...mapState('tags', {
+      tags: state => state.tags
+    })
+  },
   beforeMount () {
-    this.getTags()
     this.clearSearchTags()
+    this.getTags()
     this.getFeaturedVectors()
     this.getLatestVectors()
   },
-  mounted: function () {
+  mounted () {
     window.addEventListener('scroll', () => {
       if ((window.innerHeight + window.scrollY) >= window.innerHeight * 1.5) {
         this.showScrollToTop = true
@@ -30,21 +39,14 @@ export default {
       }
     })
   },
-  computed: {
-    ...mapState({
-      tags: 'tags',
-      featuredVectors: 'featuredVectors',
-      latestVectors: 'latestVectors'
-    })
-  },
   methods: {
     ...mapActions({
-      getTags: 'getTags',
-      getFeaturedVectors: 'getFeaturedVectors',
-      getLatestVectors: 'getLatestVectors'
+      getFeaturedVectors: 'home/getFeaturedVectors',
+      getLatestVectors: 'home/getLatestVectors',
+      getTags: 'tags/getTags'
     }),
     ...mapMutations({
-      clearSearchTags: 'clearSearchTags'
+      clearSearchTags: 'tags/clearSearchTags'
     }),
     autocompleteSearch () {
       this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))

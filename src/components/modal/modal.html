@@ -8,7 +8,7 @@
               <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
                 <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
               </li>
-              <li v-if="!customizeBulk"  v-else v-for="(tag, index) in vectorTags" :key="index">
+              <li v-if="!customizeBulk" v-for="(tag, index) in vectorTags" :key="index">
                 <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
               </li>
             </ul>

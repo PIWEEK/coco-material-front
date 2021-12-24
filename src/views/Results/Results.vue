@@ -26,6 +26,18 @@ export default {
       mobileView: false
     }
   },
+  computed: {
+    ...mapState('tags', {
+      tags: state => state.tags,
+      searchTags: state => state.searchTags
+    }),
+    ...mapState('results', {
+      totalResults: state => state.totalResults,
+      filteredVectors: state => state.filteredVectors,
+      paginationArray: state => state.paginationArray,
+      loading: state => state.loading
+    })
+  },
   async beforeMount () {
     !this.searchTags.length && this.getTags()
 
@@ -52,17 +64,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState({
-      filteredVectors: 'filteredVectors',
-      searchTags: 'searchTags',
-      tags: 'tags',
-      loading: 'loading',
-      totalResults: 'totalResults',
-      paginationArray: 'paginationArray'
-    })
-  },
-  mounted: function () {
+  mounted () {
     window.addEventListener('scroll', () => {
       if ((window.innerHeight + window.scrollY) >= window.innerHeight * 1.5) {
         this.showScrollToTop = true
@@ -80,15 +82,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      getTags: 'getTags',
-      getVectorsByTags: 'getVectorsByTags',
-      getVectors: 'getVectors'
+      getTags: 'tags/getTags',
+      getVectorsByTags: 'results/getVectorsByTags',
+      getVectors: 'results/getVectors'
     }),
     ...mapMutations({
-      clearFilteredVectors: 'clearFilteredVectors',
-      updateSearchTags: 'updateSearchTags',
-      removeSearchTag: 'removeSearchTag',
-      clearSearchTags: 'clearSearchTags'
+      clearSearchTags: 'tasg/clearSearchTags',
+      updateSearchTags: 'tags/updateSearchTags',
+      removeSearchTag: 'tags/removeSearchTag',
+      clearFilteredVectors: 'results/clearFilteredVectors'
     }),
     showModal (vector, bulk, id) {
       this.selectedVector = vector
