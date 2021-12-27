@@ -37,6 +37,11 @@ const api = {
       return response.data
     })
   },
+  getTotalVectors () {
+    return axios.get('/vectors/total/').then(response => {
+      return response.data
+    })
+  },
   // Tags
   getTags () {
     return axios.get('/tags/').then(response => {

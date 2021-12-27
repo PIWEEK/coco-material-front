@@ -1,12 +1,15 @@
 import api from '@/service/api'
 
 const state = () => ({
-  totalResults: null,
+  totalVectors: null,
   featuredVectors: null,
   latestVectors: null
 })
 
 const mutations = {
+  getTotalVectorsSuccess (state, totalVectors) {
+    state.totalVectors = totalVectors
+  },
   getFeaturedVectorsSuccess (state, vectors) {
     state.featuredVectors = vectors
   },
@@ -16,6 +19,12 @@ const mutations = {
 }
 
 const actions = {
+  getTotalVectors ({ commit }) {
+    return api.getTotalVectors()
+      .then(({ totalVectors }) => {
+        commit('getTotalVectorsSuccess', totalVectors)
+      })
+  },
   getFeaturedVectors ({ commit }) {
     return api.getFeaturedVectors()
       .then(featuredVectors => {

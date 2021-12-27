@@ -17,6 +17,7 @@ export default {
   },
   computed: {
     ...mapState('home', {
+      totalVectors: state => state.totalVectors,
       featuredVectors: state => state.featuredVectors,
       latestVectors: state => state.latestVectors
     }),
@@ -27,6 +28,7 @@ export default {
   beforeMount () {
     this.clearSearchTags()
     this.getTags()
+    this.getTotalVectors()
     this.getFeaturedVectors()
     this.getLatestVectors()
   },
@@ -41,6 +43,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      getTotalVectors: 'home/getTotalVectors',
       getFeaturedVectors: 'home/getFeaturedVectors',
       getLatestVectors: 'home/getLatestVectors',
       getTags: 'tags/getTags'
