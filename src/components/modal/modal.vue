@@ -2,7 +2,7 @@
 <style src="./modal.scss"  lang="scss" scoped></style>
 
 <script>
-import appService from '@/service/app.service.js'
+import api from '@/service/api'
 
 export default {
   name: 'modal',
@@ -39,7 +39,7 @@ export default {
     document.body.style.position = 'fixed'
 
     // Download vector
-    this.vector = await appService.getVector({ id: this.vectorId })
+    this.vector = await api.getVector({ id: this.vectorId })
     this.svgCode = this.vector.svgContent
     this.vectorTags = this.vector.tags.split(',')
 

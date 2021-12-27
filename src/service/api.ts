@@ -5,7 +5,7 @@ axios.defaults.baseURL = process.env.VUE_APP_API_URL
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common.Accept = 'application/json'
 
-const appService = {
+const api = {
   // Vectors
   getVector (payload) {
     return axios.get(`/vectors/${payload.id}`).then(response => {
@@ -16,19 +16,9 @@ const appService = {
     const queryUrl = new URLSearchParams()
     queryUrl.set('page', payload.currentPage)
     queryUrl.set('page_size', payload.pageSize)
-    if (payload.ordering) {
-      queryUrl.set('ordering', payload.ordering)
+    if (payload.tags && payload.tags.length > 0) {
+      queryUrl.set('tags', payload.tags.join())
     }
-
-    return axios.get(`/vectors/?${queryUrl.toString()}`).then(response => {
-      return response.data
-    })
-  },
-  getVectorsByTags (payload) {
-    const queryUrl = new URLSearchParams()
-    queryUrl.set('tags', payload.tags.join())
-    queryUrl.set('page', payload.currentPage)
-    queryUrl.set('page_size', payload.pageSize)
     if (payload.ordering) {
       queryUrl.set('ordering', payload.ordering)
     }
@@ -54,4 +44,4 @@ const appService = {
     })
   }
 }
-export default appService
+export default api

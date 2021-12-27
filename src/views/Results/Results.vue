@@ -49,10 +49,8 @@ export default {
 
     if (this.$route.query.q) {
       payload.tags = this.$route.query.q.split(',')
-      await this.getVectorsByTags(payload)
-    } else {
-      await this.getVectors(payload)
     }
+    await this.getVectors(payload)
 
     // Open the vector detail modal if there is a vectorId
     if (this.$route.query.vectorId) {
@@ -83,7 +81,6 @@ export default {
   methods: {
     ...mapActions({
       getTags: 'tags/getTags',
-      getVectorsByTags: 'results/getVectorsByTags',
       getVectors: 'results/getVectors'
     }),
     ...mapMutations({
@@ -162,7 +159,7 @@ export default {
       this.autocompleteResults = []
       this.updateSearchTags(tag.toLocaleLowerCase())
 
-      this.getVectorsByTags({
+      this.getVectors({
         tags: this.searchTags,
         currentPage: 1,
         pageSize: this.pageSize
@@ -172,7 +169,7 @@ export default {
     removeTag (tag) {
       this.removeSearchTag(tag)
       if (this.searchTags.length) {
-        this.getVectorsByTags({
+        this.getVectors({
           tags: this.searchTags,
           currentPage: 1,
           pageSize: this.pageSize,
@@ -228,7 +225,7 @@ export default {
     searchModalVector (tag) {
       this.clearSearchTags()
       this.updateSearchTags(tag.replace(/\s/g, ''))
-      this.getVectorsByTags({
+      this.getVectors({
         tags: this.searchTags,
         currentPage: 1,
         pageSize: this.pageSize
@@ -257,7 +254,7 @@ export default {
     handlePagination (page) {
       this.currentPage = page
       if (this.searchTags.length) {
-        this.getVectorsByTags({
+        this.getVectors({
           tags: this.searchTags,
           currentPage: page,
           pageSize: this.pageSize,

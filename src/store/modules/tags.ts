@@ -1,4 +1,4 @@
-import appService from '@/service/app.service.js'
+import api from '@/service/api'
 
 const state = () => ({
   tags: [],
@@ -26,7 +26,7 @@ const mutations = {
 
 const actions = {
   getTags ({ commit }) {
-    return appService.getTags()
+    return api.getTags()
       .then(tags => {
         commit('getTagsSuccess', tags)
       })

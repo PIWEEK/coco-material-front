@@ -1,4 +1,4 @@
-import appService from '@/service/app.service.js'
+import api from '@/service/api'
 
 const state = () => ({
   totalResults: null,
@@ -17,13 +17,13 @@ const mutations = {
 
 const actions = {
   getFeaturedVectors ({ commit }) {
-    return appService.getFeaturedVectors()
+    return api.getFeaturedVectors()
       .then(featuredVectors => {
         commit('getFeaturedVectorsSuccess', featuredVectors)
       })
   },
   getLatestVectors ({ commit }) {
-    return appService.getLatestVectors()
+    return api.getLatestVectors()
       .then(latestVectors => {
         commit('getLatestVectorsSuccess', latestVectors)
       })

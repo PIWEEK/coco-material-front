@@ -1,4 +1,4 @@
-import appService from '@/service/app.service.js'
+import api from '@/service/api'
 
 const state = () => ({
   filteredVectors: [],
@@ -30,18 +30,11 @@ const actions = {
   getVectors ({ commit }, payload) {
     commit('clearVectors')
     commit('setLoading', true)
-    return appService.getVectors(payload)
+    return api.getVectors(payload)
       .then(vectors => {
-        commit('getVectorsSuccess', { vectors: vectors, pageSize: payload.pageSize })
-        commit('setLoading', false)
-      })
-  },
-  getVectorsByTags ({ commit }, payload) {
-    commit('clearVectors')
-    commit('setLoading', true)
-    return appService.getVectorsByTags(payload)
-      .then(vectors => {
-        commit('tags/setSearchTags', payload.tags, { root: true })
+        if (payload.tags) {
+          commit('tags/setSearchTags', payload.tags, { root: true })
+        }
         commit('getVectorsSuccess', { vectors, pageSize: payload.pageSize })
         commit('setLoading', false)
       })
