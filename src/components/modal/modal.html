@@ -2,24 +2,25 @@
   <div class="modal-backdrop">
     <div class="modal">
       <header class="modal-header">
-        <slot name="header">
-          <div class="title-container">
-            <ul class="tags-list">
-              <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
-                <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
-              </li>
-              <li v-if="!customizeBulk" v-for="(tag, index) in vectorTags" :key="index">
-                <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
-              </li>
-            </ul>
+        <div class="title-container">
+          <div class="title" v-if="!customizeBulk && vector.name">
+            {{ vector.name }}
           </div>
-          <button
-            type="button"
-            class="btn-close"
-            @click="close">
-            X
-          </button>
-        </slot>
+          <ul class="tags-list">
+            <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
+              <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+            </li>
+            <li v-if="!customizeBulk" v-for="(tag, index) in vectorTags" :key="index">
+              <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+            </li>
+          </ul>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          @click="close">
+          X
+        </button>
       </header>
       <section class="modal-body">
         <slot name="body">
