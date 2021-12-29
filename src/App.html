@@ -9,20 +9,26 @@
           <router-link to="/">Home</router-link>
         </span>
         <span class="separator">
-          <img alt="Menu separator" src="./assets/dot.png">
+          <img alt="" src="./assets/dot.png">
+        </span>
+        <span class="link">
+          <router-link to="/" v-scroll-to="'#suggestion'">Missing something?</router-link>
+        </span>
+        <span class="separator">
+          <img alt="" src="./assets/dot.png">
         </span>
         <span class="link">
           <router-link to="/team">The team</router-link>
         </span>
         <span class="separator">
-          <img alt="Menu separator" src="./assets/dot.png">
+          <img alt="" src="./assets/dot.png">
         </span>
         <span class="link">
           <router-link to="/license">License</router-link>
         </span>
       </div>
       <button @click="openNav" :class="`menu-btn ${navOpen ? 'open' : ''}`">
-        <img src="./assets/menu.svg" alt="Menu mobile" />
+        <img src="./assets/menu.svg" alt="Menu" />
       </button>
     </div>
     <router-view/>
@@ -58,6 +64,7 @@
         <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
         <ul class="menu-list">
           <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/" v-scroll-to="'#suggestion'">Missing something?</router-link></li>
           <li><router-link to="/team">The team</router-link></li>
           <li><router-link to="/license">License</router-link></li>
         </ul>
@@ -69,7 +76,7 @@
           <li><a href="https://twitter.com/cocomaterial" target="blank"><img src="./assets/twitter.svg" alt="Twitter" /></a></li>
           <li><a href="https://www.instagram.com/cocomaterial/" target="blank"><img src="./assets/instagram.svg" alt="Instagram" /></a></li>
         </ul>
-        <span class="text">Cocomaterial © 2020 | Made with &lt;3 and open source</span>
+        <span class="text">Cocomaterial © 2020-present | Made with &lt;3 and open source</span>
       </div>
     </div>
   </footer>

@@ -1,11 +1,15 @@
-
 <template src="./Home.html" lang="html"></template>
 <style src="./Home.scss"  lang="scss" scoped></style>
+
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
+import suggestion from '@/components/suggestion/suggestion.vue'
 
 export default {
   name: 'Home',
+  components: {
+    'coco-suggestion': suggestion
+  },
   data () {
     return {
       vectors: null,

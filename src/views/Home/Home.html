@@ -6,7 +6,7 @@
           <h1 class="title">Looking for the perfect illustration?</h1>
           <h2 class="subtitle">
             Discover CocoMaterial, the Open Source hand-drawn illustration library
-            with <strong>{{totalVectors.toLocaleString() || 'a lot of'}} images</strong>.
+            with <strong>{{totalVectors? totalVectors.toLocaleString() : 'a lot of'}} images</strong>.
             Customize & download!
           </h2>
           <div class="search-container">
@@ -167,8 +167,10 @@
       </div>
       <img src="../../assets/topics/rrss.svg" />
     </div>
-
   </div>
+
+  <coco-suggestion class="suggestion-section" id="suggestion" />
+
   <div id="piweek" class="piweek-section">
     <div class="container">
       <h3 class="title">A PIWEEK project</h3>

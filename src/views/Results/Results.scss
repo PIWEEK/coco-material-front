@@ -422,8 +422,20 @@
     font-size: 16px;
   }
 
+  & a {
+    color: $color-turquoise;
+    text-decoration: none;
+    font-weight: 700;
+
+    &:active,
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   & .highlight {
     color: $color-turquoise;
+    font-weight: 700;
   }
 }
 

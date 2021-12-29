@@ -47,6 +47,12 @@ const api = {
     return axios.get('/tags/').then(response => {
       return response.data
     })
+  },
+  // Sugestion
+  sendSuggestion (form) {
+    return axios.post('/suggestion/', form).then(response => {
+      return response.data
+    })
   }
 }
 export default api

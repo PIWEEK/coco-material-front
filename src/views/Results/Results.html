@@ -171,16 +171,13 @@
       <div v-if="filteredVectors.length === 0" class="no-results"  @click="closeAutocomplete">
         <img alt="Coconut illustration" src="../../assets/coco.svg" />
         <h3>Sorry, this coconut is empty</h3>
-        <div v-if="searchTags.length">
-          <span>We didn't find any result matching "</span>
-          <span class="highlight">
-            <span v-for="(tag, index) in searchTags" :key="index">
-              {{tag}}
-            </span>
-          </span>
-          <span>".</span>
-        </div>
-        <p>Please try a different search term or look within our <strong>popular tags</strong></p>
+        <p v-if="searchTags.length">
+          We didn't find any result matching "<span class="highlight">{{ searchTags.join(' ') }}</span>".
+        </p>
+        <p>
+          Please try a different search term, look within our <strong>popular tags</strong><br /> or if you are
+          missing something, <router-link to="/#suggestion">send us your ideas</router-link>.
+        </p>
       </div>
 
       <transition name="fade" mode="out-in">

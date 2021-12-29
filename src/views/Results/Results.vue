@@ -1,7 +1,7 @@
 <template src="./Results.html" lang="html"></template>
 <style src="./Results.scss"  lang="scss" scoped></style>
-<script>
 
+<script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import modal from '@/components/modal/modal.vue'
 

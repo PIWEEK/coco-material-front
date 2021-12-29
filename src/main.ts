@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueMatomo from 'vue-matomo'
+import VueScrollTo from 'vue-scrollto'
 
 import App from '@/App.vue'
 import router from '@/router'
@@ -14,6 +15,11 @@ Vue.use(VueMatomo, {
   disableCookies: true,
   enableHeartBeatTimer: true,
   heartBeatTimerInterval: 10
+})
+
+Vue.use(VueScrollTo, {
+  duration: 500,
+  easing: 'ease'
 })
 
 new Vue({
