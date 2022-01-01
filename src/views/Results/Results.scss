@@ -404,8 +404,9 @@
 }
 
 .no-results {
-  margin: 70px 0;
+  margin: 70px auto;
   text-align: center;
+  max-width: 500px;
 
   & h3 {
     font-size: 36px;

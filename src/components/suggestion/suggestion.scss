@@ -67,8 +67,17 @@ form {
   align-items: center;
   margin: 1.8rem 0;
 
+  @media (max-width: 315px) {
+    flex-direction: column;
+  }
+
   & :not(:first-child) {
     margin-left: 1rem;
+
+    @media (max-width: 315px) {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
   }
 
   & fieldset {
@@ -90,9 +99,13 @@ form {
     padding: 0 25px;
     transition: all ease .3s;
 
-    @media (max-width: 480px) {
+    @media (max-width: 510px) {
       max-width: 250px;
       min-width: 0;
+    }
+
+    @media (max-width: 459px) {
+      max-width: 200px;
     }
 
     &:hover,
