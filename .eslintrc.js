@@ -4,11 +4,11 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/essential',
-    '@vue/standard',
+    'plugin:vue/vue3-essential',
+    '@vue/standard'
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    parser: 'babel-eslint'
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

@@ -2,9 +2,10 @@
 <style src="./modal.scss"  lang="scss" scoped></style>
 
 <script>
+import { defineComponent } from 'vue'
 import api from '@/service/api'
 
-export default {
+export default defineComponent({
   name: 'modal',
   props: {
     vectorId: null,
@@ -135,6 +136,13 @@ export default {
       this.downloadSuggested = false
     },
     selectStroke (color) {
+      const pathIdx = this.hasJustStroke ? 0 : 1
+      const pathEl = document.querySelectorAll('#preview path')[pathIdx]
+
+      if (!pathEl) {
+        return // The svg is not rendered yet
+      }
+
       if (color) {
         if (color.length === 7) {
           this.strokeHexValue = color
@@ -145,12 +153,17 @@ export default {
         this.strokeHexValue = this.defaultStroke
       }
 
-      const pathIdx = this.hasJustStroke ? 0 : 1
-      document.querySelectorAll('#preview path')[pathIdx].style.fill = this.strokeHexValue
+      pathEl.style.fill = this.strokeHexValue
     },
     selectFill (color) {
       if (this.hasJustStroke) {
         return // Threre is no fill to set
+      }
+
+      const pathEl = document.querySelectorAll('#preview path')[0]
+
+      if (!pathEl) {
+        return // The svg is not rendered yet
       }
 
       if (color) {
@@ -162,7 +175,8 @@ export default {
       } else {
         this.fillHexValue = this.defaultFill
       }
-      document.querySelectorAll('#preview path')[0].style.fill = this.fillHexValue
+
+      pathEl.style.fill = this.fillHexValue
     },
 
     // Submit form
@@ -224,5 +238,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

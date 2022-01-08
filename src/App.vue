@@ -2,7 +2,8 @@
 <style src="./App.scss"  lang="scss"></style>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'app',
   data () {
     return {
@@ -14,5 +15,5 @@ export default {
       this.navOpen = !this.navOpen
     }
   }
-}
+})
 </script>

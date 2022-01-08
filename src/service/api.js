@@ -14,8 +14,8 @@ const api = {
   },
   getVectors (payload) {
     const queryUrl = new URLSearchParams()
-    queryUrl.set('page', payload.currentPage)
-    queryUrl.set('page_size', payload.pageSize)
+    queryUrl.set('page', `${payload.currentPage}`)
+    queryUrl.set('page_size', `${payload.pageSize}`)
     if (payload.tags && payload.tags.length > 0) {
       queryUrl.set('tags', payload.tags.join())
     }

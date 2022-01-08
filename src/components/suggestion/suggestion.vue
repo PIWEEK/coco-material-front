@@ -2,9 +2,10 @@
 <style src="./suggestion.scss"  lang="scss" scoped></style>
 
 <script>
+import { defineComponent } from 'vue'
 import api from '@/service/api'
 
-export default {
+export default defineComponent({
   name: 'suggestion',
   data () {
     return {
@@ -43,5 +44,5 @@ export default {
       }, 5000)
     }
   }
-}
+})
 </script>

@@ -29,7 +29,9 @@
     <div class="text success" v-if="showSuccess">
       We have received your suggestion.<br /> Remember that you can send us as many as you want.
     </div>
+  </transition>
 
+  <transition name="result">
     <div class="text error" v-if="showError">
       There was an error and your suggestion could not be sent.<br />
       Please, try again later or you can <a href="mailto:soyesthermoreno@gmail.com">send us an email</a>.

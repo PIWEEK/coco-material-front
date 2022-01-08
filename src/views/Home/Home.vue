@@ -2,10 +2,11 @@
 <style src="./Home.scss"  lang="scss" scoped></style>
 
 <script>
+import { defineComponent } from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import suggestion from '@/components/suggestion/suggestion.vue'
 
-export default {
+export default defineComponent({
   name: 'Home',
   components: {
     'coco-suggestion': suggestion
@@ -147,5 +148,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

@@ -1,8 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home/Home.vue'
-
-Vue.use(VueRouter)
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '@/views/Home/Home.vue'
 
 const routes = [
   {
@@ -36,9 +33,9 @@ const routes = [
   }
 ]
 
-const router = new VueRouter({
+const router = createRouter({
   routes,
-  mode: 'history',
+  history: createWebHistory(process.env.BASE_URL),
   scrollBehavior (to, from, savedPosition) {
     if (to.hash) {
       return { selector: to.hash }

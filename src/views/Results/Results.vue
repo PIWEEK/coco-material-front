@@ -2,10 +2,11 @@
 <style src="./Results.scss"  lang="scss" scoped></style>
 
 <script>
+import { defineComponent } from 'vue'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import modal from '@/components/modal/modal.vue'
 
-export default {
+export default defineComponent({
   name: 'Results',
   components: {
     modal
@@ -84,7 +85,7 @@ export default {
       getVectors: 'results/getVectors'
     }),
     ...mapMutations({
-      clearSearchTags: 'tasg/clearSearchTags',
+      clearSearchTags: 'tags/clearSearchTags',
       updateSearchTags: 'tags/updateSearchTags',
       removeSearchTag: 'tags/removeSearchTag',
       clearFilteredVectors: 'results/clearFilteredVectors'
@@ -276,5 +277,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

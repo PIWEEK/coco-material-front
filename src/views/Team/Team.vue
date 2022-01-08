@@ -2,8 +2,8 @@
 <style src="./Team.scss"  lang="scss" scoped></style>
 
 <script>
-
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'Team',
   data () {
     return {
@@ -17,5 +17,5 @@ export default {
       ]
     }
   }
-}
+})
 </script>
