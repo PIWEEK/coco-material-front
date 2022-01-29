@@ -49,14 +49,49 @@
 }
 
 .modal-body {
+  display: grid;
+  grid-template-areas:
+    "prev main next";
+
+  @media (max-width: 768px) {
+    grid-template-areas:
+      "main main"
+      "prev next";
+    padding-bottom: 10px;
+  }
+}
+
+.main {
+  grid-area: main;
   display: flex;
-  padding: 20px 60px 30px 30px;
+  padding: 20px 30px 30px 30px;
   position: relative;
 
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 20px 30px;
   }
+}
+
+.next,
+.previous {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    padding-bottom: 10px;
+  }
+}
+
+.previous {
+  grid-area: prev;
+  padding-left: 10px;
+}
+
+.next {
+  grid-area: next;
+  padding-right: 10px;
 }
 
 .modal-fade-enter,
@@ -128,19 +163,41 @@
   }
 }
 
-/* Close button */
-.btn-close {
+/* buttons */
+.btn-close,
+.btn-previous,
+.btn-next {
   background: transparent;
   border: none;
-  color: #1C2541;
+  color: $color-black;
   cursor: pointer;
   font-family: 'Red Hat Display', sans-serif;
-  font-size: 20px;
   font-weight: 500;
+  transition: all ease 0.1s;
+
+  &:hover:enabled,
+  &:active:enabled{
+    font-weight: 900;
+  }
+}
+
+.btn-close {
+  font-size: 20px;
   padding: 0 10px;
 
   @media (max-width: 768px) {
     align-self: flex-start;
+  }
+}
+
+.btn-previous,
+.btn-next {
+  font-size: 40px;
+
+  &:disabled,
+  &[disabled] {
+    color: $color-medium-grey;
+    cursor: default;
   }
 }
 

@@ -8,7 +8,15 @@ axios.defaults.headers.common.Accept = 'application/json'
 const api = {
   // Vectors
   getVector (payload) {
-    return axios.get(`/vectors/${payload.id}`).then(response => {
+    const queryUrl = new URLSearchParams()
+    if (payload.tags && payload.tags.length > 0) {
+      queryUrl.set('tags', payload.tags.join())
+    }
+    if (payload.ordering) {
+      queryUrl.set('ordering', payload.ordering)
+    }
+
+    return axios.get(`/vectors/${payload.id}?${queryUrl.toString()}`).then(response => {
       return response.data
     })
   },

@@ -40,7 +40,7 @@ export default defineComponent({
     document.body.style.position = 'fixed'
 
     // Download vector
-    this.vector = await api.getVector({ id: this.vectorId })
+    this.vector = await api.getVector({ id: this.vectorId, tags: this.tags, ordering: this.$route.query.ordering })
     this.svgCode = this.vector.svgContent
     this.vectorTags = this.vector.tags.split(',')
 
@@ -58,7 +58,7 @@ export default defineComponent({
     }
 
     // Add data to the url
-    if (!this.customizeBulk && !this.$route.query.vectorId) {
+    if (!this.customizeBulk) {
       const query = Object.assign({}, this.$route.query, { vectorId: this.vector.id })
       this.$router.replace({ query })
     }
@@ -79,6 +79,39 @@ export default defineComponent({
         delete query.vectorId
         this.$router.replace({ query })
       }
+    },
+    async goToVector (vectorId) {
+      // const query = Object.assign({}, this.$route.query, { vectorId })
+      // this.$router.push({ path: '/results', query })
+      // Download vector
+      this.vector = await api.getVector({ id: vectorId, tags: this.tags, ordering: this.$route.query.ordering })
+      this.svgCode = this.vector.svgContent
+      this.vectorTags = this.vector.tags.split(',')
+
+      // Check if the image has only one path
+      const svgEl = document.createElement('div')
+      svgEl.innerHTML = this.svgCode
+      this.hasJustStroke = (svgEl.querySelectorAll('path').length === 1)
+
+      // Inicialize form params
+      this.downloadType = 'png' // values: png, svg
+      this.colorOption = 'black-white' // values: black-white, color-suggestion, edit
+      this.strokeHexValue = '#000000'
+      this.fillHexValue = '#FFFFFF'
+      this.downloadSuggested = false
+      this.size = 0 // values: 0, 128, 256, 512
+
+      // Check if image has color suggestion
+      this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
+
+      // If hasColorSuggesteion select it by default
+      if (this.hasColorSuggestion) {
+        this.selectColorSuggestion()
+      }
+
+      // Add data to the url
+      const query = Object.assign({}, this.$route.query, { vectorId })
+      this.$router.replace({ query })
     },
     // Tag clicked
     searchVector (tag) {

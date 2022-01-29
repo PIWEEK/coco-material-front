@@ -211,20 +211,24 @@ footer {
 .preview {
   &.horizontal {
     svg {
-      width: 200px;
+      max-height: 200px;
+      max-width: 200px;
 
       @media (max-width: 768px) {
-        width: 180px;
+        max-width: 160px;
+        max-height: 160px;
       }
     }
   }
 
   &.vertical {
     svg {
-      height: 200px;
+      max-height: 200px;
+      max-width: 200px;
 
       @media (max-width: 768px) {
-        height: 160px;
+        max-width: 160px;
+        max-height: 160px;
       }
     }
   }
