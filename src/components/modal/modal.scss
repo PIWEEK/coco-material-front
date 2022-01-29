@@ -175,9 +175,10 @@
   font-weight: 500;
   transition: all ease 0.1s;
 
-  &:hover:enabled,
-  &:active:enabled{
-    font-weight: 900;
+  &:disabled,
+  &[disabled] {
+    color: $color-light-grey;
+    cursor: default;
   }
 }
 
@@ -194,11 +195,6 @@
 .btn-next {
   font-size: 40px;
 
-  &:disabled,
-  &[disabled] {
-    color: $color-medium-grey;
-    cursor: default;
-  }
 }
 
 /* Preview */
