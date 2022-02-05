@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",
+    "vue-color-input": "^1.0.6",
     "vue-matomo": "^4.1.0",
     "vue-router": "^4.0.0-0",
     "vue-scrollto": "^2.20.0",

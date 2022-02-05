@@ -1,3 +1,6 @@
+/**********************************
+ * COMMON CSS
+ **********************************/
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700&display=swap');
 @import '@/variables';
 
@@ -10,6 +13,98 @@ body {
   font-family: 'Red Hat Display', sans-serif;
   margin: 0;
 }
+
+.preview {
+  &.horizontal {
+    svg {
+      max-height: 200px;
+      max-width: 200px;
+
+      @media (max-width: 768px) {
+        max-width: 160px;
+        max-height: 160px;
+      }
+    }
+  }
+
+  &.vertical {
+    svg {
+      max-height: 200px;
+      max-width: 200px;
+
+      @media (max-width: 768px) {
+        max-width: 160px;
+        max-height: 160px;
+      }
+    }
+  }
+}
+.btn-primary {
+  background-color: $color-white;
+  border: 2px solid $color-turquoise;
+  border-radius: 4px;
+  color: #222;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px;
+  transition: all ease .3s;
+
+  &:hover {
+    background-color: $color-turquoise;
+    color: $color-white;
+  }
+}
+
+.scroll-to-top {
+  align-items: center;
+  background: #7BDFF2;
+  border: 0;
+  border-radius: 100%;
+  bottom: 1.5rem;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  right: 1.5rem;
+  position: fixed;
+  width: 50px;
+  z-index: 400;
+
+  & img {
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
+// vue-color-input component
+
+.color-input.user {
+  .box {
+    border: 1px solid $color-medium-grey;
+    border-radius: 0px  2px 2px 0px;
+  }
+}
+.color-input.user .box.active .inner {
+  transform: none;
+}
+
+/**********************************
+ * TRANSITIONS
+ **********************************/
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0
+}
+
+/**********************************
+ * APP COMPONENT
+ **********************************/
 
 #app {
   font-family: 'Red Hat Display', sans-serif;
@@ -130,7 +225,6 @@ button:hover {
 }
 
 footer {
-
   background-size: cover;
   background-repeat: no-repeat;
   & .inner-footer {
@@ -208,74 +302,3 @@ footer {
   }
 }
 
-.preview {
-  &.horizontal {
-    svg {
-      max-height: 200px;
-      max-width: 200px;
-
-      @media (max-width: 768px) {
-        max-width: 160px;
-        max-height: 160px;
-      }
-    }
-  }
-
-  &.vertical {
-    svg {
-      max-height: 200px;
-      max-width: 200px;
-
-      @media (max-width: 768px) {
-        max-width: 160px;
-        max-height: 160px;
-      }
-    }
-  }
-}
-.btn-primary {
-  background-color: $color-white;
-  border: 2px solid $color-turquoise;
-  border-radius: 4px;
-  color: #222;
-  font-family: 'Red Hat Display', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 5px;
-  transition: all ease .3s;
-
-  &:hover {
-    background-color: $color-turquoise;
-    color: $color-white;
-  }
-}
-
-.scroll-to-top {
-  align-items: center;
-  background: #7BDFF2;
-  border: 0;
-  border-radius: 100%;
-  bottom: 1.5rem;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  right: 1.5rem;
-  position: fixed;
-  width: 50px;
-  z-index: 400;
-
-  & img {
-    height: 1rem;
-    width: 1rem;
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .5s
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0
-}

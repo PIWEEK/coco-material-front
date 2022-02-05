@@ -87,6 +87,13 @@
                               placeholder="HEX"
                               v-model="strokeHexValue"
                               @keyup="selectStroke(strokeHexValue)" />
+                            <color-input
+                              format="hex string"
+                              position="bottom left"
+                              disable-alpha
+                              disable-text-inputs
+                              v-model="strokeHexValue"
+                              @change="selectStroke(strokeHexValue)" />
                           </div>
                         </div>
                       </div>
@@ -111,6 +118,13 @@
                               placeholder="HEX"
                               v-model="fillHexValue"
                               @keyup="selectFill(fillHexValue)" />
+                            <color-input
+                              format="hex string"
+                              position="bottom left"
+                              disable-alpha
+                              disable-text-inputs
+                              v-model="fillHexValue"
+                              @change="selectFill(fillHexValue)" />
                           </div>
                         </div>
                       </div>

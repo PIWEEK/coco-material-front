@@ -3,6 +3,7 @@ import './registerServiceWorker'
 
 import VueMatomo from 'vue-matomo'
 import VueScrollTo from 'vue-scrollto'
+import ColorInput from 'vue-color-input'
 
 import App from './App.vue'
 import router from './router'
@@ -23,4 +24,5 @@ createApp(App)
     duration: 500,
     easing: 'ease'
   })
+  .use(ColorInput)
   .mount('#app')
