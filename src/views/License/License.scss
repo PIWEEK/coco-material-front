@@ -23,3 +23,15 @@ p {
     padding: 0 20px;
   }
 }
+
+a {
+  color: $color-turquoise;
+  text-decoration: none;
+  font-weight: 700;
+
+  &:active,
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
