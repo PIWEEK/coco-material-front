@@ -172,10 +172,6 @@ export default defineComponent({
       const pathIdx = this.hasJustStroke ? 0 : 1
       const pathEl = document.querySelectorAll('#preview path')[pathIdx]
 
-      if (!pathEl) {
-        return // The svg is not rendered yet
-      }
-
       if (color) {
         if (color.length === 7) {
           this.strokeHexValue = color
@@ -186,18 +182,15 @@ export default defineComponent({
         this.strokeHexValue = this.defaultStroke
       }
 
-      pathEl.style.fill = this.strokeHexValue
+      if (pathEl) {
+        pathEl.style.fill = this.strokeHexValue
+      }
     },
     selectFill (color) {
       if (this.hasJustStroke) {
         return // Threre is no fill to set
       }
-
       const pathEl = document.querySelectorAll('#preview path')[0]
-
-      if (!pathEl) {
-        return // The svg is not rendered yet
-      }
 
       if (color) {
         if (color.length === 7 || color === 'none') {
@@ -209,9 +202,10 @@ export default defineComponent({
         this.fillHexValue = this.defaultFill
       }
 
-      pathEl.style.fill = this.fillHexValue
+      if (pathEl) {
+        pathEl.style.fill = this.fillHexValue
+      }
     },
-
     // Submit form
     download () {
       const queryUrl = new URLSearchParams()
