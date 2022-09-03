@@ -40,8 +40,13 @@ export default defineComponent({
     })
   },
   async beforeMount () {
+    // Load tags
     !this.searchTags.length && this.getTags()
 
+    // Set current page
+    this.currentPage = this.$route.query.page || this.currentPage
+
+    // Get images
     const payload = {
       currentPage: this.currentPage,
       pageSize: this.pageSize,
@@ -183,7 +188,7 @@ export default defineComponent({
           pageSize: this.pageSize,
           ordering: this.$route.query.ordering
         })
-        this.$router.push({ path: '/results' })
+        this.$router.push({ path: '/results', query: { page: this.currentPage } })
       }
     },
     async downloadAll () {
@@ -253,7 +258,18 @@ export default defineComponent({
       )
     },
     handlePagination (page) {
+      // Update current page
       this.currentPage = page
+
+      const query = Object.assign({}, this.$route.query)
+      if (this.currentPage > 1) {
+        query.page = this.currentPage
+      } else {
+        delete query.page
+      }
+      this.$router.push({ query })
+
+      // Load vectors
       if (this.searchTags.length) {
         this.getVectors({
           tags: this.searchTags,
