@@ -63,6 +63,9 @@ export default defineComponent({
       this.$router.replace({ query })
     }
   },
+  async umounted () {
+    document.body.style.position = undefined
+  },
   methods: {
     // Close modal
     close () {
