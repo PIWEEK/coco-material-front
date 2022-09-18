@@ -70,11 +70,12 @@ export default defineComponent({
     // Close modal
     close () {
       const actualScroll = document.body.style.top
-      this.$emit('close')
       document.body.style.position = null
       document.body.style.top = null
       document.body.style.width = null
-      window.scrollTo(0, parseInt(actualScroll || '0') * -1)
+      setTimeout(() => window.scrollTo(0, parseInt(actualScroll || '0') * -1), 100)
+
+      this.$emit('close')
 
       // Delete data from url
       if (this.$route.query.vectorId) {
@@ -118,6 +119,7 @@ export default defineComponent({
     },
     // Tag clicked
     searchVector (tag) {
+      this.close()
       this.$emit('search', tag)
     },
     // Download type settings

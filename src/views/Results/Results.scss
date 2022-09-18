@@ -5,7 +5,6 @@
   transition: height .5s;
   height: 66px;
   overflow: hidden;
-  z-index: 1;
 
   @media (max-width: 1024px) {
     height: 58px;
@@ -16,7 +15,6 @@
 .slide-leave-to {
   height: 0;
   overflow: hidden;
-
 }
 
 .results {
