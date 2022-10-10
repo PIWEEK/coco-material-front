@@ -23,7 +23,8 @@
                 @keyup.delete="handleDelete"
                 @keyup="autocompleteSearch"
                 @keyup.esc="resetAutocompleteResults()"
-                @keydown.down="focusAutocompleteResults(-1, 'down')" />
+                @keydown.down="focusAutocompleteResults(-1, 'down')"
+                :placeholder="`${searchTags.length ? '' : 'write a topic (in English)'}`" />
             </div>
             <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
               <span tabindex="1" v-for="(result, index) in autocompleteResults" :key="index" @click="addTag(result.slug)"
@@ -70,11 +71,12 @@
                 ref="search"
                 v-model="search"
                 type="text"
+                :placeholder="`${searchTags.length ? '' : 'write a topic (in English)'}`"
                 @keyup.enter="searchVector"
                 @keyup.delete="handleDelete"
                 @keyup="autocompleteSearch"
                 @keyup.esc="resetAutocompleteResults()"
-                @keydown.down="focusAutocompleteResults(-1, 'down')"/>
+                @keydown.down="focusAutocompleteResults(-1, 'down')" />
             </div>
             <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
               <span

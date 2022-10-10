@@ -23,12 +23,12 @@
                   ref="search"
                   v-model="search"
                   type="text"
-                  :placeholder="`${tagsToSearch.length ? '' : 'Search by topic'}`"
+                  :placeholder="`${tagsToSearch.length ? '' : 'Search by topic (in English)'}`"
                   @keyup.enter="searchVector"
                   @keyup.delete="handleDelete"
                   @keyup="autocompleteSearch"
                   @keyup.esc="resetAutocompleteResults()"
-                  @keydown.down="focusAutocompleteResults(-1, 'down')"/>
+                  @keydown.down="focusAutocompleteResults(-1, 'down')" />
               </div>
               <div id="results" ref="results" v-if="autocompleteResults.length" class="autocomplete-results">
                 <span
