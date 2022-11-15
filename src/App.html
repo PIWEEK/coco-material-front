@@ -2,40 +2,46 @@
   <div id="coco-container">
     <div class="nav">
       <router-link to="/">
-        <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
+        <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg" />
       </router-link>
       <div class="nav-links">
         <span class="link">
           <router-link to="/">Home</router-link>
         </span>
         <span class="separator">
-          <img alt="" src="./assets/dot.png">
+          <img alt="" src="./assets/dot.png" />
         </span>
         <span class="link">
           <router-link to="/" v-scroll-to="'#suggestion'">Missing something?</router-link>
         </span>
         <span class="separator">
-          <img alt="" src="./assets/dot.png">
+          <img alt="" src="./assets/dot.png" />
         </span>
         <span class="link">
           <router-link to="/team">The team</router-link>
         </span>
         <span class="separator">
-          <img alt="" src="./assets/dot.png">
+          <img alt="" src="./assets/dot.png" />
         </span>
         <span class="link">
           <router-link to="/license">License</router-link>
+        </span>
+        <span class="separator">
+          <img alt="" src="./assets/dot.png" />
+        </span>
+        <span class="link">
+          <a href="https://paypal.me/cocomaterial" title="Enjoying the site? Support our work!">⭐️ Donate</a>
         </span>
       </div>
       <button @click="openNav" :class="`menu-btn ${navOpen ? 'open' : ''}`">
         <img src="./assets/menu.svg" alt="Menu" />
       </button>
     </div>
-    <router-view/>
+    <router-view />
   </div>
   <div :class="`side-nav ${navOpen ? 'open' : ''}`">
     <div class="header">
-      <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg">
+      <img class="logo" alt="CocoMaterial logo. Coconut with a straw inside" src="./assets/logo.svg" />
       <button @click="openNav" :class="`menu-btn ${navOpen ? 'open' : ''}`">
         <img src="./assets/close2.svg" alt="Close" />
       </button>
@@ -45,19 +51,19 @@
         <router-link to="/">Home</router-link>
       </span>
       <span class="separator">
-        <img alt="" src="./assets/dot.png">
+        <img alt="" src="./assets/dot.png" />
       </span>
       <span class="link">
         <router-link to="/" v-scroll-to="'#suggestion'">Missing something?</router-link>
       </span>
       <span class="separator">
-        <img alt="" src="./assets/dot.png">
+        <img alt="" src="./assets/dot.png" />
       </span>
       <span class="link" @click="openNav">
         <router-link to="/team">The team</router-link>
       </span>
       <span class="separator">
-        <img alt="" src="./assets/dot.png">
+        <img alt="" src="./assets/dot.png" />
       </span>
       <span class="link" @click="openNav">
         <router-link to="/license">License</router-link>
@@ -67,12 +73,13 @@
   <footer :style="{ backgroundImage: 'url(' + require('@/assets/waves.svg') + ')' }">
     <div class="inner-footer">
       <div class="left-side">
-        <img alt="Palm tree illustration" src="./assets/palm-tree.svg">
+        <img alt="Palm tree illustration" src="./assets/palm-tree.svg" />
         <ul class="menu-list">
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/" v-scroll-to="'#suggestion'">Missing something?</router-link></li>
           <li><router-link to="/team">The team</router-link></li>
           <li><router-link to="/license">License</router-link></li>
+          <li><a href="https://paypal.me/cocomaterial" title="Enjoying the site? Support our work!">⭐️ Donate</a></li>
         </ul>
       </div>
       <div class="right-side">
