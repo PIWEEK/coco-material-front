@@ -1,12 +1,12 @@
-<template src="./suggestion.html" lang="html"></template>
-<style src="./suggestion.scss"  lang="scss" scoped></style>
+<template src="./CocoSuggestion.html" lang="html"></template>
+<style src="./CocoSuggestion.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 import api from '@/service/api'
 
 export default defineComponent({
-  name: 'suggestion',
+  name: 'CocoSuggestion',
   data () {
     return {
       form: {},

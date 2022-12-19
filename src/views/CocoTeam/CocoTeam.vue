@@ -1,10 +1,10 @@
-<template src="./Team.html" lang="html"></template>
-<style src="./Team.scss"  lang="scss" scoped></style>
+<template src="./CocoTeam.html" lang="html"></template>
+<style src="./CocoTeam.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: 'Team',
+  name: 'CocoTeam',
   data () {
     return {
       members: [

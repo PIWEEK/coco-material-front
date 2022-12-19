@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home/Home.vue'
+import CocoHome from '@/views/CocoHome/CocoHome.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: CocoHome
   },
   {
     path: '/team',
@@ -13,7 +13,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Team/Team.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/CocoTeam/CocoTeam.vue')
   },
   {
     path: '/license',
@@ -21,7 +21,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/License/License.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/CocoLicense/CocoLicense.vue')
   },
   {
     path: '/results',
@@ -29,7 +29,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Results/Results.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/CocoResults/CocoResults.vue')
   }
 ]
 

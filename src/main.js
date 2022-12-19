@@ -15,10 +15,10 @@ createApp(App)
   .use(VueMatomo, {
     host: process.env.VUE_APP_MATOMO_HOST,
     siteId: process.env.VUE_APP_MATOMO_SITE_ID,
-    router: router,
     disableCookies: true,
     enableHeartBeatTimer: true,
-    heartBeatTimerInterval: 10
+    heartBeatTimerInterval: 10,
+    router
   })
   .use(VueScrollTo, {
     duration: 500,

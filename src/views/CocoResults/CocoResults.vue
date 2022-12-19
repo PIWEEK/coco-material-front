@@ -1,15 +1,15 @@
-<template src="./Results.html" lang="html"></template>
-<style src="./Results.scss"  lang="scss" scoped></style>
+<template src="./CocoResults.html" lang="html"></template>
+<style src="./CocoResults.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 import { mapState, mapActions, mapMutations } from 'vuex'
-import modal from '@/components/modal/modal.vue'
+import CocoModal from '@/components/CocoModal/CocoModal.vue'
 
 export default defineComponent({
-  name: 'Results',
+  name: 'CocoResults',
   components: {
-    modal
+    'coco-modal': CocoModal
   },
   data () {
     return {
@@ -287,7 +287,7 @@ export default defineComponent({
       this.scrollToTop()
     },
     getSvgImageAsStyleAttr (vector) {
-      var svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
+      const svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
       return {
         backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`
       }

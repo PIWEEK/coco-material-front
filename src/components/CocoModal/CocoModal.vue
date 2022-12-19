@@ -1,12 +1,12 @@
-<template src="./modal.html" lang="html"></template>
-<style src="./modal.scss"  lang="scss" scoped></style>
+<template src="./CocoModal.html" lang="html"></template>
+<style src="./CocoModal.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 import api from '@/service/api'
 
 export default defineComponent({
-  name: 'modal',
+  name: 'CocoModal',
   props: {
     vectorId: null,
     isHorizontal: null,
