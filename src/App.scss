@@ -20,7 +20,7 @@ body {
       max-height: 200px;
       max-width: 200px;
 
-      @media (max-width: 768px) {
+      @media (max-width: 890px) {
         max-width: 160px;
         max-height: 160px;
       }
@@ -32,7 +32,7 @@ body {
       max-height: 200px;
       max-width: 200px;
 
-      @media (max-width: 768px) {
+      @media (max-width: 890px) {
         max-width: 160px;
         max-height: 160px;
       }
@@ -77,6 +77,11 @@ body {
 }
 
 // vue-color-input component
+
+.color-input .box {
+  height: 30px;
+  width: 30px;
+}
 
 .color-input.user {
   .box {

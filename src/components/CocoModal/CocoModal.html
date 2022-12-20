@@ -24,6 +24,15 @@
       </header>
       <section class="modal-body">
         <slot name="body">
+          <div class="previous" v-if="!customizeBulk">
+            <button
+              class="btn-previous" type="button"
+              :disabled="!vector.neighbors.previous"
+              @click="goToVector(vector.neighbors.previous.id)">
+              &lt;
+            </button>
+          </div>
+
           <div class="main">
             <div class="preview-container">
               <div
@@ -80,20 +89,22 @@
                           </div>
                           <div class="color-title-container">
                             <label class="title" for="strokeHex"> Stroke </label>
-                            <input
-                              class="hex"
-                              type="text"
-                              name="strokeHex"
-                              placeholder="HEX"
-                              v-model="strokeHexValue"
-                              @keyup="selectStroke(strokeHexValue)" />
-                            <color-input
-                              format="hex string"
-                              position="bottom left"
-                              disable-alpha
-                              disable-text-inputs
-                              v-model="strokeHexValue"
-                              @change="selectStroke(strokeHexValue)" />
+                            <div class="color-hex-container">
+                              <input
+                                class="hex"
+                                type="text"
+                                name="strokeHex"
+                                placeholder="HEX"
+                                v-model="strokeHexValue"
+                                @keyup="selectStroke(strokeHexValue)" />
+                              <color-input
+                                format="hex string"
+                                position="bottom left"
+                                disable-alpha
+                                disable-text-inputs
+                                v-model="strokeHexValue"
+                                @change="selectStroke(strokeHexValue)" />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -111,7 +122,8 @@
                           </div>
                           <div class="color-title-container">
                             <label class="title" for="fillHex">Fill</label>
-                            <input
+                            <div class="color-hex-container">
+                              <input
                               class="hex"
                               type="text"
                               name="fillHex"
@@ -125,6 +137,7 @@
                               disable-text-inputs
                               v-model="fillHexValue"
                               @change="selectFill(fillHexValue)" />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -168,14 +181,7 @@
               </div>
             </form>
           </div>
-          <div class="previous" v-if="!customizeBulk">
-            <button
-              class="btn-previous" type="button"
-              :disabled="!vector.neighbors.previous"
-              @click="goToVector(vector.neighbors.previous.id)">
-              &lt;
-            </button>
-          </div>
+
           <div class="next" v-if="!customizeBulk">
             <button
               class="btn-next" type="button"
