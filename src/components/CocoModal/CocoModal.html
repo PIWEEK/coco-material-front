@@ -1,21 +1,23 @@
 <transition name="modal-fade">
-  <div class="modal-backdrop">
-    <div class="modal" v-if="vector">
+  <focus-trap v-model:active="isActive" :initial-focus="() => $refs.title"  v-if="vector">
+    <div class="modal-backdrop">
+      <div class="modal" v-if="vector">
       <header class="modal-header">
         <div class="title-container">
-          <div class="title" v-if="!customizeBulk && vector.name">
+          <div class="title" v-if="!customizeBulk && vector.name" ref="title" tabindex="1" >
             {{ vector.name }}
           </div>
           <ul class="tags-list">
             <li v-if="customizeBulk" v-for="(tag, index) in tags" :key="index">
-              <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+              <button tabindex="1" class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
             </li>
             <li v-if="!customizeBulk" v-for="(tag, index) in vectorTags" :key="index">
-              <button class="popular-btn" @click="searchVector(tag)">{{tag}}</button>
+              <button class="popular-btn" tabindex="1" @click="searchVector(tag)">{{tag}}</button>
             </li>
           </ul>
         </div>
         <button
+          tabindex="1"
           type="button"
           class="btn-close"
           @click="close">
@@ -26,6 +28,7 @@
         <slot name="body">
           <div class="previous" v-if="!customizeBulk">
             <button
+              tabindex="1"
               class="btn-previous" type="button"
               :disabled="!vector.neighbors.previous"
               @click="goToVector(vector.neighbors.previous.id)">
@@ -48,11 +51,11 @@
               <div class="types-container">
                 <div class="choices-container">
                   <div class="choice-container">
-                    <input type="radio" id="type-png" value="png" v-model="downloadType" />
+                    <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-png" value="png" v-model="downloadType" />
                     <label for="type-png" @click="selectDownloadTypePng()">Download PNG</label>
                   </div>
                   <div class="choice-container">
-                    <input type="radio" id="type-svg" value="svg" v-model="downloadType" />
+                    <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-svg" value="svg" v-model="downloadType" />
                     <label for="type-svg" @click="selectDownloadTypeSvg()">Download SVG</label>
                   </div>
                 </div>
@@ -61,15 +64,15 @@
                 <fieldset class="colors-container">
                   <div class="choices-container">
                     <div class="choice-container">
-                      <input type="radio" id="color-black-white" value="black-white" v-model="colorOption" />
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-black-white" value="black-white" v-model="colorOption" />
                       <label for="color-black-white" @click="selectColorBlackAndWhite()">Black & White</label>
                     </div>
                     <div class="choice-container" v-if="customizeBulk || hasColorSuggestion">
-                      <input type="radio" id="color-suggestion" value="color-suggestion" v-model="colorOption" />
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-suggestion" value="color-suggestion" v-model="colorOption" />
                       <label for="color-suggestion" @click="selectColorSuggestion()">Color Suggestion</label>
                     </div>
                     <div class="choice-container">
-                      <input type="radio" id="color-edit" value="edit" v-model="colorOption" />
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-edit" value="edit" v-model="colorOption" />
                       <label for="color-edit" @click="selectColorEdit()">Edit</label>
                     </div>
                   </div>
@@ -80,9 +83,11 @@
                         <div class="color-options">
                           <div class="rounds">
                             <span
+                              tabindex="1"
                               :class="`round ${strokeHexValue === color ? 'selected' : ''}`"
                               v-for="(color, index) in strokeColor"
                               :key="index"
+                              v-on:keyup.enter="selectStroke(color)"
                               @click="selectStroke(color)"
                               :style="{backgroundColor: `${color}`}">
                             </span>
@@ -91,6 +96,7 @@
                             <label class="title" for="strokeHex"> Stroke </label>
                             <div class="color-hex-container">
                               <input
+                                tabindex="1"
                                 class="hex"
                                 type="text"
                                 name="strokeHex"
@@ -124,12 +130,12 @@
                             <label class="title" for="fillHex">Fill</label>
                             <div class="color-hex-container">
                               <input
-                              class="hex"
-                              type="text"
-                              name="fillHex"
-                              placeholder="HEX"
-                              v-model="fillHexValue"
-                              @keyup="selectFill(fillHexValue)" />
+                                class="hex"
+                                type="text"
+                                name="fillHex"
+                                placeholder="HEX"
+                                v-model="fillHexValue"
+                                @keyup="selectFill(fillHexValue)" />
                             <color-input
                               format="hex string"
                               position="bottom left"
@@ -149,22 +155,22 @@
                   <fieldset class="sizes-container" v-if="downloadType === 'png'">
                     <div class="choices-container">
                       <div class="choice-container">
-                        <input type="radio" id="size-original" value="0" v-model="size" />
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="size"  type="radio" id="size-original" value="0" v-model="size" />
                         <label for="size-original">Original size</label>
                         <div class="size">If you want to combine it with similar images</div>
                       </div>
                       <div class="choice-container">
-                        <input type="radio" id="size-s" value="128" v-model="size" />
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="size" type="radio" id="size-s" value="128" v-model="size" />
                         <label for="size-s">S</label>
                         <div class="size">128px</div>
                       </div>
                       <div class="choice-container">
-                        <input type="radio" id="size-m" value="256" v-model="size" />
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="size" type="radio" id="size-m" value="256" v-model="size" />
                         <label for="size-m">M</label>
                         <div class="size">256px</div>
                       </div>
                       <div class="choice-container">
-                        <input type="radio" id="size-l" value="512" v-model="size" />
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="size" type="radio" id="size-l" value="512" v-model="size" />
                         <label for="size-l">L</label>
                         <div class="size">512px</div>
                       </div>
@@ -173,7 +179,7 @@
                 </transition>
 
                 <fieldset class="actions-container">
-                  <button class="btn submit" type="submit">
+                  <button tabindex="1" class="btn submit" type="submit">
                     Download {{ downloadType.toUpperCase() }}
                   </button>
                   <div class="counter" v-if="customizeBulk">{{totalVectors}} illustrations zipped</div>
@@ -184,6 +190,7 @@
 
           <div class="next" v-if="!customizeBulk">
             <button
+              tabindex="1"
               class="btn-next" type="button"
               :disabled="!vector.neighbors.next"
               @click="goToVector(vector.neighbors.next.id)">
@@ -194,5 +201,6 @@
       </section>
       <footer></footer>
     </div>
-  </div>
+    </div>
+  </focus-trap>
 </transition>

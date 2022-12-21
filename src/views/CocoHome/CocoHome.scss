@@ -574,11 +574,15 @@
 
 
   & .img-container {
-    background: #FFF;
+    background: $color-white;
+    cursor: pointer;
+    border: 1px solid $color-light-grey;
     display: flex;
-    height: 90px;
-    transition: all .3s ease;
-    position: relative;
+    height: 180px;
+    margin-bottom: 10px;
+    transition: all ease .3s;
+    padding: 2% 4%;
+    width: 100%;
 
     @media (min-width: 468px) {
       height: 110px
@@ -657,6 +661,11 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  @media (max-width: 340px) {
+    grid-template-columns: 1fr;
+  }
+
+
   & .svg-container {
     background-position: center;
     background-size: contain;
@@ -674,13 +683,15 @@
 
 
   & .img-container {
-    background: #FFF;
+    background: $color-white;
+    cursor: pointer;
+    border: 1px solid $color-light-grey;
     display: flex;
-    height: 90px;
-    margin: 0 auto;
-    max-width: 188px;
-    position: relative;
-    transition: all .3s ease;
+    height: 180px;
+    margin-bottom: 10px;
+    transition: all ease .3s;
+    padding: 2% 4%;
+    width: 100%;
 
     @media (min-width: 468px) {
       height: 110px

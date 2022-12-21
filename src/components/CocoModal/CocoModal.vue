@@ -31,7 +31,9 @@ export default defineComponent({
       strokeHexValue: '#000000',
       fillHexValue: '#FFFFFF',
       downloadSuggested: false,
-      size: 0 // values: 0, 128, 256, 512
+      size: 0, // values: 0, 128, 256, 512
+      cooldown: false,
+      preventKeys: false
     }
   },
   async mounted () {
@@ -66,8 +68,28 @@ export default defineComponent({
   async umounted () {
     document.body.style.position = undefined
   },
+  created () {
+    window.addEventListener('keydown', this.escapeHandler, true)
+  },
   methods: {
     // Close modal
+    escapeHandler (e) {
+      if (!this.cooldown & !this.preventKeys) {
+        if (e.key === 'ArrowLeft' && this.vector.neighbors.previous) {
+          this.goToVector(this.vector.neighbors.previous.id)
+        }
+        if (e.key === 'ArrowRight' && this.vector.neighbors.next) {
+          this.goToVector(this.vector.neighbors.next.id)
+        }
+        this.cooldown = true
+        setTimeout(() => {
+          this.cooldown = false
+        }, 200)
+      }
+      if (e.key === 'Escape') {
+        this.close()
+      }
+    },
     close () {
       const actualScroll = document.body.style.top
       document.body.style.position = null
@@ -83,6 +105,7 @@ export default defineComponent({
         delete query.vectorId
         this.$router.replace({ query })
       }
+      window.removeEventListener('keydown', this.escapeHandler, true)
     },
     async goToVector (vectorId) {
       // const query = Object.assign({}, this.$route.query, { vectorId })

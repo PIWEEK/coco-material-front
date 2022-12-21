@@ -13,6 +13,17 @@
   top: 0;
 }
 
+.radio-label[type='radio'] {
+  height: 0;
+  width: 0;
+  &:focus {
+    & + label {
+      outline: solid 1px red;
+    }
+  }
+}
+
+
 .modal {
   background: $color-white;
   border-radius: 6px;
@@ -315,7 +326,15 @@
   }
 
   & input {
-    display: none;
+    left: -9999px;
+    opacity: 0;
+    height: 0;
+    position: absolute;
+    width: 0;
+
+    &:focus + label {
+      outline: solid 1px $color-red;
+    }
   }
 
   & label {

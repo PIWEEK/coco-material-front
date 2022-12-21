@@ -359,13 +359,15 @@
   }
 
   & .img-container {
+    background: $color-white;
     cursor: pointer;
     border: 1px solid $color-light-grey;
     display: flex;
-    height: 150px;
+    height: 180px;
     margin-bottom: 10px;
     padding: 8% 16%;
     transition: all ease .3s;
+    width: 100%;
 
     &:hover {
       border-color: $color-medium-grey;

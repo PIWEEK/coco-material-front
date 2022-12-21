@@ -59,8 +59,8 @@
   </h1>
   <div class="latest-wrapper" v-if="latestVectors && latestVectors.length">
     <div class="latest-vector-wrappers" v-for="(vector, index) in latestVectors"  :key="index">
-      <div class="img-container">
-        <div class="svg-wrapper" @click="searchVectorByTopic(vector.tags, vector.id)">
+      <button class="img-container">
+        <div class="svg-wrapper" tabindex="1" @click="searchVectorByTopic(vector.tags, vector.id)">
           <div
             class="svg-container"
             :id="index"
@@ -68,7 +68,7 @@
             @load="loaded(index)"
             :style="getSvgImageAsStyleAttr(vector)"></div>
         </div>
-      </div>
+      </button>
       <div class="tags-container">
         <button class="tag" v-for="tag in tagsSeparator(vector.tags)" @click="searchVectorByTopic(tag)">
           {{ tag }}
@@ -89,7 +89,7 @@
         <button class="btn-primary" @click="searchVectorByTopic(featured.tag)">View all</button>
       </div>
       <div class="featured-vector-wrappers">
-        <div class="img-container" v-for="(vector, index) in featured.vectors.slice(0, 6)"  :key="index">
+        <button class="img-container" v-for="(vector, index) in featured.vectors.slice(0, 6)"  :key="index">
           <div class="svg-wrapper" @click="searchVectorByTopic(vector.tags, vector.id)">
             <div
               class="svg-container"
@@ -98,7 +98,7 @@
               @load="loaded(index)"
               :style="getSvgImageAsStyleAttr(vector)"></div>
           </div>
-        </div>
+        </button>
       </div>
     </div>
   </div>
