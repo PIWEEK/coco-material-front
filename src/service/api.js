@@ -9,6 +9,26 @@ const api = {
   // Vectors
   getVector (payload) {
     const queryUrl = new URLSearchParams()
+
+    if (payload.tags && payload.tags.length > 0) {
+      queryUrl.set('tags', payload.tags.join())
+    }
+    if (payload.similarity && payload.similarity.length > 0) {
+      queryUrl.set('similarity', payload.similarity.join())
+    }
+    if (payload.ordering) {
+      queryUrl.set('ordering', payload.ordering)
+    }
+    return axios.get(`/vectors/${payload.id}?${queryUrl.toString()}`).then(response => {
+      return response.data
+    })
+  },
+  getVectors (payload) {
+    const queryUrl = new URLSearchParams()
+
+    queryUrl.set('page', `${payload.currentPage}`)
+    queryUrl.set('page_size', `${payload.pageSize}`)
+
     if (payload.tags && payload.tags.length > 0) {
       queryUrl.set('tags', payload.tags.join())
     }
@@ -16,16 +36,18 @@ const api = {
       queryUrl.set('ordering', payload.ordering)
     }
 
-    return axios.get(`/vectors/${payload.id}?${queryUrl.toString()}`).then(response => {
+    return axios.get(`/vectors/?${queryUrl.toString()}`).then(response => {
       return response.data
     })
   },
-  getVectors (payload) {
+  getSimilarVectors (payload) {
     const queryUrl = new URLSearchParams()
+
     queryUrl.set('page', `${payload.currentPage}`)
     queryUrl.set('page_size', `${payload.pageSize}`)
+
     if (payload.tags && payload.tags.length > 0) {
-      queryUrl.set('tags', payload.tags.join())
+      queryUrl.set('similarity', payload.tags.join())
     }
     if (payload.ordering) {
       queryUrl.set('ordering', payload.ordering)

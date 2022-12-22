@@ -36,7 +36,8 @@ export default defineComponent({
       totalResults: state => state.totalResults,
       filteredVectors: state => state.filteredVectors,
       paginationArray: state => state.paginationArray,
-      loading: state => state.loading
+      loading: state => state.loading,
+      isShowingSimilarVectors: state => state.isShowingSimilarVectors
     })
   },
   async beforeMount () {

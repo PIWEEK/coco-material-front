@@ -410,13 +410,14 @@
 
   & h3 {
     font-size: 36px;
-    margin: 20px 0 15px;
+    margin-bottom: 15px;
   }
 
   & p {
     color: $color-grey;
     font-size: 16px;
     font-weight: 500;
+    margin-bottom: .5rem;
   }
 
   & strong {
@@ -439,6 +440,19 @@
     font-weight: 700;
   }
 }
+.suggestion {
+  max-width: 660px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  img {
+    height: 160px;
+  }
+}
+
 
 .pagination-container {
   display: flex;
