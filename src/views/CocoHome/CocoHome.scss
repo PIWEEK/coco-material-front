@@ -432,7 +432,7 @@
   margin-right: auto;
   max-width: 1400px;
 
-  @media (min-width: 1023px) {
+  @media (min-width: 1325px) {
     flex-direction: row;
 
     &:nth-child(even) {
@@ -465,7 +465,7 @@
       height: 120px;
       top: -10px;
       width: 120px;
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: -20px;
         top: 50px;
       }
@@ -477,7 +477,7 @@
       left: -10px;
       top: -10px;
       transform: scaleX(-1);
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: auto;
         right: -30px;
         top: 30px;
@@ -490,7 +490,7 @@
       width: 145px;
       left: -10px;
       top: -10px;
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: -20px;
         top: 50px;
       }
@@ -501,7 +501,7 @@
       width: 136px;
       left: -10px;
       top: -10px;
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: auto;
         right: -20px;
         top: 40px;
@@ -513,7 +513,7 @@
       width: 130px;
       left: -10px;
       top: -10px;
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: -20px;
         top: 50px;
       }
@@ -524,7 +524,7 @@
       width: 145px;
       left: -10px;
       top: -10px;
-      @media (min-width: 1023px) {
+      @media (min-width: 1325px) {
         left: auto;
         right: -20px;
         top: 40px;
@@ -536,22 +536,27 @@
     display: grid;
     position: relative;
     z-index: 10;
-
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 90px;
-    column-gap: 1.5rem;
-    row-gap: 1.5rem;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: .5rem;
+    row-gap: .5rem;
 
 
     @media (min-width: 468px) {
-      grid-template-rows: 110px;
+      grid-template-rows: 180px;
     }
 
-    @media (min-width: 790px) {
-      grid-template-columns: repeat(6, 1fr);
+    @media (min-width: 390px) {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (min-width: 1023px) {
+    @media (min-width: 580px) {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+
+    }
+
+    @media (min-width: 1325px) {
       grid-template-columns: repeat(6, 1fr);
       width: 100%;
     }
@@ -579,14 +584,9 @@
     border: 1px solid $color-light-grey;
     display: flex;
     height: 180px;
-    margin-bottom: 10px;
     transition: all ease .3s;
     padding: 2% 4%;
     width: 100%;
-
-    @media (min-width: 468px) {
-      height: 110px
-    }
 
     &:hover {
       cursor: pointer;
@@ -600,12 +600,21 @@
 
   & .featured-title {
     display: flex;
+    flex-direction: column;
     padding-bottom: 1.5rem;
+    gap: 1rem;
+
     justify-content: space-between;
     position: relative;
     z-index: 10;
 
-    @media (min-width: 1023px) {
+
+    @media (min-width: 350px) {
+      flex-direction: row;
+      gap: 0;
+    }
+
+    @media (min-width: 1325px) {
       flex-direction: column;
       padding-bottom: 0;
       justify-content: center;
@@ -688,14 +697,9 @@
     border: 1px solid $color-light-grey;
     display: flex;
     height: 180px;
-    margin-bottom: 10px;
     transition: all ease .3s;
     padding: 2% 4%;
     width: 100%;
-
-    @media (min-width: 468px) {
-      height: 110px
-    }
 
     &:hover {
       cursor: pointer;

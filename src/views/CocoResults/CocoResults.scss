@@ -317,7 +317,12 @@
   & .download-btn {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 10px;
+    column-gap: .5rem;
+
+    @media (max-width: 400px) {
+      grid-template-columns: 1fr;
+      row-gap: .25rem;
+    }
 
     @media (max-width: 768px) {
       column-gap: 2px;
