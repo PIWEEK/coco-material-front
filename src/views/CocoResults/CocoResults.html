@@ -94,7 +94,8 @@
           </div>
           <span v-if="filteredVectors.length" class="info-text">Showing {{totalResults}} results</span >
         </form>
-        <div v-if="filteredVectors.length" class="vectors-actions" @click="closeAutocomplete">
+        <div v-if="!isShowingSimilarVectors && filteredVectors.length"
+             class="vectors-actions" @click="closeAutocomplete">
           <button class="btn-color" @click="showModal(filteredVectors[0], true, 0)">
             <img alt="Palette icon" src="../../assets/palette.svg"/>
             <span>Customize all</span>
@@ -104,23 +105,45 @@
           </button>
         </div>
       </div>
+
+      <div v-if="isShowingSimilarVectors" class="no-results suggestion">
+        <div class="img-container">
+          <img alt="Miss Sherlock illustration" src="../../assets/sherlock.svg" />
+        </div>
+        <div class="text-container">
+          <h3>Sorry, we couldn't find anything you're looking for</h3>
+          <p v-if="searchTags.length">
+            We didn't find any result matching "<span class="highlight">{{ searchTags.join(' ') }}</span>".
+          </p>
+          <p v-if="searchTags.length && filteredVectors.length">
+            Meanwhile, we are going to offer you some drawings that may or may not be related to your search
+            and may or may not interest you.
+          </p>
+          <p>
+            Please check what you have written, try a different search term, look within our <strong>popular
+            tags</strong> or if you are missing something,
+            <router-link to="/#suggestion">send us your ideas</router-link>.
+          </p>
+        </div>
+      </div>
+
       <div v-if="filteredVectors.length" class="results-list"  @click="closeAutocomplete">
         <div class="vector-container" v-for="(vector, index) in filteredVectors" :key="index">
-          <div class="img-container" @click="showModal(vector, false, index)">
+          <button class="img-container" @click="showModal(vector, false, index)">
             <div
               class="svg-container"
               :id="index"
               :alt="vector.name"
               @load="loaded(index)"
               :style="getSvgImageAsStyleAttr(vector)"></div>
-          </div>
+          </button>
           <div class="download-btn">
             <button class="btn svg" @click="download(vector)">Download</button>
             <button class="btn png" @click="showModal(vector, false, index)">Customize</button>
           </div>
         </div>
       </div>
-      <div v-if="filteredVectors.length && paginationArray.length > 1 && 6 >= paginationArray.length" class="pagination-container">
+      <div v-if="!isShowingSimilarVectors && filteredVectors.length && paginationArray.length > 1 && 6 >= paginationArray.length" class="pagination-container">
         <button class="prev" @click="handlePagination(currentPage - 1)" :disabled="currentPage == 1">
           <img v-if="currentPage == 1" src="../../assets/prev-disabled.svg" alt="Previous page disabled" />
           <img v-else src="../../assets/prev.svg" alt="Previous page" />
@@ -189,13 +212,14 @@
       </transition>
 
     </section>
-    <modal
+    <coco-modal
       v-if="isModalVisible && filteredVectors.length"
       :vectorId="selectedVector.id"
       :isHorizontal="isHorizontal"
       :customizeBulk="customizeBulk"
       :totalVectors="totalResults"
       :tags="searchTags"
+      :isASuggestion="isShowingSimilarVectors"
       @close="closeModal"
       @search="searchModalVector($event)"
     />

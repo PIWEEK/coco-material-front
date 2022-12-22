@@ -1,15 +1,15 @@
-<template src="./Home.html" lang="html"></template>
-<style src="./Home.scss"  lang="scss" scoped></style>
+<template src="./CocoHome.html" lang="html"></template>
+<style src="./CocoHome.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
-import suggestion from '@/components/suggestion/suggestion.vue'
+import CocoSuggestion from '@/components/CocoSuggestion/CocoSuggestion.vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'CocoHome',
   components: {
-    'coco-suggestion': suggestion
+    'coco-suggestion': CocoSuggestion
   },
   data () {
     return {
@@ -142,7 +142,7 @@ export default defineComponent({
       )
     },
     getSvgImageAsStyleAttr (vector) {
-      var svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
+      const svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
       return {
         backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`
       }

@@ -1,18 +1,19 @@
-<template src="./modal.html" lang="html"></template>
-<style src="./modal.scss"  lang="scss" scoped></style>
+<template src="./CocoModal.html" lang="html"></template>
+<style src="./CocoModal.scss"  lang="scss" scoped></style>
 
 <script>
 import { defineComponent } from 'vue'
 import api from '@/service/api'
 
 export default defineComponent({
-  name: 'modal',
+  name: 'CocoModal',
   props: {
     vectorId: null,
     isHorizontal: null,
     customizeBulk: null,
     totalVectors: null,
-    tags: null
+    tags: null,
+    isASuggestion: null
   },
   data () {
     return {
@@ -31,7 +32,9 @@ export default defineComponent({
       strokeHexValue: '#000000',
       fillHexValue: '#FFFFFF',
       downloadSuggested: false,
-      size: 0 // values: 0, 128, 256, 512
+      size: 0, // values: 0, 128, 256, 512
+      cooldown: false,
+      preventKeys: false
     }
   },
   async mounted () {
@@ -40,22 +43,7 @@ export default defineComponent({
     document.body.style.position = 'fixed'
 
     // Download vector
-    this.vector = await api.getVector({ id: this.vectorId, tags: this.tags, ordering: this.$route.query.ordering })
-    this.svgCode = this.vector.svgContent
-    this.vectorTags = this.vector.tags.split(',')
-
-    // Check if the image has only one path
-    const svgEl = document.createElement('div')
-    svgEl.innerHTML = this.svgCode
-    this.hasJustStroke = (svgEl.querySelectorAll('path').length === 1)
-
-    // Check if image has color suggestion
-    this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
-
-    // If hasColorSuggesteion select it by default
-    if (this.hasColorSuggestion) {
-      this.selectColorSuggestion()
-    }
+    await this._getVector(this.vectorId)
 
     // Add data to the url
     if (!this.customizeBulk) {
@@ -66,8 +54,28 @@ export default defineComponent({
   async umounted () {
     document.body.style.position = undefined
   },
+  created () {
+    window.addEventListener('keydown', this.escapeHandler, true)
+  },
   methods: {
     // Close modal
+    escapeHandler (e) {
+      if (!this.cooldown & !this.preventKeys) {
+        if (e.key === 'ArrowLeft' && this.vector.neighbors.previous) {
+          this.goToVector(this.vector.neighbors.previous.id)
+        }
+        if (e.key === 'ArrowRight' && this.vector.neighbors.next) {
+          this.goToVector(this.vector.neighbors.next.id)
+        }
+        this.cooldown = true
+        setTimeout(() => {
+          this.cooldown = false
+        }, 200)
+      }
+      if (e.key === 'Escape') {
+        this.close()
+      }
+    },
     close () {
       const actualScroll = document.body.style.top
       document.body.style.position = null
@@ -83,12 +91,19 @@ export default defineComponent({
         delete query.vectorId
         this.$router.replace({ query })
       }
+      window.removeEventListener('keydown', this.escapeHandler, true)
     },
-    async goToVector (vectorId) {
+    async _getVector (vectorId) {
       // const query = Object.assign({}, this.$route.query, { vectorId })
       // this.$router.push({ path: '/results', query })
+
       // Download vector
-      this.vector = await api.getVector({ id: vectorId, tags: this.tags, ordering: this.$route.query.ordering })
+      this.vector = await api.getVector({
+        id: vectorId,
+        tags: !this.isASuggestion ? this.tags : [],
+        similarity: this.isASuggestion ? this.tags : [],
+        ordering: this.$route.query.ordering
+      })
       this.svgCode = this.vector.svgContent
       this.vectorTags = this.vector.tags.split(',')
 
@@ -97,14 +112,6 @@ export default defineComponent({
       svgEl.innerHTML = this.svgCode
       this.hasJustStroke = (svgEl.querySelectorAll('path').length === 1)
 
-      // Inicialize form params
-      this.downloadType = 'png' // values: png, svg
-      this.colorOption = 'black-white' // values: black-white, color-suggestion, edit
-      this.strokeHexValue = '#000000'
-      this.fillHexValue = '#FFFFFF'
-      this.downloadSuggested = false
-      this.size = 0 // values: 0, 128, 256, 512
-
       // Check if image has color suggestion
       this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
 
@@ -112,6 +119,17 @@ export default defineComponent({
       if (this.hasColorSuggestion) {
         this.selectColorSuggestion()
       }
+    },
+    async goToVector (vectorId) {
+      await this._getVector(vectorId)
+
+      // Inicialize form params
+      this.downloadType = 'png' // values: png, svg
+      this.colorOption = 'black-white' // values: black-white, color-suggestion, edit
+      this.strokeHexValue = '#000000'
+      this.fillHexValue = '#FFFFFF'
+      this.downloadSuggested = false
+      this.size = 0 // values: 0, 128, 256, 512
 
       // Add data to the url
       const query = Object.assign({}, this.$route.query, { vectorId })
