@@ -143,22 +143,21 @@
 
 /* Title */
 .title {
+  align-self: flex-start;
   color: $color-black;
   display: flex;
   font-size: 18px;
+  flex-shrink: 0;
   line-height: 24px;
   font-weight: 700;
-  margin: 0 20px 0 0;
-
-  @media (max-width: 890px) {
-    margin: 0 0 20px 0;
-  }
+  margin: 0 1rem .5rem 0;
 }
 
 /* Tags list */
 .tags-list {
-  display: flex;
+  display: block;
   flex-wrap: wrap;
+  max-width: 620px;
   justify-content: center;
 
   @media (max-width: 890px) {
@@ -166,9 +165,8 @@
   }
 
   li {
-    @media (max-width: 890px) {
-      margin-bottom: 8px;
-    }
+    display: inline-block;
+    margin-bottom: 8px;
   }
 
   .popular-btn {
@@ -180,7 +178,7 @@
     line-height: 18px;
     font-family: "Red Hat Display";
     max-width: 190px;
-    margin: 0 5px;
+    margin: 0 5px 0 0;
     overflow: hidden;
     padding: 4px 10px;
     text-overflow: ellipsis;
@@ -213,12 +211,10 @@
 }
 
 .btn-close {
+  align-self: flex-start;
   font-size: 20px;
   padding: 0 10px;
 
-  @media (max-width: 890px) {
-    align-self: flex-start;
-  }
 }
 
 .btn-previous,
