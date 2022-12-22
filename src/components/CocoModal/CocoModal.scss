@@ -90,7 +90,7 @@
 
   @media (max-width: 890px) {
     flex-direction: column;
-    padding: 0 30px 8px;
+    padding: 0 30px 1rem;
   }
 }
 
@@ -205,7 +205,7 @@
 
   &:disabled,
   &[disabled] {
-    color: $color-light-grey;
+    color: $color-medium-grey;
     cursor: default;
   }
 }
