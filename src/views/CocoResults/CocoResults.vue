@@ -125,8 +125,12 @@ export default defineComponent({
       const width = image.width
       document.getElementById(id).className = height > width ? 'vertical' : 'horizontal'
     },
-    autocompleteSearch () {
-      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
+    autocompleteSearch (ev) {
+      if (event.code === 'Enter') {
+        this.autocompleteResults = []
+      } else {
+        this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
+      }
     },
     focusAutocompleteResults (index, key) {
       event.stopPropagation()
