@@ -121,8 +121,6 @@ export default defineComponent({
       }
     },
     async goToVector (vectorId) {
-      await this._getVector(vectorId)
-
       // Inicialize form params
       this.downloadType = 'png' // values: png, svg
       this.colorOption = 'black-white' // values: black-white, color-suggestion, edit
@@ -130,6 +128,9 @@ export default defineComponent({
       this.fillHexValue = '#FFFFFF'
       this.downloadSuggested = false
       this.size = 0 // values: 0, 128, 256, 512
+
+      // Download vector
+      await this._getVector(vectorId)
 
       // Add data to the url
       const query = Object.assign({}, this.$route.query, { vectorId })
