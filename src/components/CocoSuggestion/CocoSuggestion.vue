@@ -17,17 +17,18 @@ export default defineComponent({
   },
   methods: {
     async sendSuggestion () {
-      try {
-        this.isLoading = true
-        await api.sendSuggestion(this.form)
-        this.showSuccessMessage()
-      } catch (err) {
-        this.showErrorMessage()
-      } finally {
-        this.isLoading = false
+      if (!this.isLoading) {
+        try {
+          this.isLoading = true
+          await api.sendSuggestion(this.form)
+          this.showSuccessMessage()
+        } catch (err) {
+          this.showErrorMessage()
+        } finally {
+          this.isLoading = false
+        }
       }
     },
-
     showSuccessMessage () {
       this.form = {}
       this.showError = false
