@@ -53,6 +53,7 @@
     </div>
     <div class="grass"></div>
   </div>
+
   <h1 class="home-title">
     Recently added
     <button class="btn-primary" @click="searchVectorByTopic('', null, '-uploaded')">View all</button>
@@ -73,101 +74,13 @@
         <button class="tag" v-for="tag in tagsSeparator(vector.tags)" @click="searchVectorByTopic(tag)">
           {{ tag }}
         </button>
-
       </div>
     </div>
   </div>
 
-  <h1 class="home-title">Featured Tags</h1>
-  <div class="featured-wrapper" v-if="featuredVectors && featuredVectors.length">
-    <div class="featured-container" v-for="(featured, index) in featuredVectors"  :key="index">
-      <div class="featured-decoration">
-        <div class="bubble-container" v-bind:class="'bubble' + (index + 1)"></div>
-      </div>
-      <div class="featured-title">
-        <h2>{{ featured.name }}</h2>
-        <button class="btn-primary" @click="searchVectorByTopic(featured.tag)">View all</button>
-      </div>
-      <div class="featured-vector-wrappers">
-        <button class="img-container" v-for="(vector, index) in featured.vectors.slice(0, 6)"  :key="index">
-          <div class="svg-wrapper" @click="searchVectorByTopic(vector.tags, vector.id)">
-            <div
-              class="svg-container"
-              :id="index"
-              :alt="vector.name"
-              @load="loaded(index)"
-              :style="getSvgImageAsStyleAttr(vector)"></div>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
-  <h1 class="home-title">Featured Topics</h1>
-  <div class=topics @click="closeAutocomplete">
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Technology</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('technology')">View all</button>
-      </div>
-      <img src="../../assets/topics/tech.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Science</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('science')">View all</button>
-      </div>
-      <img src="../../assets/topics/science.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Objects</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('object')">View all</button>
-      </div>
-      <img src="../../assets/topics/objects.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Food</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('food')">View all</button>
-      </div>
-      <img src="../../assets/topics/food.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">People</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('people')">View all</button>
-      </div>
-      <img src="../../assets/topics/people.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Charts</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('chart')">View all</button>
-      </div>
-      <img src="../../assets/topics/charts.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Emojis</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('emojis')">View all</button>
-      </div>
-      <img src="../../assets/topics/emojis.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Office</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('office')">View all</button>
-      </div>
-      <img src="../../assets/topics/office.svg" />
-    </div>
-    <div class="topic">
-      <div class="top">
-        <h5 class="title">Social</h5>
-        <button class="btn-primary" @click="searchVectorByTopic('social')">View all</button>
-      </div>
-      <img src="../../assets/topics/rrss.svg" />
-    </div>
-  </div>
+  <coco-featured-tags class="featured-tags-section" id="featured-tags" />
+
+  <!-- <coco-featured-topics class="featured-topics-section" id="featured-topics" /> -->
 
   <coco-suggestion class="suggestion-section" id="suggestion" />
 

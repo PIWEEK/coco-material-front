@@ -2,16 +2,12 @@ import api from '@/service/api'
 
 const state = () => ({
   totalVectors: null,
-  featuredVectors: null,
   latestVectors: null
 })
 
 const mutations = {
   getTotalVectorsSuccess (state, totalVectors) {
     state.totalVectors = totalVectors
-  },
-  getFeaturedVectorsSuccess (state, vectors) {
-    state.featuredVectors = vectors
   },
   getLatestVectorsSuccess (state, vectors) {
     state.latestVectors = vectors
@@ -25,12 +21,6 @@ const actions = {
         commit('getTotalVectorsSuccess', totalVectors)
       })
   },
-  getFeaturedVectors ({ commit }) {
-    return api.getFeaturedVectors()
-      .then(featuredVectors => {
-        commit('getFeaturedVectorsSuccess', featuredVectors)
-      })
-  },
   getLatestVectors ({ commit }) {
     return api.getLatestVectors()
       .then(latestVectors => {
@@ -39,11 +29,9 @@ const actions = {
   }
 }
 
-const homeStoreModule = {
+export default {
   namespaced: true,
   state,
   mutations,
   actions
 }
-
-export default homeStoreModule

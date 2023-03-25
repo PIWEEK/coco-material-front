@@ -1,0 +1,75 @@
+.featured-topics-host {}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 40px;
+  max-width: 1440px;
+
+  @media (min-width: 720px) {
+    font-size: 30px;
+  }
+
+  @media (min-width: 1023px) {
+    margin: 3rem auto;
+  }
+}
+
+
+.featured-topics {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 80px;
+  row-gap: 50px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 440px) {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.topic {
+  margin: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  & .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
+
+  & .topic-title {
+    font-size: 24px;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+  & button {
+    font-size: 14px;
+    padding: 5px 15px;
+
+    @media (max-width: 768px) {
+      padding: 5px 8px;
+    }
+  }
+
+  & img {
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}

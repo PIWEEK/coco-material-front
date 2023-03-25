@@ -4,11 +4,16 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
+
 import CocoSuggestion from '@/components/CocoSuggestion/CocoSuggestion.vue'
+import CocoFeaturedTags from '@/components/CocoFeaturedTags/CocoFeaturedTags.vue'
+import CocoFeaturedTopics from '@/components/CocoFeaturedTopics/CocoFeaturedTopics.vue'
 
 export default defineComponent({
   name: 'CocoHome',
   components: {
+    'coco-featured-tags': CocoFeaturedTags,
+    'coco-featured-topics': CocoFeaturedTopics,
     'coco-suggestion': CocoSuggestion
   },
   data () {
@@ -23,7 +28,6 @@ export default defineComponent({
   computed: {
     ...mapState('home', {
       totalVectors: state => state.totalVectors,
-      featuredVectors: state => state.featuredVectors,
       latestVectors: state => state.latestVectors
     }),
     ...mapState('tags', {
@@ -34,7 +38,6 @@ export default defineComponent({
     this.clearSearchTags()
     this.getTags()
     this.getTotalVectors()
-    this.getFeaturedVectors()
     this.getLatestVectors()
   },
   mounted () {
@@ -49,7 +52,6 @@ export default defineComponent({
   methods: {
     ...mapActions({
       getTotalVectors: 'home/getTotalVectors',
-      getFeaturedVectors: 'home/getFeaturedVectors',
       getLatestVectors: 'home/getLatestVectors',
       getTags: 'tags/getTags'
     }),
