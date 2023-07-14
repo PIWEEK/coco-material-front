@@ -59,7 +59,15 @@ export default defineComponent({
       clearSearchTags: 'tags/clearSearchTags'
     }),
     autocompleteSearch () {
-      this.autocompleteResults = this.tags.filter(it => it.slug.includes(this.search.toLocaleLowerCase()))
+      this.autocompleteResults = this.tags.filter(it => it.slug.indexOf(this.search.toLocaleLowerCase()) >= 0).sort((a, b) => {
+        if (a.slug < b.slug) {
+          return -1
+        }
+        if (a.slug > b.slug) {
+          return 1
+        }
+        return 0
+      })
     },
     focusAutocompleteResults (index, key) {
       event.stopPropagation()
