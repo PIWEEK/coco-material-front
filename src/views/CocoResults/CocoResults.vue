@@ -4,6 +4,8 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import levenSort from 'leven-sort'
+
 import CocoModal from '@/components/CocoModal/CocoModal.vue'
 
 export default defineComponent({
@@ -129,15 +131,9 @@ export default defineComponent({
       if (event.code === 'Enter') {
         this.autocompleteResults = []
       } else {
-        this.autocompleteResults = this.tags.filter(it => it.slug.indexOf(this.search.toLocaleLowerCase()) >= 0).sort((a, b) => {
-          if (a.slug < b.slug) {
-            return -1
-          }
-          if (a.slug > b.slug) {
-            return 1
-          }
-          return 0
-        })
+        const text = this.search.toLocaleLowerCase()
+        const results = this.tags.filter(it => it.slug.indexOf(text) >= 0)
+        this.autocompleteResults = levenSort(results, text, 'slug')
       }
     },
     focusAutocompleteResults (index, key) {

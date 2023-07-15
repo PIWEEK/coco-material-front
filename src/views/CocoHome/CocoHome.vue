@@ -4,6 +4,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
+import levenSort from 'leven-sort'
 
 import CocoSuggestion from '@/components/CocoSuggestion/CocoSuggestion.vue'
 import CocoFeaturedTags from '@/components/CocoFeaturedTags/CocoFeaturedTags.vue'
@@ -59,15 +60,9 @@ export default defineComponent({
       clearSearchTags: 'tags/clearSearchTags'
     }),
     autocompleteSearch () {
-      this.autocompleteResults = this.tags.filter(it => it.slug.indexOf(this.search.toLocaleLowerCase()) >= 0).sort((a, b) => {
-        if (a.slug < b.slug) {
-          return -1
-        }
-        if (a.slug > b.slug) {
-          return 1
-        }
-        return 0
-      })
+      const text = this.search.toLocaleLowerCase()
+      const results = this.tags.filter(it => it.slug.indexOf(text) >= 0)
+      this.autocompleteResults = levenSort(results, text, 'slug')
     },
     focusAutocompleteResults (index, key) {
       event.stopPropagation()
