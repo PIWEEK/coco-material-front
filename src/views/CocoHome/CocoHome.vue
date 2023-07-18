@@ -146,10 +146,16 @@ export default defineComponent({
         { top: 0, behavior: 'smooth' }
       )
     },
-    getSvgImageAsStyleAttr (vector) {
-      const svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
-      return {
-        backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`
+    getImageAsStyleBackgroundAttr (vector) {
+      if (vector.gif !== null || vector.coloredGif !== null) {
+        return {
+          backgroundImage: `url('${vector.coloredGif || vector.gif}')`
+        }
+      } else {
+        const svg64 = window.btoa(vector.coloredSvgContent || vector.svgContent)
+        return {
+          backgroundImage: `url('data:image/svg+xml;base64,${svg64}')`
+        }
       }
     }
   }

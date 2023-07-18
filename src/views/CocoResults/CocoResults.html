@@ -135,7 +135,7 @@
               :id="index"
               :alt="vector.name"
               @load="loaded(index)"
-              :style="getSvgImageAsStyleAttr(vector)"></div>
+              :style="getImageAsStyleBackgroundAttr(vector)"></div>
           </button>
           <div class="download-btn">
             <button class="btn svg" @click="download(vector)">Download</button>
