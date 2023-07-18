@@ -38,11 +38,21 @@
 
           <div class="main">
             <div class="preview-container">
+
               <div
-                :class="`preview ${isHorizontal ? 'horizontal' : 'vertical'}`"
+                v-if="downloadType != 'gif'"
+                :class="`preview svg ${isHorizontal ? 'horizontal' : 'vertical'}`"
                 id="preview"
                 ref="preview"
-                v-html="svgCode"></div>
+                v-html="svgCode">
+              </div>
+              <div
+                v-else
+                :class="`preview gif ${isHorizontal ? 'horizontal' : 'vertical'}`"
+                id="preview"
+                ref="preview">
+                <img class="gif-image" :src="selectedGifUrl" />
+              </div>
               <span class="preview-title" v-if="customizeBulk">Example illustation for reference</span>
             </div>
             <form
@@ -50,31 +60,35 @@
               @submit.prevent="download()">
               <div class="types-container">
                 <div class="choices-container">
-                  <div class="choice-container">
-                    <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-png" value="png" v-model="downloadType" />
-                    <label for="type-png" @click="selectDownloadTypePng()">Download PNG</label>
-                  </div>
-                  <div class="choice-container">
-                    <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-svg" value="svg" v-model="downloadType" />
-                    <label for="type-svg" @click="selectDownloadTypeSvg()">Download SVG</label>
-                  </div>
+                    <div class="choice-container" v-if="showTypePng">
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-png" value="png" v-model="downloadType" />
+                      <label for="type-png" @click="selectDownloadTypePng()">PNG</label>
+                    </div>
+                    <div class="choice-container" v-if="showTypeSvg">
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-svg" value="svg" v-model="downloadType" />
+                      <label for="type-svg" @click="selectDownloadTypeSvg()">SVG</label>
+                    </div>
+                    <div class="choice-container" v-if="showTypeGif">
+                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="downloadType" type="radio" id="type-gif" value="gif" v-model="downloadType" />
+                      <label for="type-gif" @click="selectDownloadTypeGif()">GIF</label>
+                    </div>
                 </div>
               </div>
               <div class="type-settings-container">
                 <fieldset class="colors-container">
                   <div class="choices-container">
-                    <div class="choice-container">
-                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-black-white" value="black-white" v-model="colorOption" />
-                      <label for="color-black-white" @click="selectColorBlackAndWhite()">Black & White</label>
-                    </div>
-                    <div class="choice-container" v-if="customizeBulk || hasColorSuggestion">
-                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-suggestion" value="color-suggestion" v-model="colorOption" />
-                      <label for="color-suggestion" @click="selectColorSuggestion()">Color Suggestion</label>
-                    </div>
-                    <div class="choice-container">
-                      <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-edit" value="edit" v-model="colorOption" />
-                      <label for="color-edit" @click="selectColorEdit()">Edit</label>
-                    </div>
+                      <div class="choice-container" v-if="showColorBW">
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-black-white" value="black-white" v-model="colorOption" />
+                        <label for="color-black-white" @click="selectColorBlackAndWhite()">Black & White</label>
+                      </div>
+                      <div class="choice-container" v-if="showColorSuggestion">
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-suggestion" value="color-suggestion" v-model="colorOption" />
+                        <label for="color-suggestion" @click="selectColorSuggestion()">Color Suggestion</label>
+                      </div>
+                      <div class="choice-container" v-if="showColorEdit">
+                        <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="colorOption" type="radio" id="color-edit" value="edit" v-model="colorOption" />
+                        <label for="color-edit" @click="selectColorEdit()">Edit</label>
+                      </div>
                   </div>
                   <transition name="fade" mode="out-in">
                     <div class="edit-color-settings-container" v-if="colorOption == 'edit'">
@@ -152,7 +166,7 @@
                 </fieldset>
 
                 <transition name="fade" mode="out-in">
-                  <fieldset class="sizes-container" v-if="downloadType === 'png'">
+                    <fieldset class="sizes-container" v-if="showSizeChoices">
                     <div class="choices-container">
                       <div class="choice-container">
                         <input tabindex="1" @focus="preventKeys = true" @blur="preventKeys = false" name="size"  type="radio" id="size-original" value="0" v-model="size" />

@@ -27,7 +27,7 @@ export default defineComponent({
       hasJustStroke: false,
       hasColorSuggestion: false,
       // Form params
-      downloadType: 'png', // values: png, svg
+      downloadType: null, // values: png, svg
       colorOption: 'black-white', // values: black-white, color-suggestion, edit
       strokeHexValue: '#000000',
       fillHexValue: '#FFFFFF',
@@ -35,6 +35,49 @@ export default defineComponent({
       size: 0, // values: 0, 128, 256, 512
       cooldown: false,
       preventKeys: false
+    }
+  },
+  computed: {
+    // Form inputs options
+    showTypeSvg () {
+      return this.vector && this.vector.svg
+    },
+    showTypePng () {
+      return this.vector && this.vector.svg
+    },
+    showTypeGif () {
+      return this.vector && (this.vector.gif || this.vector.coloredGif)
+    },
+    showColorBW () {
+      return !(this.downloadType === 'gif' && !this.vector.gif)
+    },
+    showColorSuggestion () {
+      return (
+        (
+          this.downloadType !== 'gif' &&
+            (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
+        ) || (
+          this.downloadType === 'gif' &&
+            this.vector.coloredGif
+        )
+      )
+    },
+    showColorEdit () {
+      return this.downloadType !== 'gif'
+    },
+    showSizeChoices () {
+      return this.downloadType === 'png'
+    },
+    // Vector values
+    selectedGifUrl () {
+      switch (this.colorOption) {
+        case 'black-white':
+          return this.vector.gif
+        case 'color-suggestion':
+          return this.vector.coloredGif
+        default:
+          return ''
+      }
     }
   },
   async mounted () {
@@ -104,20 +147,34 @@ export default defineComponent({
         similarity: this.isASuggestion ? this.tags : [],
         ordering: this.$route.query.ordering
       })
-      this.svgCode = this.vector.svgContent
-      this.vectorTags = this.vector.tags.split(',')
 
-      // Check if the image has only one path
-      const svgEl = document.createElement('div')
-      svgEl.innerHTML = this.svgCode
-      this.hasJustStroke = (svgEl.querySelectorAll('path').length === 1)
+      // Set svg
+      if (this.vector.svg) {
+        this.svgCode = this.vector.svgContent
+        this.vectorTags = this.vector.tags.split(',')
 
-      // Check if image has color suggestion
-      this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
+        // Check if the image has only one path
+        const svgEl = document.createElement('div')
+        svgEl.innerHTML = this.svgCode
+        this.hasJustStroke = (svgEl.querySelectorAll('path').length === 1)
+      }
 
-      // If hasColorSuggesteion select it by default
-      if (this.hasColorSuggestion) {
+      // Select options
+      if (this.vector.coloredGif) {
+        this.selectDownloadTypeGif()
         this.selectColorSuggestion()
+      } else if (this.vector.gif) {
+        this.selectDownloadTypeGif()
+        this.selectColorBlackAndWhite()
+      } else {
+        this.selectDownloadTypePng()
+        // Check if image has color suggestion
+        this.hasColorSuggestion = (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
+
+        // If hasColorSuggesteion select it by default
+        if (this.hasColorSuggestion) {
+          this.selectColorSuggestion()
+        }
       }
     },
     async goToVector (vectorId) {
@@ -150,6 +207,11 @@ export default defineComponent({
       this.downloadType = 'svg'
       this.size = 0
     },
+    selectDownloadTypeGif () {
+      this.downloadType = 'gif'
+      this.size = 0
+    },
+
     // Color settings
     //
     // NOTE:
@@ -180,7 +242,7 @@ export default defineComponent({
         this.selectStroke(this.vector.strokeColor)
       }
 
-      if (this.customizeBulk) {
+      if (this.customizeBulk || this.downloadType === 'gif') {
         this.downloadSuggested = true
       }
     },
