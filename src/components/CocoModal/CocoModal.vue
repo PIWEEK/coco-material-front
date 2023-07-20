@@ -147,11 +147,11 @@ export default defineComponent({
         similarity: this.isASuggestion ? this.tags : [],
         ordering: this.$route.query.ordering
       })
+      this.vectorTags = this.vector.tags.split(',')
 
       // Set svg
       if (this.vector.svg) {
         this.svgCode = this.vector.svgContent
-        this.vectorTags = this.vector.tags.split(',')
 
         // Check if the image has only one path
         const svgEl = document.createElement('div')
