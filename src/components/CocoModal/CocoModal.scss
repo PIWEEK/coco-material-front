@@ -364,20 +364,22 @@
   }
 }
 
-/* Download type selector */
-.types-container {
+.types-container,
+.colors-container,
+.sizes-container {
   display: flex;
-  margin-bottom: 20px;
+  flex-direction: column;
 
-  @media (max-width: 890px) {
-    margin-bottom: -16px; // Why?
+  & .legend {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 8px;
   }
 }
 
-.type-settings-container {
-  margin-left: 0px;
-  margin-top: 1rem;
-}
+/* Download type selector */
+.types-container { }
 
 /* Colors options */
 .color-hex-container {
@@ -385,8 +387,11 @@
 }
 
 .colors-container {
-  display: flex;
-  flex-direction: column;
+  margin-top: 20px;
+
+  @media (max-width: 890px) {
+    margin-top: 8px;
+  }
 
   & .edit-color-settings-container {
     margin-top: 15px;
@@ -478,11 +483,10 @@
 
 /* Sizes options */
 .sizes-container {
-  display: flex;
   margin-top: 20px;
 
   @media (max-width: 890px) {
-    margin-top: 0;
+    margin-top: 8px;
   }
 
   & .choice-container {
@@ -500,11 +504,10 @@
 
 /* Actions */
 .actions-container {
-  display: flex;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 
   @media (max-width: 890px) {
-    margin-top: 8px;
+    margin-top: 12px;
   }
 
   & .btn {
