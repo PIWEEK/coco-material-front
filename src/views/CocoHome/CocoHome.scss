@@ -267,19 +267,20 @@
   }
 }
 
-.suggestion-section {
-  padding: 40px;
+.suggestion-section,
+.fonts-section,
+.piweek-section {
+  padding: 50px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 }
 
 .piweek-section {
   background-size: cover;
   background-repeat: no-repeat;
-  padding: 40px;
   text-align: center;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
 
   & .title {
     font-size: 48px;

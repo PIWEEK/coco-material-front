@@ -83,6 +83,12 @@ const api = {
     return axios.post('/suggestion/', form).then(response => {
       return response.data
     })
+  },
+  // Resources
+  getResources () {
+    return axios.get('/resources/').then(response => {
+      return response.data
+    })
   }
 }
 export default api

@@ -6,6 +6,7 @@ import { defineComponent } from 'vue'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import levenSort from 'leven-sort'
 
+import CocoFonts from '@/components/CocoFonts/CocoFonts.vue'
 import CocoSuggestion from '@/components/CocoSuggestion/CocoSuggestion.vue'
 import CocoFeaturedTags from '@/components/CocoFeaturedTags/CocoFeaturedTags.vue'
 import CocoFeaturedTopics from '@/components/CocoFeaturedTopics/CocoFeaturedTopics.vue'
@@ -15,6 +16,7 @@ export default defineComponent({
   components: {
     'coco-featured-tags': CocoFeaturedTags,
     'coco-featured-topics': CocoFeaturedTopics,
+    'coco-fonts': CocoFonts,
     'coco-suggestion': CocoSuggestion
   },
   data () {
