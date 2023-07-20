@@ -17,10 +17,10 @@ export default defineComponent({
   },
   data () {
     return {
-      fillColor: ['#FFFFFF', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF', 'none'],
-      strokeColor: ['#000000', '#FF4E4E', '#FF9E48', '#FFD144', '#3CD77D', '#378CFF', '#D974FF', '#FFFFFF'],
-      defaultStroke: '#000000',
+      fillColor: ['#FFFFFF', '#ff7878', '#ffa569', '#ffde77', '#75e0d5', '#9bafff', 'none'],
       defaultFill: '#FFFFFF',
+      strokeColor: ['#000000', '#ff7878', '#ffa569', '#ffde77', '#75e0d5', '#9bafff', '#FFFFFF'],
+      defaultStroke: '#000000',
       vector: null,
       svgCode: null,
       vectorTags: [],
