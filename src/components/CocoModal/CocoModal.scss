@@ -359,8 +359,17 @@
     transition: all ease 0.3s;
   }
 
+  // Is checked
   & input:checked + label {
     background-color: $color-light-turquoise;
+  }
+
+  // Is disabled
+  & input:disabled+label {
+    background-color: $color-light-grey;
+    border: 2px solid $color-medium-grey;
+    color: $color-medium-grey;
+    cursor: not-allowed;
   }
 }
 

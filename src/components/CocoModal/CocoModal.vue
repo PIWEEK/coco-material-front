@@ -39,20 +39,20 @@ export default defineComponent({
   },
   computed: {
     // Form inputs options
-    showTypeSvg () {
-      return this.vector && this.vector.svg
+    disableTypeSvg () {
+      return !(this.vector && this.vector.svg)
     },
-    showTypePng () {
-      return this.vector && this.vector.svg
+    disableTypePng () {
+      return !(this.vector && this.vector.svg)
     },
-    showTypeGif () {
-      return this.vector && (this.vector.gif || this.vector.coloredGif)
+    disableTypeGif () {
+      return !(this.vector && (this.vector.gif || this.vector.coloredGif))
     },
-    showColorBW () {
-      return !(this.downloadType === 'gif' && !this.vector.gif)
+    disableColorBW () {
+      return this.downloadType === 'gif' && !this.vector.gif
     },
-    showColorSuggestion () {
-      return (
+    disableColorSuggestion () {
+      return !(
         (
           this.downloadType !== 'gif' &&
             (this.vector.coloredSvg || this.vector.fillColor || this.vector.strokeColor)
@@ -62,11 +62,11 @@ export default defineComponent({
         )
       )
     },
-    showColorEdit () {
-      return this.downloadType !== 'gif'
+    disableColorEdit () {
+      return this.downloadType === 'gif'
     },
-    showSizeChoices () {
-      return this.downloadType === 'png'
+    disableSizeChoices () {
+      return this.downloadType !== 'png'
     },
     // Vector values
     selectedGifUrl () {

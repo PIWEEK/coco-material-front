@@ -3,7 +3,7 @@ import api from '@/service/api'
 const state = () => ({
   resources: {},
   lettersFont: null,
-  emojisFont: null
+  iconsFont: null
 })
 
 const mutations = {
@@ -15,8 +15,8 @@ const mutations = {
     if (state.resources['letters-font']) {
       state.lettersFont = state.resources['letters-font'].file
     }
-    if (state.resources['emojis-font']) {
-      state.emojisFont = state.resources['emojis-font'].file
+    if (state.resources['icons-font']) {
+      state.iconsFont = state.resources['icons-font'].file
     }
   }
 }

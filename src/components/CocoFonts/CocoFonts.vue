@@ -10,7 +10,7 @@ export default defineComponent({
   computed: {
     ...mapState('resources', {
       lettersFont: state => state.lettersFont,
-      emojisFont: state => state.emojisFont
+      iconsFont: state => state.iconsFont
     })
   },
   beforeMount () {
