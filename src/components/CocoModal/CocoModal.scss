@@ -365,11 +365,16 @@
   }
 
   // Is disabled
+  & input:disabled {
+    pointer-events: none;
+  }
+
   & input:disabled+label {
     background-color: $color-light-grey;
     border: 2px solid $color-medium-grey;
     color: $color-medium-grey;
     cursor: not-allowed;
+    pointer-events: none;
   }
 }
 
