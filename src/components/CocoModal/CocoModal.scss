@@ -238,8 +238,6 @@
 
   .preview {
     align-items: center;
-    background-image: url("../../assets/square.svg");
-    background-color: $color-light-grey;
     display: flex;
     justify-content: center;
     height: 335px;
@@ -252,15 +250,26 @@
     }
   }
 
-  .gif-image {
-    height: 335px;
-    width: 335px;
+  .svg {
+    background-image: url("../../assets/square.svg");
+    background-color: $color-light-grey;
+  }
 
-    @media (max-width: 890px) {
-      height: 207px;
-      width: 100%;
+  .gif {
+    background: $color-white;
+
+    .gif-image {
+      max-height: 335px;
+      max-width: 335px;
+
+      @media (max-width: 890px) {
+        max-height: 207px;
+        max-width: 100%;
+      }
     }
   }
+
+
 
   .preview-title {
     color: $color-grey;
